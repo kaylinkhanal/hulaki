@@ -24,7 +24,16 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
- const index = () => (
+
+ const index = () => {
+    const handleRegister = (values) => {
+      fetch('http://localhost:4000/register', {
+        method:'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      })
+    }
+  return(
   <div>
       <Image
       src="/hulakilogo.png"
@@ -42,8 +51,7 @@ const SignupSchema = Yup.object().shape({
       }}
       validationSchema={SignupSchema}
       onSubmit={values => {
-        // same shape as initial values
-        console.log(values);
+        handleRegister(values)
       }}
     >
       {({ errors, touched }) => (
@@ -77,6 +85,6 @@ const SignupSchema = Yup.object().shape({
       )}
     </Formik>
   </div>
-);
+)};
 
 export default index
