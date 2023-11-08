@@ -10,8 +10,14 @@ const port = 4000
 connection()
 
 app.post('/register', async(req, res) => {
-   const data=  await User.create(req.body)
-   if(data) res.json({msg :'user registered'})
+   const userExists = await User.findOne({phoneNumber: req.body.phoneNumber})
+   if(userExists){
+        res.status(409).json({msg :'Phone Number already taken!'})
+   }else{
+    const data=  await User.create(req.body)
+   if(data) res.json({msg :'User registered. Please login'})
+  }
+ 
 })
 
 
