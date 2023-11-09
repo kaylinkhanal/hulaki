@@ -65,7 +65,7 @@ const SignupSchema = Yup.object().shape({
       }}
     >
       {({ errors, touched }) => (
-        <Form>
+        <Form className='authForm'>
            {contextHolder}
           <Field name="phoneNumber"  placeholder="phoneNumber" /> 
           {errors.firstName && touched.firstName ? (

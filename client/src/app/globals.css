@@ -25,3 +25,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+.authForm{
+  background-color: rgb(163, 208, 208);
+  padding: 10px;
+  width: 200px;
+  border-radius: 13px;
+}
