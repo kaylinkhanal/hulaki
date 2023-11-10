@@ -32,16 +32,16 @@ app.post('/register', async(req, res) => {
 
 
 app.post('/login',async (req,res)=>{
+  //check if phoneNumber exists
   const userDetails = await User.findOne({phoneNumber: req.body.phoneNumber})
   if(!userDetails){
-    res.json({msg :'Invalid Credentials'})
+    res.status(401).json({msg :'Invalid Credentials'})
   }else{
     const isMatched = await bcrypt.compare( req.body.password,userDetails.password )
-    console.log(isMatched)
     if(isMatched){
       res.json({msg :'Login Success'})
     }else{
-      res.json({msg :'Incorrect password'})
+      res.status(401).json({msg :'Incorrect password'})
     }
   }
 
