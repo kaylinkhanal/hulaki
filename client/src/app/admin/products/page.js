@@ -1,0 +1,79 @@
+'use client'
+
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import Image from 'next/image'
+import Link from 'next/link'
+import {  message } from 'antd';
+const SignupSchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+    password: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+});
+
+ const Home = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const handleLogin = async(values) => {
+    const res = await fetch('http://localhost:4000/login', {
+        method:'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      })
+      const data = await res.json()
+        messageApi.open({
+          type: res.status == 200 ? 'success': 'error',
+          content: data.msg,
+        });
+      console.log(res)
+    }
+
+  
+  return(
+  <div>
+   
+    {contextHolder}
+    <h1>Add products</h1>
+    <Formik
+      initialValues={{
+        phoneNumber: '',
+        password: '',
+      }}
+      validationSchema={SignupSchema}
+      onSubmit={values => {
+        handleLogin(values);
+      }}
+    >
+      {({ errors, touched }) => (
+        <Form>
+          <Field name="productName"  placeholder="productName" /> 
+          {errors.firstName && touched.firstName ? (
+            <div>{errors.firstName}</div>
+          ) : null}
+          <br/>
+          <Field name="product Price" placeholder="productPrice" />
+          {errors.productPrice && touched.productPrice ? (
+            <div>{errors.productPrice}</div>
+          ) : null}
+          <br/>
+          <Field name="product Category" placeholder="productCategory" />
+          {errors.productPrice && touched.productPrice ? (
+            <div>{errors.productPrice}</div>
+          ) : null}
+          <br/>
+         <input type="file"/>
+          <br/>
+
+          <button type="submit">Save Products</button>
+        </Form>
+      )}
+    </Formik>
+  </div>
+)}
+
+export default Home
