@@ -1,11 +1,27 @@
 'use client'
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Image from 'next/image'
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
+import Card from '../components/Card/page'
+
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {
+
+  const [productList, setProductList] = useState([])
+  const fetchProducts = async()=> {
+    const res = await fetch('http://localhost:4000/products')
+    const data = await res.json()
+    setProductList(data.productList)
+  }
+
+
+  useEffect(()=>{
+  fetchProducts()
+  },[])
+
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -30,6 +46,7 @@ const App = () => {
         }}
       >
         <div className="demo-logo" />
+          
         <Image
       src="/hulakilogo.png"
       width={60}
@@ -67,7 +84,13 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-          Content
+
+
+          {productList.length> 0 && productList.map((item,id)=>{
+            return (
+             <Card item={item}/>
+            )
+          }) }
         </div>
       </Content>
       <Footer

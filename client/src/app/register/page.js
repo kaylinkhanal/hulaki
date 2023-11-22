@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Image from 'next/image'
 import {  message } from 'antd';
 import Link from 'next/link';
+import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
     .min(2, 'Too Short!')
@@ -34,7 +35,7 @@ const handleregister =(formField) =>{
     body: JSON.stringify(formField)
 })
   }
- const index = () => {
+ const index = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
     const handleRegister = async(values) => {
     const res = await fetch('http://localhost:4000/register', {
@@ -53,6 +54,7 @@ const handleregister =(formField) =>{
   
   return(
   <div>
+    <NavBar name={props.name}/>
       <Image
       src="/hulakilogo.png"
       width={60}
