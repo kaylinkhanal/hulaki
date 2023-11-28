@@ -1,4 +1,23 @@
-/* @tailwind base;
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.authForm{
+  background-color: rgb(163, 208, 208);
+  padding: 10px;
+  width: 200px;
+  border-radius: 13px;
+}
+
+
+
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -16,19 +35,3 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
-
-.authForm{
-  background-color: rgb(163, 208, 208);
-  padding: 10px;
-  width: 200px;
-  border-radius: 13px;
-}

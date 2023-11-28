@@ -8,6 +8,8 @@ const products = new Schema({
  price :String,
  Image:String,
  Category:String,
+},{
+    timestamps:true
 });
 
 const Product = mongoose.model('Product', products);

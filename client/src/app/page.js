@@ -4,7 +4,8 @@ import Image from 'next/image'
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Card from '../components/Card/page'
-
+import Table from '../components/Table/page'
+import Carousel  from '../components/Carousel/page'
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {
@@ -13,9 +14,9 @@ const App = () => {
   const fetchProducts = async()=> {
     const res = await fetch('http://localhost:4000/products')
     const data = await res.json()
-    setProductList(data.productList)
+    setProductList(data.productList) 
   }
-
+ 
 
   useEffect(()=>{
   fetchProducts()
@@ -60,6 +61,7 @@ const App = () => {
           items={[{key:1, label:"login"},{key:2, label:"sign up"} ]}
         />
       </Header>
+      <Carousel/>
       <Content
         style={{
           padding: '0 50px',
@@ -82,10 +84,11 @@ const App = () => {
           className="site-layout-content"
           style={{
             background: colorBgContainer,
+            display: 'flex'
           }}
         >
-
-
+          
+          <Table data={productList}/>
           {productList.length> 0 && productList.map((item,id)=>{
             return (
              <Card item={item}/>
