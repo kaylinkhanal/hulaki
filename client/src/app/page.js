@@ -54,6 +54,7 @@ const App = () => {
       height={60}
       alt="Logo"
     />
+       <h1>This is landing page</h1>
         <Menu
           theme="dark"
           mode="horizontal"
