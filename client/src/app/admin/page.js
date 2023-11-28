@@ -4,19 +4,10 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image'
+import Link from 'next/link'
 import {  message } from 'antd';
-import Link from 'next/link';
-import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-    email: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-    address: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -26,19 +17,10 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
-
-
-const handleregister =(formField) =>{
-  fetch('http://localhost :4000/register', {
-    method : 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formField)
-})
-  }
- const index = (props) => {
+ const Home = () => {
   const [messageApi, contextHolder] = message.useMessage();
-    const handleRegister = async(values) => {
-    const res = await fetch('http://localhost:4000/register', {
+  const handleLogin = async(values) => {
+    const res = await fetch('http://localhost:4000/login', {
         method:'POST', 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)
@@ -54,58 +36,43 @@ const handleregister =(formField) =>{
   
   return(
   <div>
-    <NavBar name={props.name}/>
       <Image
       src="/hulakilogo.png"
       width={60}
       height={60}
       alt="Logo"
     />
-    <h1>Sign up</h1>
+    {contextHolder}
+    <h1>Login</h1>
     <Formik
       initialValues={{
         phoneNumber: '',
         password: '',
-        email: '',
-        address: ''
       }}
       validationSchema={SignupSchema}
       onSubmit={values => {
-        handleRegister(values)
+        handleLogin(values);
       }}
     >
       {({ errors, touched }) => (
-        <Form className='authForm'>
-           {contextHolder}
+        <Form>
           <Field name="phoneNumber"  placeholder="phoneNumber" /> 
           {errors.firstName && touched.firstName ? (
             <div>{errors.firstName}</div>
           ) : null}
           <br/>
-          <Field name="email"  placeholder="email" /> 
-          {errors.email && touched.email ? (
-            <div>{errors.email}</div>
-          ) : null}
-          <br/>
-
-        
-          <Field name="address" type="address" placeholder="address" />
-          {errors.address && touched.address ? (
-            <div>{errors.address}</div>
-          ) : null}
-          <br/>
-          <Field name="password" type="password"  placeholder="password" /> 
+          <Field name="password" type="password" placeholder="password" />
           {errors.password && touched.password ? (
             <div>{errors.password}</div>
           ) : null}
           <br/>
-          Already registered ? <Link href="/">Login</Link> instead
+          Dont have an account yet ? <Link href="/register">Sign Up</Link> instead
           <br/>
           <button type="submit">Submit</button>
         </Form>
       )}
     </Formik>
   </div>
-)};
+)}
 
-export default index
+export default Home
