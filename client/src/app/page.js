@@ -5,7 +5,9 @@ import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Card from '../components/Card/page'
 import Table from '../components/Table/page'
-import Carousel  from '../components/Carousel/page'
+//import Top from '../components/Top/page'
+
+
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {
@@ -58,15 +60,28 @@ const App = () => {
       width={60}
       height={60}
       alt="Logo"
+    /> 
+
+
+     <Search
+      placeholder="Enter Your Traking Order"
+      enterButton="Search"
+      size="medium"
+      suffix={suffix}
+      onSearch={onSearch}
     />
+      
+{/* <button className='btn'  >login</button>
+<button className='btn'>Register</button> */}
         <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={['2']}
           items={[{key:1, label:"login"},{key:2, label:"sign up"} ]}
+          
         />
       </Header>
-      <Carousel/>
+    
       <Content
         style={{
           padding: '0 50px',
@@ -77,13 +92,7 @@ const App = () => {
             margin: '16px 0',
           }}
         >
-          <Search
-      placeholder="Enter Your Traking Order"
-      enterButton="Search"
-      size="large"
-      suffix={suffix}
-      onSearch={onSearch}
-    />
+       
         </Breadcrumb>
         <div
           className="site-layout-content"
@@ -106,6 +115,7 @@ const App = () => {
           textAlign: 'center',
         }}
       >
+        {/* <Top/> */}
         Ant Design ©2023 Created by Ant UED
       </Footer>
     </Layout>
