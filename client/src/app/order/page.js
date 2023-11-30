@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
+import {  message } from 'antd';
 import Link from 'next/link'
 
 const SignupSchema = Yup.object().shape({
@@ -15,26 +15,14 @@ const SignupSchema = Yup.object().shape({
     .min(0.2, 'Too low!')
     .max(20, 'Too big!')
     .required('Required'),
-    content: Yup.string()
+    description: Yup.string()
     .min(5, 'Too short!')
     .max(250, 'Too long!')
-    .required('Required'),
-    packagingType: Yup.string()
-    .min(5, 'Too short!')
-    .max(20, 'Too long!')
-    .required('Required'),
-    hazardousMaterial: Yup.string()
-    .min(5, 'Too short!')
-    .max(20, 'Too long!')
-    .required('Required'),
-    senderReferenceNumber: Yup.string()
-    .min(5, 'Too short!')
-    .max(20, 'Too long!')
     .required('Required'),
 });
 
  const Home = () => {
-  
+  const [messageApi, contextHolder] = message.useMessage();
   const handleOrder = async(values) => {
     const res = await fetch('http://localhost:4000/order', {
         method:'POST', 
@@ -49,13 +37,67 @@ const SignupSchema = Yup.object().shape({
       console.log(res)
     }
 
+    const [formStep, setFormStep]= useState(1)
   
+
+  const FormDisplay = ({errors,touched})=> {
+    if(formStep==1){
+      return (
+      <div>
+          <h1>Product Detail form</h1>
+            <p> Category:</p>
+          <Field name="orderCateogry"  placeholder="orderCateogry" /> 
+            {errors.orderCateogry && touched.orderCateogry ? (
+              <div>{errors.orderCateogry}</div>
+            ) : null}
+            <br/>
+            <hr />
+            <p>Weight:</p>
+            <Field name="productWeight" type="number" placeholder="Enter your  productWeight" />
+            {errors.productWeight && touched.productWeight ? (
+              <div>{errors.productWeight}</div>
+            ) : null}
+            <br/> <hr />
+            <p>About your Product:</p>
+            <Field  as="textarea" name="content" type="string" placeholder="Describe about your product" />
+            {errors.content && touched.content ? (
+              <div>{errors.content}</div>
+            ) : null}
+     
+            <br/> <hr />
+            <button onClick={()=>setFormStep(2)}>Next</button>
+      </div>
+
+      )
+    }else{
+      return (
+        <div>
+            <h1>Reciever Details:</h1>
+              <p> Reciever Full Name:</p>
+            <Field name="fullName"  placeholder="fullName" /> 
+              {errors.fullName && touched.fullName ? (
+                <div>{errors.fullName}</div>
+              ) : null}
+              <br/>
+              <hr />
+              <p>phoneNumber:</p>
+              <Field name="phoneNumber" placeholder="Enter your  phoneNumber" />
+              {errors.phoneNumber && touched.phoneNumber ? (
+                <div>{errors.phoneNumber}</div>
+              ) : null}
+              <br/> <hr />
+              <button onClick={()=>setFormStep(1)}>Back</button>
+        </div>
+  
+        )
+    }
+
+  }
+
+
   return(
   <div>
-     
- 
-    
-    <Formik
+  <Formik
       initialValues={{
         orderCateogry: '',
         productWeight: '',
@@ -64,52 +106,17 @@ const SignupSchema = Yup.object().shape({
         hazardousMaterial:'',
         senderReferenceNumber:''
       }}
-      validationSchema={SignupSchema}
+      // validationSchema={SignupSchema}
       onSubmit={values => {
+    
         handleOrder(values);
       }}
     >
       {({ errors, touched }) => (
         <Form className='form1'>
-          <h1>Product Detail form</h1>
-           <p> Category:</p>
-        <Field name="orderCateogry"  placeholder="orderCateogry" /> 
-          {errors.orderCateogry && touched.orderCateogry ? (
-            <div>{errors.orderCateogry}</div>
-          ) : null}
-          <br/>
-          <hr />
-          <p>Weight:</p>
-          <Field name="productWeight" type="number" placeholder="Enter your  productWeight" />
-          {errors.productWeight && touched.productWeight ? (
-            <div>{errors.productWeight}</div>
-          ) : null}
-          <br/> <hr />
-          <p>About your Product:</p>
-          <Field  as="textarea" name="content" type="string" placeholder="Describe about your product" />
-          {errors.content && touched.content ? (
-            <div>{errors.content}</div>
-          ) : null}
-          <br /> <hr />
-          <p>Packing Type:</p>
-          <Field name="packagingType" type="string" placeholder="Enter your  packagingType" />
-          {errors.packagingType && touched.packagingType ? (
-            <div>{errors.packagingType}</div>
-          ) : null}
-          <br/> <hr />
-           <p>Enter if it is hazardousMaterial</p>
-          <Field name="hazardousMaterial" type="string" placeholder="if it is hazardousMaterial" />
-          {errors.hazardousMaterial && touched.hazardousMaterial ? (
-            <div>{errors.hazardousMaterial}</div>
-          ) : null}
-          <br/> <hr />
-          <p>Enter sender Refrence Number</p>
-          <Field name="senderReferenceNumber" type="string" placeholder=" enter senderReferenceNumber" />
-          {errors.senderReferenceNumber && touched.senderReferenceNumber ? (
-            <div>{errors.senderReferenceNumber}</div>
-          ) : null}
-          <br/> <hr />
-          <Link href="/reciever"> <button type="submit">Submit</button> </Link> 
+              {contextHolder}
+          <FormDisplay errors={errors} touched={touched}/>
+          {formStep==2 && <button type="submit">Submit</button> } 
         </Form>
       )}
     </Formik>
