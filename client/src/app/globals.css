@@ -1,12 +1,4 @@
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+/* 
 
 .authForm{
   background-color: rgb(163, 208, 208);
@@ -33,5 +25,22 @@ body {
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
+
+.form1{
+  width: 300px;
+  margin: 0 auto;
+  border: 2px solid black;
+  text-align: center;
+  background-color: rgb(227, 227, 234);
+  padding: 10px;
+}
+p{
+  font-weight: 700;
+}
+button{
+  border-radius: 40%;
+  background: blue;
+  color: #ffff;
+}
