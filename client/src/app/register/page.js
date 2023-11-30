@@ -8,11 +8,11 @@ import { message } from 'antd';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
-  fullName: Yup.string()
+  phoneNumber: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  phoneNumber: Yup.string()
+  fullName: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -68,8 +68,9 @@ const index = (props) => {
       <h1>Sign up</h1>
       <Formik
         initialValues={{
-          fullName: '',
+          
           phoneNumber: '',
+          fullName: '',
           password: '',
           email: '',
           address: ''
@@ -82,7 +83,7 @@ const index = (props) => {
         {({ errors, touched }) => (
           <Form className='authForm'>
             {contextHolder}
-            <Field name="fullname" type="fullname" placeholder="Full Name:" />
+            <Field name="fullName" type="fullName" placeholder="Full Name:" />
             {errors.fullName && touched.fullName ? (
               <div>{errors.fullName}</div>
             ) : null}
