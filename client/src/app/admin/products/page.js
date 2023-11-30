@@ -51,6 +51,7 @@ export const index = () => {
       }}
       // validationSchema={SignupSchema}
       onSubmit={values => {
+        console.log(values)
         // same shape as initial values
         productHandle(values)
       }}
@@ -62,7 +63,7 @@ export const index = () => {
           {errors.productName && touched.productName ? <div>{errors. productNamer}</div> : null}
           <br />
           <br />
-          <Field name="Description" type="text" placeholder="Enter about your product"/>
+          <Field name="Description" as="textarea" placeholder="Enter about your product"/>
           {errors.Description && touched.Description? <div>{errors.Description}</div> : null}
           <br />
           <br />
