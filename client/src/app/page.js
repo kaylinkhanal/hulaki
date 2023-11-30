@@ -13,6 +13,7 @@ const { Header, Content, Footer } = Layout;
 const App = () => {
 
   const [productList, setProductList] = useState([])
+  const [searchList, setSearchList] = useState([])
   const fetchProducts = async()=> {
     const res = await fetch('http://localhost:4000/products')
     const data = await res.json()
@@ -37,7 +38,11 @@ const App = () => {
       }}
     />
   );
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+  const onSearch = async (value, _e, info) => {
+    const res = await  fetch('http://localhost:4000/search-products?name='+value)
+    const data = await res.json()
+    setSearchList(data.productList)
+  };
   return (
     <Layout className="layout">
       <Header

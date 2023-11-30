@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd';
+import Image from 'next/image'
 const contentStyle = {
   height: '160px',
   color: '#fff',
@@ -10,16 +11,36 @@ const contentStyle = {
 const App = () => (
   <Carousel autoplay autoplaySpeed={5000}>
     <div>
-      <h3 style={contentStyle}>1</h3>
+    <Image
+      src="https://img.freepik.com/free-psd/special-sales-banner-template_23-2148975924.jpg"
+      width={1000}
+      height={60}
+      alt="Logo"
+    />
     </div>
     <div>
-      <h3 style={contentStyle}>2</h3>
+    <Image
+      src="https://img.freepik.com/free-psd/special-sales-banner-template_23-2148975924.jpg"
+      width={1000}
+      height={60}
+      alt="Logo"
+    />
     </div>
     <div>
-      <h3 style={contentStyle}>3</h3>
+    <Image
+      src="/hulakilogo.png"
+      width={1000}
+      height={60}
+      alt="Logo"
+    />
     </div>
     <div>
-      <h3 style={contentStyle}>4</h3>
+    <Image
+      src="/hulakilogo.png"
+      width={1000}
+      height={60}
+      alt="Logo"
+    />
     </div>
   </Carousel>
 );
