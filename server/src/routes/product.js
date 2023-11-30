@@ -13,10 +13,13 @@ if(data){
 }
    )
 
+
    router.get('/products',async(req,res)=>{
-    const data= await Product.find()
+    const skipCount = (req.query.page - 1)*10
+    const totalCount = await Product.find().count()
+    const data= await Product.find().limit(10).skip(skipCount)
     if(data){
-      res.json({productList: data})
+      res.json({productList: data, totalCount})
     }
    })
 

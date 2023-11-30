@@ -5,6 +5,7 @@ import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Card from '../components/Card/page'
 import Table from '../components/Table/page'
+import { Pagination } from 'antd';
 //import Top from '../components/Top/page'
 
 
@@ -14,10 +15,12 @@ const App = () => {
 
   const [productList, setProductList] = useState([])
   const [searchList, setSearchList] = useState([])
-  const fetchProducts = async()=> {
-    const res = await fetch('http://localhost:4000/products')
+  const [count,setCount] = useState(0)
+  const fetchProducts = async(page=1)=> {
+    const res = await fetch('http://localhost:4000/products?page='+page)
     const data = await res.json()
     setProductList(data.productList) 
+    setCount(data.totalCount)
   }
  
 
@@ -102,14 +105,17 @@ const App = () => {
           }}
         >
           
-          <Table data={productList}/>
+          {/* <Table data={productList}/> */}
           {productList.length> 0 && productList.map((item,id)=>{
             return (
              <Card item={item}/>
             )
           }) }
+          <br/>
+      
         </div>
       </Content>
+      <Pagination onChange={(page)=> fetchProducts(page)} defaultCurrent={1} total={count} />
       <Footer
         style={{
           textAlign: 'center',
