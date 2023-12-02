@@ -1,4 +1,4 @@
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -6,18 +6,35 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
 
 .authForm{
   background-color: rgb(163, 208, 208);
   padding: 10px;
-  width: 200px;
+  width: 340px;
   border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.authForm input,select{
+  color: black;
+  padding: 5px;
+  width: 80%;
+  cursor: pointer;
+}
+.errors{
+  color: red;
+  font-size: 0.8rem;
+}
+.formFooter{
+  display: flex;
+  font-size: 0.8rem;
 }
 
 
-
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -33,5 +50,5 @@ body {
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 

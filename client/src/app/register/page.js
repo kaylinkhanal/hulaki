@@ -24,6 +24,8 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
+    role: Yup.string()
+    .required('Required')
 });
 
 
@@ -37,6 +39,7 @@ const handleregister =(formField) =>{
   }
  const index = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
+
     const handleRegister = async(values) => {
     const res = await fetch('http://localhost:4000/register', {
         method:'POST', 
@@ -67,7 +70,8 @@ const handleregister =(formField) =>{
         phoneNumber: '',
         password: '',
         email: '',
-        address: ''
+        address: '',
+        role:''
       }}
       validationSchema={SignupSchema}
       onSubmit={values => {
@@ -78,28 +82,37 @@ const handleregister =(formField) =>{
         <Form className='authForm'>
            {contextHolder}
           <Field name="phoneNumber"  placeholder="phoneNumber" /> 
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
+          {errors.phoneNumber && touched.phoneNumber ? (
+            <div className='errors'>{errors.phoneNumber}</div>
           ) : null}
           <br/>
           <Field name="email"  placeholder="email" /> 
           {errors.email && touched.email ? (
-            <div>{errors.email}</div>
+            <div className='errors'>{errors.email}</div>
           ) : null}
           <br/>
 
         
           <Field name="address" type="address" placeholder="address" />
           {errors.address && touched.address ? (
-            <div>{errors.address}</div>
+            <div className='errors'>{errors.address}</div>
+          ) : null}
+          <br/>
+          <Field component='select' name='role' id='roles' placeholder='Choose your role'>
+            <option disabled >Choose your role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </Field>
+          {errors.role && touched.role ? (
+            <div className='errors'>{errors.role}</div>
           ) : null}
           <br/>
           <Field name="password" type="password"  placeholder="password" /> 
           {errors.password && touched.password ? (
-            <div>{errors.password}</div>
+            <div className='errors'>{errors.password}</div>
           ) : null}
           <br/>
-          Already registered ? <Link href="/">Login</Link> instead
+          <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
           <br/>
           <button type="submit">Submit</button>
         </Form>
