@@ -52,3 +52,20 @@
   }
 } */
 
+
+.form1{
+  width: 300px;
+  margin: 0 auto;
+  border: 2px solid black;
+  text-align: center;
+  background-color: rgb(227, 227, 234);
+  padding: 10px;
+}
+p{
+  font-weight: 700;
+}
+button{
+  border-radius: 40%;
+  background: blue;
+  color: #ffff;
+}

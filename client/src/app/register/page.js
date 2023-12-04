@@ -4,23 +4,27 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image'
-import {  message } from 'antd';
+import { message } from 'antd';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
+  fullName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
   phoneNumber: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-    email: Yup.string()
+  email: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-    address: Yup.string()
+  address: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-    password: Yup.string()
+  password: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -30,34 +34,34 @@ const SignupSchema = Yup.object().shape({
 
 
 
-const handleregister =(formField) =>{
+const handleregister = (formField) => {
   fetch('http://localhost :4000/register', {
-    method : 'POST',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formField)
-})
-  }
- const index = (props) => {
+  })
+}
+const index = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
     const handleRegister = async(values) => {
     const res = await fetch('http://localhost:4000/register', {
-        method:'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-      })
-      const data = await res.json()
-        messageApi.open({
-          type: res.status == 200 ? 'success': 'error',
-          content: data.msg,
-        });
-      console.log(res)
-    }
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values)
+    })
+    const data = await res.json()
+    messageApi.open({
+      type: res.status == 200 ? 'success' : 'error',
+      content: data.msg,
+    });
+    console.log(res)
+  }
 
-  
-  return(
-  <div>
-    <NavBar name={props.name}/>
+
+  return (
+    <div>
+      <NavBar name={props.name} />
       <Image
       src="/hulakilogo.png"
       width={60}
