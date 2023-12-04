@@ -1,6 +1,7 @@
 'use client'
 import React, {useState, useEffect} from 'react';
 import Image from 'next/image'
+import { useSelector } from 'react-redux';
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Card from '../components/Card/page'
@@ -12,7 +13,7 @@ import { Pagination } from 'antd';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {
-
+  const {age} = useSelector(state=>state.user)
   const [productList, setProductList] = useState([])
   const [searchList, setSearchList] = useState([])
   const [count,setCount] = useState(0)
@@ -41,41 +42,22 @@ const App = () => {
       }}
     />
   );
-  const onSearch = async (value, _e, info) => {
-    const res = await  fetch('http://localhost:4000/search-products?name='+value)
+  const onSearch = async (e) => {
+    const res = await  fetch('http://localhost:4000/search-products?name='+e.target.value)
     const data = await res.json()
     setSearchList(data.productList)
   };
   return (
     <Layout className="layout">
-      <Header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor:'#fff',
-          border: '1px solid'
-        }}
-      >
-        <div className="demo-logo" />
-          
-        <Image
-      src="/hulakilogo.png"
-      width={60}
-      height={60}
-      alt="Logo"
-    /> 
+     
 
 
-     <Search
-      placeholder="Enter Your Traking Order"
-      enterButton="Search"
-      size="medium"
-      suffix={suffix}
-      onSearch={onSearch}
-    />
-      
-{/* <button className='btn'  >login</button>
-<button className='btn'>Register</button> */}
+
+   
+         
+
+
+
         <Menu
           theme="dark"
           mode="horizontal"
@@ -83,7 +65,14 @@ const App = () => {
           items={[{key:1, label:"login"},{key:2, label:"sign up"} ]}
           
         />
-      </Header>
+     <Search
+      placeholder="Enter Your Traking Order"
+      enterButton="Search"
+      size="medium"
+      suffix={suffix}
+      onChange={onSearch}
+    />
+   
     
       <Content
         style={{
@@ -97,32 +86,14 @@ const App = () => {
         >
        
         </Breadcrumb>
-        <div
-          className="site-layout-content"
-          style={{
-            background: colorBgContainer,
-            display: 'flex'
-          }}
-        >
-          
-          {/* <Table data={productList}/> */}
-          {productList.length> 0 && productList.map((item,id)=>{
-            return (
-             <Card item={item}/>
-            )
-          }) }
-          <br/>
-      
-        </div>
       </Content>
-      <Pagination onChange={(page)=> fetchProducts(page)} defaultCurrent={1} total={count} />
       <Footer
         style={{
           textAlign: 'center',
         }}
       >
         {/* <Top/> */}
-        Ant Design ©2023 Created by Ant UED
+        Ant Design ©2023 Created by Ant UED age    {age}
       </Footer>
     </Layout>
   );
