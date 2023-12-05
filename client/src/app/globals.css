@@ -1,4 +1,4 @@
-/* body {
+body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -6,7 +6,7 @@
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-} */
+}
 
 .authForm{
   background-color: rgb(163, 208, 208);
@@ -34,7 +34,7 @@
 }
 
 
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -50,7 +50,7 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-} */
+}
 
 
 .form1{
@@ -66,6 +66,6 @@ p{
 }
 button{
   border-radius: 40%;
-  background: blue;
+  background: blue !important;
   color: #ffff;
 }
