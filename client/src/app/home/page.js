@@ -57,20 +57,10 @@ const App = () => {
   };
   return (
     <Layout className="layout">
-     
-
-
-
-   
-         
-
-
-
         <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={['2']}
-        
           
         >
         <Link href="/" >

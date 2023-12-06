@@ -34,7 +34,7 @@ const loginUser = async (req,res)=>{
       if(isMatched){
        const {password , ...userInfo} = userDetails
        // generate a token for the user
-         const token = jwt.sign({phoneNumber: req.body.phoneNumber, id: userDetails._id}, process.env.SECRET_KEY);
+         const token = jwt.sign({phoneNumber: req.body.phoneNumber, id: userDetails._id}, 'fggff65rf7if');
         res.json({msg :'Login Success', token,userDetails:userInfo})
       }else{
         res.status(401).json({msg :'Incorrect password'})

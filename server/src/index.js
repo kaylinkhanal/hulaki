@@ -14,7 +14,7 @@ app.use(userRoute)
 app.use(productRoute)
 app.use(orderRoute)
 app.use(recieverRoute)
-const port = process.env.PORT
+const port = process.env.PORT || 4000
 connection()
 
 app.listen(port, () => {
