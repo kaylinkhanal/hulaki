@@ -24,8 +24,7 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-    role: Yup.string()
-    .required('Required')
+    role: Yup.string().required('Required')
 });
 
 
@@ -98,8 +97,8 @@ const handleregister =(formField) =>{
             <div className='errors'>{errors.address}</div>
           ) : null}
           <br/>
-          <Field component='select' name='role' id='roles' placeholder='Choose your role'>
-            <option disabled >Choose your role</option>
+          <Field component='select' required  name='role' id='roles' placeholder='Choose your role'>
+            <option value=''>Choose your role</option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </Field>
