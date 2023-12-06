@@ -1,22 +1,27 @@
 'use client'
 import React, {useState, useEffect} from 'react';
 import Image from 'next/image'
+import { useSelector } from 'react-redux';
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Card from '../components/Card/page'
 import Table from '../components/Table/page'
+import { Pagination } from 'antd';
 //import Top from '../components/Top/page'
 
 
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {
-
+  const {age} = useSelector(state=>state.user)
   const [productList, setProductList] = useState([])
-  const fetchProducts = async()=> {
-    const res = await fetch('http://localhost:4000/products')
+  const [searchList, setSearchList] = useState([])
+  const [count,setCount] = useState(0)
+  const fetchProducts = async(page=1)=> {
+    const res = await fetch('http://localhost:4000/products?page='+page)
     const data = await res.json()
     setProductList(data.productList) 
+    setCount(data.totalCount)
   }
  
 
@@ -37,37 +42,22 @@ const App = () => {
       }}
     />
   );
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+  const onSearch = async (e) => {
+    const res = await  fetch('http://localhost:4000/search-products?name='+e.target.value)
+    const data = await res.json()
+    setSearchList(data.productList)
+  };
   return (
     <Layout className="layout">
-      <Header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor:'#fff',
-          border: '1px solid'
-        }}
-      >
-        <div className="demo-logo" />
-          
-        <Image
-      src="/hulakilogo.png"
-      width={60}
-      height={60}
-      alt="Logo"
-    /> 
+     
 
 
-     <Search
-      placeholder="Enter Your Traking Order"
-      enterButton="Search"
-      size="medium"
-      suffix={suffix}
-      onSearch={onSearch}
-    />
-      
-{/* <button className='btn'  >login</button>
-<button className='btn'>Register</button> */}
+
+   
+         
+
+
+
         <Menu
           theme="dark"
           mode="horizontal"
@@ -75,7 +65,14 @@ const App = () => {
           items={[{key:1, label:"login"},{key:2, label:"sign up"} ]}
           
         />
-      </Header>
+     <Search
+      placeholder="Enter Your Traking Order"
+      enterButton="Search"
+      size="medium"
+      suffix={suffix}
+      onChange={onSearch}
+    />
+   
     
       <Content
         style={{
@@ -89,21 +86,6 @@ const App = () => {
         >
        
         </Breadcrumb>
-        <div
-          className="site-layout-content"
-          style={{
-            background: colorBgContainer,
-            display: 'flex'
-          }}
-        >
-          
-          <Table data={productList}/>
-          {productList.length> 0 && productList.map((item,id)=>{
-            return (
-             <Card item={item}/>
-            )
-          }) }
-        </div>
       </Content>
       <Footer
         style={{
@@ -111,7 +93,7 @@ const App = () => {
         }}
       >
         {/* <Top/> */}
-        Ant Design ©2023 Created by Ant UED
+        Ant Design ©2023 Created by Ant UED age    {age}
       </Footer>
     </Layout>
   );

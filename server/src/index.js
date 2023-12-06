@@ -6,12 +6,15 @@ const app = express()
 require('dotenv').config()
 const userRoute = require('./routes/user')
 const productRoute = require('./routes/product')
+const orderRoute=require('./routes/order')
+const recieverRoute=require('./routes/reciever')
 console.log(process.env.SECRET_KEY)
 app.use(express.json())
 app.use(cors())
 app.use(userRoute)
 app.use(productRoute)
-
+app.use(orderRoute)
+app.use(recieverRoute)
 const port = process.env.PORT
 connection()
 
