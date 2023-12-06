@@ -265,3 +265,31 @@ Use this space to list resources you find helpful and would like to give credit 
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+
+
+Feature:
+
+1. Track my order with track id
+2. Location choose:
+   Door Service
+   user fill the form: 
+     -> product category : price
+     -> sender info: 
+     -> distance : price
+     -> Quick Hulaki 
+     price:3550
+
+     
+3. rider checklist
+       user form ==== product validate
+       
+9. receiver:
+     
+4. live location tracking
+5. reward points for sender
+5. deliver history
+6. Email to sender: order has been sender 
+
+
+
+   location : Map

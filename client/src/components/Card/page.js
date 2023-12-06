@@ -9,7 +9,10 @@ function page(props) {
 
 
   return (
-    <Link href={`/products/${props.item._id}`}>
+  
+     <>
+     
+     <Link href={`/products/${props.item._id}`}>
     <Card
     hoverable
     style={{
@@ -21,8 +24,9 @@ function page(props) {
     <Meta title={props.item.productName} description={props.item.price} />
     {props?.item?.createdAt ? diffTime : null}
   </Card>
-    
     </Link>
+     <p><button>Add</button></p>
+     </>
 
   )
 }
