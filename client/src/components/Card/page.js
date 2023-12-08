@@ -11,7 +11,6 @@ function page(props) {
   return (
   
      <>
-     
      <Link href={`/products/${props.item._id}`}>
     <Card
     hoverable
@@ -19,10 +18,10 @@ function page(props) {
       width: 240,
       margin:'30px'
     }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    cover={<img alt="example" src={`http://localhost:4000/user-avatar?userId=${props.item._id}`} />}
   >
-    <Meta title={props.item.productName} description={props.item.price} />
-    {props?.item?.createdAt ? diffTime : null}
+    <Meta title={props.item.address} description={props.item.role} />
+    {/* {props?.item?.createdAt ? diffTime : null} */}
   </Card>
     </Link>
      <p><button>Add</button></p>

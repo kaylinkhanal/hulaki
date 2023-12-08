@@ -4,6 +4,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux';
 import {setLoginDetails} from '../../redux/reducerSlices/userSlice'
 import Link from 'next/link'
@@ -21,6 +22,7 @@ const SignupSchema = Yup.object().shape({
 
  const Home = () => {
   const dispatch = useDispatch()
+  const router = useRouter()
   const [messageApi, contextHolder] = message.useMessage();
   const handleLogin = async(values) => {
     const res = await fetch('http://localhost:4000/login', {
@@ -35,6 +37,7 @@ const SignupSchema = Yup.object().shape({
         });
       if(res.status==200){
         dispatch(setLoginDetails(data.userDetails))
+        router.push('/')
       }
     }
 

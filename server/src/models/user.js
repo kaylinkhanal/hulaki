@@ -4,12 +4,13 @@ const userSchema = new mongoose.Schema({
   phoneNumber: String, // String is shorthand for {type: String}
   email: String,
   address: String,
-  password: String,
   role: {
-    type: String,
-    enum : ["Admin","User"],
-    default: 'Admin'
-}
+    type:String,
+    enum:['user','rider', 'admin'],
+    default:'user'
+  },
+  password: String,
+  avatar: String
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User
