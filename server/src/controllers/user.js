@@ -2,9 +2,10 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10;
-
+const path = require('path')
 const registerNewUser= async(req, res) => {
     try{
+      console.log(req.file)
      //check if user/email/phoneNumber doesnt already exist
      const userExists = await User.findOne({phoneNumber: req.body.phoneNumber})
      if(userExists){
@@ -13,6 +14,7 @@ const registerNewUser= async(req, res) => {
        // generate a hash Password
        const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
        req.body.password = hashPassword
+       req.body.filename = req.file.filename
        // create new user with hash password
       const data=  await User.create(req.body)
      if(data) res.json({msg :'User registered. Please login'})
@@ -42,4 +44,29 @@ const loginUser = async (req,res)=>{
     }
   
   }
-   module.exports = {registerNewUser,loginUser}
+
+
+  const getAllUsers = async (req,res)=>{
+    const list = await  User.find()
+    res.json({list})
+  }
+
+
+
+  const getUserImageById = async (req,res)=>{
+    const userDetails = await User.findById(req.query.userId)
+    if(userDetails?.avatar){
+      const imgPath = path.join(__dirname , '/../../uploads/avatars/', userDetails.avatar)
+      res.sendFile(imgPath)
+    }else{
+      const imgPath = path.join(__dirname , '/../../uploads/avatars/', 'default.png')
+      res.sendFile(imgPath)
+    }
+   
+  }
+
+
+   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById}
+
+
+   

@@ -4,7 +4,6 @@ function page(props) {
   return (
     <div>
         {props.name}
-    <button onClick={()=> props.setColor('pink')}>Change parent color</button>
     </div>
   )
 }

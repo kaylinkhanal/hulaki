@@ -1,7 +1,7 @@
 'use client'
 import React, {useState, useEffect} from 'react';
 import Image from 'next/image'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Link from 'next/link'
@@ -9,20 +9,21 @@ import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider  } from 'antd
 import Card from '../../components/Card/page'
 import Table from '../../components/Table/page'
 import { Pagination } from 'antd';
+import {handleLogout} from '../../redux/reducerSlices/userSlice'
 //import Top from '../components/Top/page'
-
 
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {
-  const {userDetails} = useSelector(state=>state.user)
+  const dispatch= useDispatch()
+  const {userDetails,isLoggedIn} = useSelector(state=>state.user)
   const [productList, setProductList] = useState([])
   const [searchList, setSearchList] = useState([])
   const [count,setCount] = useState(0)
   const fetchProducts = async(page=1)=> {
-    const res = await fetch('http://localhost:4000/products?page='+page)
+    const res = await fetch('http://localhost:4000/users')
     const data = await res.json()
-    setProductList(data.productList) 
+    setProductList(data.list) 
     setCount(data.totalCount)
   }
  
@@ -35,7 +36,7 @@ const App = () => {
   const content = (
     <div>
      <Link href="/profile"><span>Profile</span></Link>
-      <p>Logout</p>
+      <p onClick={()=>dispatch(handleLogout())}>Logout</p>
     </div>
   );
   const {
@@ -73,14 +74,27 @@ const App = () => {
         
           
         >
-        <Link href="/" >
+          <Link href="/" >
             <Menu.Item key="alipay">
             Logo here
             </Menu.Item>
           
           </Link>
-      
-          <Link href="/login" >
+          {isLoggedIn ? (
+                <div
+                style={{
+                  marginInlineStart: 80,
+                  clear: 'both',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <Popover placement="bottomRight" title={text} content={content}>
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+                </Popover>
+              </div>
+          ): (
+            <>
+             <Link href="/login" >
             <Menu.Item key="alipay">
             Login
             </Menu.Item>
@@ -90,22 +104,10 @@ const App = () => {
             <Menu.Item key="alipay">
             Register
             </Menu.Item>
-          
-          </Link>
-        
-          <div
-        style={{
-          marginInlineStart: 80,
-          clear: 'both',
-          whiteSpace: 'nowrap',
-        }}
-      >
-       
-        <Popover placement="bottomRight" title={text} content={content}>
-        <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
-        </Popover>
-      </div>
-            </Menu>
+            </Link>
+            </>
+          )}
+      </Menu>
      <Search
       placeholder="Enter Your Traking Order"
       enterButton="Search"
@@ -125,7 +127,10 @@ const App = () => {
             margin: '16px 0',
           }}
         >
-       
+
+       {productList?.length> 0  && productList.map((item)=>{
+        return (<Card item={item}/>)
+       })}
         </Breadcrumb>
       </Content>
       <Footer

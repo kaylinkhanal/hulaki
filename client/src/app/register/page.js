@@ -1,10 +1,12 @@
 'use client'
 
-import React from 'react';
+import React,{useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Image from 'next/image'
 import { message } from 'antd';
+import { Modal, Upload } from 'antd';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
@@ -34,21 +36,46 @@ const SignupSchema = Yup.object().shape({
 
 
 
-const handleregister = (formField) => {
-  fetch('http://localhost :4000/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formField)
-  })
-}
 const index = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
+    // const saveFile = (e) => {
+    //   e.target.files[0]
+     
+    // }
+
+    const [loading, setLoading] = useState(false);
+    const [file, setFile] = useState(null)
+  // const [imageUrl, setImageUrl] = useState();
+  // const handleChange = (info) => {
+  //  console.log(info.file.originFileObj)
+  // };
+  // const uploadButton = (
+  //   <div>
+  //     {loading ? <LoadingOutlined /> : <PlusOutlined />}
+  //     <div
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       Upload
+  //     </div>
+  //   </div>
+  // );
 
     const handleRegister = async(values) => {
+      var formData = new FormData();
+      formData.append('avatar', file) 
+
+      Object.entries(values).map((item,id)=>{
+        formData.append(item[0], item[1]) 
+      })
+      
+  
+   
+
     const res = await fetch('http://localhost:4000/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values)
+      body: formData
     })
     const data = await res.json()
     messageApi.open({
@@ -58,10 +85,12 @@ const index = (props) => {
     console.log(res)
   }
 
+  const saveImage = (e)=>{
+    setFile(e.target.files[0])
+  }
 
   return (
     <div>
-      <NavBar name={props.name} />
       <Image
       src="/hulakilogo.png"
       width={60}
@@ -116,6 +145,28 @@ const index = (props) => {
             <div className='errors'>{errors.password}</div>
           ) : null}
           <br/>
+
+          <input type="file" onChange={saveImage}/>
+          {/* <Upload
+        name="avatar"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={false}
+        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+        onChange={handleChange}
+      >
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt="avatar"
+            style={{
+              width: '100%',
+            }}
+          />
+        ) : (
+          uploadButton
+        )}
+      </Upload> */}
           <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
           <br/>
           <button type="submit">Submit</button>
