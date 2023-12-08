@@ -65,8 +65,18 @@ const loginUser = async (req,res)=>{
    
   }
 
+  const updateUserDetails = async(req,res)=>{
+    const data = await User.findByIdAndUpdate(req.params.id,req.body,{new:true});
+    console.log(data);
+    if(data){
+      res.json({msg:'successfully updated profile details',userDetails:data})
+    }else{
+      res.json({msg:'couldnot update profile details'});
+    }
+   }
 
-   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById}
+
+   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById , updateUserDetails}
 
 
    

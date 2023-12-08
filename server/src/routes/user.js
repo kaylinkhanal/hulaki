@@ -1,7 +1,8 @@
 const express=require('express')
 const router=express.Router()
-const {registerNewUser, loginUser ,getAllUsers,getUserImageById}  =require('../controllers/user')
+const {registerNewUser, loginUser ,getAllUsers,getUserImageById ,updateUserDetails}  =require('../controllers/user')
 const multer  = require('multer')
+const User = require('../models/user')
 
 
 const storage = multer.diskStorage({
@@ -24,5 +25,6 @@ router.post('/register', upload.single('avatar'),registerNewUser)
    router.get('/users', getAllUsers)
    router.get('/user-avatar', getUserImageById)
 
+   router.post('/profile/edit/:id',updateUserDetails);
 
    module.exports=router;
