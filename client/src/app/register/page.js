@@ -30,8 +30,10 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-    // role: Yup.string()
-    // .required('Required')
+  role: Yup.string()
+    .required('Required'),
+  role: Yup.string()
+    .required('Required')
 });
 
 
@@ -100,14 +102,14 @@ const index = (props) => {
       <h1>Sign up</h1>
       <Formik
         initialValues={{
-          
-          phoneNumber: '',
           fullName: '',
+          phoneNumber: '',
           password: '',
           email: '',
-          address: ''
+          address: '',
+          role: ''
         }}
-        validationSchema={SignupSchema}
+        // validationSchema={SignupSchema}
         onSubmit={values => {
           handleRegister(values)
         }}
@@ -115,71 +117,50 @@ const index = (props) => {
         {({ errors, touched }) => (
           <Form className='authForm'>
             {contextHolder}
-            <Field name="fullName" type="fullName" placeholder="Full Name:" />
-            {errors.fullName && touched.fullName ? (
-              <div>{errors.fullName}</div>
-            ) : null}
-            <br />
-            <Field name="phoneNumber" placeholder="PhoneNumber:" />
+            <Field name="fullName" placeholder="full name " />
             {errors.phoneNumber && touched.phoneNumber ? (
-              <div>{errors.phoneNumber}</div>
+              <div className='errors'>{errors.phoneNumber}</div>
             ) : null}
             <br />
-            <Field name="email" placeholder="Email:" />
+            <Field name="phoneNumber" placeholder="phoneNumber" />
+            {errors.phoneNumber && touched.phoneNumber ? (
+              <div className='errors'>{errors.phoneNumber}</div>
+            ) : null}
+            <br />
+            <Field name="email" placeholder="email" />
             {errors.email && touched.email ? (
-              <div>{errors.email}</div>
+              <div className='errors'>{errors.email}</div>
             ) : null}
             <br />
 
-        
-          <Field name="address" type="address" placeholder="address" />
-          {errors.address && touched.address ? (
-            <div className='errors'>{errors.address}</div>
-          ) : null}
-          <br/>
-          <Field component='select' name='role' id='roles' placeholder='Choose your role'>
-            <option disabled >Choose your role</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </Field>
-          {errors.role && touched.role ? (
-            <div className='errors'>{errors.role}</div>
-          ) : null}
-          <br/>
-          <Field name="password" type="password"  placeholder="password" /> 
-          {errors.password && touched.password ? (
-            <div className='errors'>{errors.password}</div>
-          ) : null}
-          <br/>
 
-          <input type="file" onChange={saveImage}/>
-          {/* <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-        onChange={handleChange}
-      >
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="avatar"
-            style={{
-              width: '100%',
-            }}
-          />
-        ) : (
-          uploadButton
+            <Field name="address" type="address" placeholder="address" />
+            {errors.address && touched.address ? (
+              <div className='errors'>{errors.address}</div>
+            ) : null}
+            <br />
+            <Field component='select' name='role' id='roles' placeholder='Choose your role'>
+              <option value='null' >Choose your role</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </Field>
+            {errors.role && touched.role ? (
+              <div className='errors'>{errors.role}</div>
+            ) : null}
+            <br />
+            <Field name="password" type="password" placeholder="password" />
+            {errors.password && touched.password ? (
+              <div className='errors'>{errors.password}</div>
+            ) : null}
+            <br />
+            <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
+            <br />
+            <button type="submit">Submit</button>
+          </Form>
         )}
-      </Upload> */}
-          <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
-          <br/>
-          <button type="submit">Submit</button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-)};
+      </Formik>
+    </div>
+  )
+};
 
 export default index
