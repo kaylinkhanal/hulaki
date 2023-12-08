@@ -67,13 +67,14 @@ const page = () => {
                 <div className='sider'>
                     <div className='heading'>
                         <Image src={`http://localhost:4000/user-avatar?userId=${userDetails._id}&id=${Math.random()}`} width={50} height={50} />
-                        <span>Binod Bastola</span>
+                        <span>{userDetails.fullName}</span>
                     </div>
                     <Divider style={{backgroundColor:'white'}}/>
                     <div className='menu'>
                         <span>Personal details</span>
                         <span>Edit your profile</span>
                         <span>Your orders</span>
+                        <span>Change Password</span>
                         <span>Logout</span>
                     </div>
                 </div>
