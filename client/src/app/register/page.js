@@ -10,11 +10,11 @@ import { Modal, Upload } from 'antd';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
-  fullName: Yup.string()
+  phoneNumber: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  phoneNumber: Yup.string()
+  fullName: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -92,38 +92,44 @@ const index = (props) => {
   return (
     <div>
       <Image
-      src="/hulakilogo.png"
-      width={60}
-      height={60}
-      alt="Logo"
-    />
-    <h1>Sign up</h1>
-    <Formik
-      initialValues={{
-        phoneNumber: '',
-        password: '',
-        email: '',
-        address: '',
-        role:''
-      }}
-      // validationSchema={SignupSchema}
-      onSubmit={values => {
-        handleRegister(values)
-      }}
-    >
-      {({ errors, touched }) => (
-        <Form className='authForm'>
-           {contextHolder}
-          <Field name="phoneNumber"  placeholder="phoneNumber" /> 
-          {errors.phoneNumber && touched.phoneNumber ? (
-            <div className='errors'>{errors.phoneNumber}</div>
-          ) : null}
-          <br/>
-          <Field name="email"  placeholder="email" /> 
-          {errors.email && touched.email ? (
-            <div className='errors'>{errors.email}</div>
-          ) : null}
-          <br/>
+        src="/hulakilogo.png"
+        width={60}
+        height={60}
+        alt="Logo"
+      />
+      <h1>Sign up</h1>
+      <Formik
+        initialValues={{
+          
+          phoneNumber: '',
+          fullName: '',
+          password: '',
+          email: '',
+          address: ''
+        }}
+        validationSchema={SignupSchema}
+        onSubmit={values => {
+          handleRegister(values)
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form className='authForm'>
+            {contextHolder}
+            <Field name="fullName" type="fullName" placeholder="Full Name:" />
+            {errors.fullName && touched.fullName ? (
+              <div>{errors.fullName}</div>
+            ) : null}
+            <br />
+            <Field name="phoneNumber" placeholder="PhoneNumber:" />
+            {errors.phoneNumber && touched.phoneNumber ? (
+              <div>{errors.phoneNumber}</div>
+            ) : null}
+            <br />
+            <Field name="email" placeholder="Email:" />
+            {errors.email && touched.email ? (
+              <div>{errors.email}</div>
+            ) : null}
+            <br />
 
         
           <Field name="address" type="address" placeholder="address" />
