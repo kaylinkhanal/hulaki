@@ -11,7 +11,6 @@ import Table from '../../components/Table/page'
 import { Pagination } from 'antd';
 //import Top from '../components/Top/page'
 
-
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 const App = () => {

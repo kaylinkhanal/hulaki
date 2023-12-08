@@ -1,18 +1,20 @@
 'use client'
 
-import React from 'react';
+import React,{useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Image from 'next/image'
 import { message } from 'antd';
+import { Modal, Upload } from 'antd';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
-  fullName: Yup.string()
+  phoneNumber: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  phoneNumber: Yup.string()
+  fullName: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -36,21 +38,46 @@ const SignupSchema = Yup.object().shape({
 
 
 
-const handleregister = (formField) => {
-  fetch('http://localhost:4000/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formField)
-  })
-}
 const index = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
+    // const saveFile = (e) => {
+    //   e.target.files[0]
+     
+    // }
 
-  const handleRegister = async (values) => {
+    const [loading, setLoading] = useState(false);
+    const [file, setFile] = useState(null)
+  // const [imageUrl, setImageUrl] = useState();
+  // const handleChange = (info) => {
+  //  console.log(info.file.originFileObj)
+  // };
+  // const uploadButton = (
+  //   <div>
+  //     {loading ? <LoadingOutlined /> : <PlusOutlined />}
+  //     <div
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       Upload
+  //     </div>
+  //   </div>
+  // );
+
+    const handleRegister = async(values) => {
+      var formData = new FormData();
+      formData.append('avatar', file) 
+
+      Object.entries(values).map((item,id)=>{
+        formData.append(item[0], item[1]) 
+      })
+      
+  
+   
+
     const res = await fetch('http://localhost:4000/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values)
+      body: formData
     })
     const data = await res.json()
     messageApi.open({
@@ -60,10 +87,12 @@ const index = (props) => {
     console.log(res)
   }
 
+  const saveImage = (e)=>{
+    setFile(e.target.files[0])
+  }
 
   return (
     <div>
-      <NavBar name={props.name} />
       <Image
         src="/hulakilogo.png"
         width={60}
