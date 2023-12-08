@@ -66,7 +66,7 @@ const page = () => {
             <div className='profileContainer'>
                 <div className='sider'>
                     <div className='heading'>
-                        <Image src='/hulakilogo.png' width={50} height={50} />
+                        <Image src={`http://localhost:4000/user-avatar?userId=${userDetails._id}&id=${Math.random()}`} width={50} height={50} />
                         <span>Binod Bastola</span>
                     </div>
                     <Divider style={{backgroundColor:'white'}}/>
