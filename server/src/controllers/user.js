@@ -65,8 +65,26 @@ const loginUser = async (req,res)=>{
    
   }
 
+  const changePassword = async (req,res)=>{
+    //1. check if phoneNumber exists
+   
+    const userDetail = await User.findById(req.query.userId).select('+password')
+    
+    const isMatched = await bcrypt.compare(req.body.oldPassword, userDetail.password)
+    if(isMatched){
+      const hashPassword = await bcrypt.hash(req.body.newPassword, saltRounds)
+      await User.findByIdAndUpdate(req.query.userId, {password: hashPassword})
+       
+        res.json({msg :'Password Changed'})
+      }else{
+        res.status(401).json({msg :'Incorrect password'})
+      }
+    }
+  
+  
 
-   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById}
+
+   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById,changePassword}
 
 
    

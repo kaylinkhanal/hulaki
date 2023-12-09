@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const {registerNewUser, loginUser ,getAllUsers,getUserImageById}  =require('../controllers/user')
+const {registerNewUser, loginUser ,getAllUsers,getUserImageById, changePassword}  =require('../controllers/user')
 const multer  = require('multer')
 
 
@@ -23,6 +23,8 @@ router.post('/register', upload.single('avatar'),registerNewUser)
    
    router.get('/users', getAllUsers)
    router.get('/user-avatar', getUserImageById)
+
+   router.post('/change-password', changePassword)
 
 
    module.exports=router;

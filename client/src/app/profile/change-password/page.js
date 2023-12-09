@@ -5,27 +5,32 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useDispatch } from 'react-redux';
-import {setLoginDetails} from '../../redux/reducerSlices/userSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import {setLoginDetails} from '../../../redux/reducerSlices/userSlice'
 import Link from 'next/link'
 import {  message } from 'antd';
-const SignupSchema = Yup.object().shape({
-  phoneNumber: Yup.string()
+const PasswordSchema = Yup.object().shape({
+  oldPassword: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-    password: Yup.string()
+    newPassword: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+    confirmPassword: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
 });
 
  const Home = () => {
-  const dispatch = useDispatch()
+  const {userDetails,isLoggedIn} = useSelector(state=>state.user)
+  // const dispatch = useDispatch()
   const router = useRouter()
   const [messageApi, contextHolder] = message.useMessage();
-  const handleLogin = async(values) => {
-    const res = await fetch('http://localhost:4000/login', {
+  const changePassword = async(values) => {
+    const res = await fetch(`http://localhost:4000/change-password?userId=${userDetails._id}`, {
         method:'POST', 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)
@@ -36,8 +41,8 @@ const SignupSchema = Yup.object().shape({
           content: data.msg,
         });
       if(res.status==200){
-        dispatch(setLoginDetails(data.userDetails))
-        router.push('/')
+        
+        router.push('/profile')
       }
     }
 
@@ -51,32 +56,37 @@ const SignupSchema = Yup.object().shape({
       alt="Logo"
     />
     {contextHolder}
-    <h1>Login</h1>
+    <h2>Change Password </h2>
     <Formik
       initialValues={{
-        phoneNumber: '',
-        password: '',
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: '',
       }}
-      validationSchema={SignupSchema}
+      validationSchema={PasswordSchema}
       onSubmit={values => {
-        handleLogin(values);
+        changePassword(values);
       }}
     >
       {({ errors, touched }) => (
         <Form>
-          <Field name="phoneNumber"  placeholder="phoneNumber" /> 
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
-          ) : null}
-          <br/>
-          <Field name="password" type="password" placeholder="password" />
+          <Field name="oldPassword" type="password" placeholder="Old password" />
           {errors.password && touched.password ? (
             <div>{errors.password}</div>
           ) : null}
           <br/>
-          Dont have an account yet ? <Link href="/register">Sign Up</Link> instead
+          <Field name="newPassword" type="password" placeholder="New password" />
+          {errors.password && touched.password ? (
+            <div>{errors.password}</div>
+          ) : null}
           <br/>
-          <button type="submit">Submit</button>
+          <Field name="confirmPassword" type="password" placeholder="Confirm password" />
+          {errors.password && touched.password ? (
+            <div>{errors.password}</div>
+          ) : null}
+
+          <br/>
+          <button type="submit">Change Password</button>
         </Form>
       )}
     </Formik>

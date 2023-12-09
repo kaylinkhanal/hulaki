@@ -1,12 +1,3 @@
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
 
 *{
   margin: 0;
@@ -50,12 +41,97 @@
   justify-content: space-between;
   margin: auto;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.sider{
+  background-color: yellow;
+  width: 25%;
+  min-height: 50vh;
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 15px;
 }
- */
+.heading{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.heading img{
+  border-radius:30px;
+}
+.menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.menu span{
+  cursor: pointer;
+  width: 80%;
+  padding: 10px;
+  border-radius: 7px;
+}
+.menu span:hover{
+  background-color: black;
+  color: white;
+}
+.content{
+  /* background-color: rgba(0,0,0,0.2); */
+  width: 72%;
+  min-height: 90vh;
+  padding: 20px;
+}
+.contentBox{
+  border: 1px solid black;
+  box-shadow: 5px 5px 8px 10px #888888;
+  max-height: max-content;
+  margin-top: -15px;
+}
+.detailsHeading{
+  font-weight: bolder;
+  font-size: 1.5rem;
+  padding-left: 37px;
+  padding-top: 30px !important;
+}
+.personalInfo{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 25px;
+}
+.basicInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+}
+.profilePic{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.profilePic img{
+  border: 1px solid black;
+}
+.uploadBtn{
+  background-color: #ffff !important;
+}
+/* profile page css  */
+
+
+.form1{
+  width: 300px;
+  margin: 0 auto;
+  border: 2px solid black;
+  text-align: center;
+  background-color: rgb(227, 227, 234);
+  padding: 10px;
+}
+p{
+  font-weight: 700;
+}
+button{
+  border-radius: 40%;
+  background: blue !important;
+  color: #ffff;
+}
