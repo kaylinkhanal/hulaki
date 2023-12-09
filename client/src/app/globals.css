@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -8,9 +7,6 @@
     )
     rgb(var(--background-start-rgb));
 }
-=======
-/* 
->>>>>>> a01b3f7dac581fdae5bcc3c91be09a707f6fe442
 
 .authForm{
   background-color: rgb(163, 208, 208);
@@ -37,27 +33,5 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-<<<<<<< HEAD
 }
  */
-=======
-} */
-
-
-.form1{
-  width: 300px;
-  margin: 0 auto;
-  border: 2px solid black;
-  text-align: center;
-  background-color: rgb(227, 227, 234);
-  padding: 10px;
-}
-p{
-  font-weight: 700;
-}
-button{
-  border-radius: 40%;
-  background: blue;
-  color: #ffff;
-}
->>>>>>> a01b3f7dac581fdae5bcc3c91be09a707f6fe442

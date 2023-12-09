@@ -13,12 +13,8 @@
     "antd": "^5.11.0",
     "formik": "^2.4.5",
     "moment": "^2.29.4",
-<<<<<<< HEAD
     "next": "^14.0.3",
     "postcss": "8.4.31",
-=======
-    "next": "^14.0.1",
->>>>>>> a01b3f7dac581fdae5bcc3c91be09a707f6fe442
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
