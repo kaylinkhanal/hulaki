@@ -72,7 +72,7 @@ const EditProfile = () => {
           const data = await res.json()
           if(data){
             dispatch(setLoginDetails(data.userDetails));
-          }
+           }
           messageApi.open({
             type: res.status == 200 ? 'success' : 'error',
             content: data.msg,
