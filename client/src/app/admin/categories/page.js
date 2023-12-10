@@ -32,6 +32,7 @@ export const index = () => {
   },[])
   const [messageApi, contextHolder] = message.useMessage();
   const registerValidCateogries = async(values) => {
+    try{
     const res = await fetch('http://localhost:4000/categories', {
         method:'POST', 
         headers: { 'Content-Type': 'application/json' },
@@ -42,14 +43,18 @@ export const index = () => {
           type: res.status == 200 ? 'success': 'error',
           content: data.msg,
         });
-      console.log(res)
-    } 
-  
+        if(res.status===200){
+          categoryFetch();
+        }
+      }catch(error){
+        console.error('Error adding categoriry:',error);
+      }
+    };
   return(
   <div className='form'>
 
     
-    Add new category:
+    <h3>Add new category:</h3>
     <Formik
       initialValues={{
        
@@ -79,11 +84,11 @@ export const index = () => {
       )}
     </Formik>
 
-    <h1>Valid Cateories List:</h1>
+    <h2>Valid Cateories List:</h2>
 
-    {JSON.stringify(categoryList)}
+    
     {categoryList.length> 0 && categoryList.map((item)=>{
-      return <p>{item.categoryName}</p>
+      return <p key={index}>{item.categoryName}</p>
     })}
 
   </div>
