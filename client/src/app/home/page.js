@@ -135,7 +135,7 @@ const App = () => {
         >
           <Row gutter={24}>
     <Col span={8}>
-      <Card onClick={()=> router.push('/create-order')}  title="Order" bordered={false}>
+      <Card onClick={()=> router.push('/order')}  title="Order" bordered={false}>
         Place order
       </Card>
     </Col>

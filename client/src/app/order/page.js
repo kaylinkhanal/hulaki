@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {  message } from 'antd';
-import Link from 'next/link'
+
 
 const SignupSchema = Yup.object().shape({
-    orderCateogry: Yup.string()
+  orderCateogry: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
@@ -19,6 +19,8 @@ const SignupSchema = Yup.object().shape({
     .min(5, 'Too short!')
     .max(250, 'Too long!')
     .required('Required'),
+    fullName: Yup.string(),
+    phoneNumber:Yup.number()
 });
 
  const Home = () => {
@@ -59,7 +61,7 @@ const SignupSchema = Yup.object().shape({
             ) : null}
             <br/> <hr />
             <p>About your Product:</p>
-            <Field  as="textarea" name="content" type="string" placeholder="Describe about your product" />
+            <Field  as="textarea" name="description" type="string" placeholder="Describe about your product" />
             {errors.content && touched.content ? (
               <div>{errors.content}</div>
             ) : null}
@@ -101,10 +103,11 @@ const SignupSchema = Yup.object().shape({
       initialValues={{
         orderCateogry: '',
         productWeight: '',
-        content:'',
-        packagingType:'',
-        hazardousMaterial:'',
-        senderReferenceNumber:''
+        description:'',
+        fullName:'',
+        phoneNumber:''
+        
+       
       }}
       // validationSchema={SignupSchema}
       onSubmit={values => {
