@@ -65,8 +65,12 @@ const loginUser = async (req,res)=>{
    
   }
 
+
+
+
+
   const updateUserDetails = async(req,res)=>{
-    const data = await User.findByIdAndUpdate(req.params.id,req.body,{new:true});
+    const data = await User.findByIdAndUpdate(req.params.id,req.body);
     console.log(data);
     if(data){
       res.json({msg:'successfully updated profile details',userDetails:data})
@@ -76,7 +80,27 @@ const loginUser = async (req,res)=>{
    }
 
 
-   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById , updateUserDetails}
+
+  const changePassword = async (req,res)=>{
+    //1. check if phoneNumber exists
+   
+    const userDetail = await User.findById(req.query.userId).select('+password')
+    
+    const isMatched = await bcrypt.compare(req.body.oldPassword, userDetail.password)
+    if(isMatched){
+      const hashPassword = await bcrypt.hash(req.body.newPassword, saltRounds)
+      await User.findByIdAndUpdate(req.query.userId, {password: hashPassword})
+       
+        res.json({msg :'Password Changed'})
+      }else{
+        res.status(401).json({msg :'Incorrect password'})
+      }
+    }
+  
+  
+
+
+   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById,changePassword,updateUserDetails}
 
 
    

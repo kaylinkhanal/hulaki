@@ -1,16 +1,17 @@
 const express = require('express')
 var router = express.Router();
 
-const Order=require('../models/order')
+const Order= require('../models/order')
 router.use(express.json());
 
 
 
    router.post('/order',async(req,res)=>{
 
-      const data= await Order.find({category: req.body})
+      const data= await Order.create(req.body)
      if(data){
-       res.json({msg: `${req.body.orderCategory} has been created`})
+      
+      res.json({msg: `${req.body.orderCateogry} has been created`})
      }
      }
         )
@@ -18,9 +19,12 @@ router.use(express.json());
         router.get('/order',async(req,res)=>{
          const data= await Order.find()
          if(data){
-           res.json({productList: data})
+           res.json({orderList: data})
          }
         })
 
 
+  
+        
+   
    module.exports=router

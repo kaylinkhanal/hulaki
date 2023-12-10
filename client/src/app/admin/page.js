@@ -36,42 +36,7 @@ const SignupSchema = Yup.object().shape({
   
   return(
   <div>
-      <Image
-      src="/hulakilogo.png"
-      width={60}
-      height={60}
-      alt="Logo"
-    />
-    {contextHolder}
-    <h1>Login</h1>
-    <Formik
-      initialValues={{
-        phoneNumber: '',
-        password: '',
-      }}
-      validationSchema={SignupSchema}
-      onSubmit={values => {
-        handleLogin(values);
-      }}
-    >
-      {({ errors, touched }) => (
-        <Form>
-          <Field name="phoneNumber"  placeholder="phoneNumber" /> 
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
-          ) : null}
-          <br/>
-          <Field name="password" type="password" placeholder="password" />
-          {errors.password && touched.password ? (
-            <div>{errors.password}</div>
-          ) : null}
-          <br/>
-          Dont have an account yet ? <Link href="/register">Sign Up</Link> instead
-          <br/>
-          <button type="submit">Submit</button>
-        </Form>
-      )}
-    </Formik>
+    Admin dashboard
   </div>
 )}
 
