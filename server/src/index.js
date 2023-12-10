@@ -5,13 +5,13 @@ const app = express()
 
 require('dotenv').config()
 const userRoute = require('./routes/user')
-const productRoute = require('./routes/product')
+const categoryRoute = require('./routes/categories')
 const orderRoute=require('./routes/order')
 
 app.use(express.json())
 app.use(cors())
 app.use(userRoute)
-app.use(productRoute)
+app.use(categoryRoute)
 app.use(orderRoute)
 
 const port = process.env.PORT || 4000

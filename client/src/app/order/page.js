@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {  message } from 'antd';
@@ -19,12 +19,23 @@ const SignupSchema = Yup.object().shape({
     .min(5, 'Too short!')
     .max(250, 'Too long!')
     .required('Required'),
-    fullName: Yup.string(),
-    phoneNumber:Yup.number()
+    receiverName: Yup.string(),
+    receiverPhoneNumber:Yup.number()
 });
 
  const Home = () => {
   const [messageApi, contextHolder] = message.useMessage();
+  const [categoryList, setCategoryList] = useState({})
+  const categoryFetch = async()=> {
+    const res = await fetch(`http://localhost:4000/categories`)
+    const data = await res.json()
+    setCategoryList(data.categoryList) 
+  }
+ 
+
+  useEffect(()=>{
+    categoryFetch()
+  },[])
   const handleOrder = async(values) => {
     const res = await fetch('http://localhost:4000/order', {
         method:'POST', 
@@ -48,9 +59,18 @@ const SignupSchema = Yup.object().shape({
       <div>
           <h1>Product Detail form</h1>
             <p> Category:</p>
-          <Field name="orderCateogry"  placeholder="orderCateogry" /> 
-            {errors.orderCateogry && touched.orderCateogry ? (
-              <div>{errors.orderCateogry}</div>
+          <Field as='select'   name='categoryName' >
+            {categoryList.length>0 && categoryList.map((item)=>{
+              return   <option value={item.categoryName}>{item.categoryName}</option>
+            })}
+          
+          </Field>
+          {errors.role && touched.role ? (
+            <div className='errors'>{errors.role}</div>
+          ) : null}
+          <Field name="productName"  placeholder="productName" /> 
+            {errors.productName && touched.productName ? (
+              <div>{errors.productName}</div>
             ) : null}
             <br/>
             <hr />
@@ -75,17 +95,17 @@ const SignupSchema = Yup.object().shape({
       return (
         <div>
             <h1>Reciever Details:</h1>
-              <p> Reciever Full Name:</p>
-            <Field name="fullName"  placeholder="fullName" /> 
-              {errors.fullName && touched.fullName ? (
-                <div>{errors.fullName}</div>
+              <p> Full Name:</p>
+            <Field name="receiverName"  placeholder="receiverName" /> 
+              {errors.receiverName && touched.receiverName ? (
+                <div>{errors.receiverName}</div>
               ) : null}
               <br/>
               <hr />
-              <p>phoneNumber:</p>
-              <Field name="phoneNumber" placeholder="Enter your  phoneNumber" />
-              {errors.phoneNumber && touched.phoneNumber ? (
-                <div>{errors.phoneNumber}</div>
+              <p>PhoneNumber:</p>
+              <Field name="receiverPhoneNumber" placeholder="Enter your  phoneNumber" />
+              {errors.receiverPhoneNumber && touched.receiverPhoneNumber ? (
+                <div>{errors.receiverPhoneNumber}</div>
               ) : null}
               <br/> <hr />
               <button onClick={()=>setFormStep(1)}>Back</button>
@@ -101,14 +121,16 @@ const SignupSchema = Yup.object().shape({
   <div>
   <Formik
       initialValues={{
-        orderCateogry: '',
+        categoryName: categoryList?.[0]?.categoryName,
+        productName: '',
         productWeight: '',
         description:'',
-        fullName:'',
-        phoneNumber:''
+        receiverName:'',
+        receiverPhoneNumber:''
         
        
       }}
+      enableReinitialize
       // validationSchema={SignupSchema}
       onSubmit={values => {
     
