@@ -3,9 +3,11 @@
 import React,{useState, useEffect} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
-import {  message } from 'antd';
-
+import {  message,Button, Modal, Card } from 'antd';
+const gridStyle = {
+  width: '25%',
+  textAlign: 'center',
+};
 
 const SignupSchema = Yup.object().shape({
 
@@ -20,6 +22,17 @@ const SignupSchema = Yup.object().shape({
 
 export const index = () => {
   const [categoryList, setCategoryList] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+      setIsModalOpen(true);
+    };
+    const handleOk = () => {
+      setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+      setIsModalOpen(false);
+    };
+  
   const categoryFetch = async()=> {
     const res = await fetch(`http://localhost:4000/categories`)
     const data = await res.json()
@@ -32,7 +45,6 @@ export const index = () => {
   },[])
   const [messageApi, contextHolder] = message.useMessage();
   const registerValidCateogries = async(values) => {
-    try{
     const res = await fetch('http://localhost:4000/categories', {
         method:'POST', 
         headers: { 'Content-Type': 'application/json' },
@@ -43,13 +55,27 @@ export const index = () => {
           type: res.status == 200 ? 'success': 'error',
           content: data.msg,
         });
+        console.log(res)
         if(res.status===200){
           categoryFetch();
         }
-      }catch(error){
-        console.error('Error adding categoriry:',error);
-      }
     };
+    const deleteCat = async(id) => {
+      const res = await fetch('http://localhost:4000/categories', {
+          method:'DELETE', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({id})
+        })
+        const data = await res.json()
+          messageApi.open({
+            type: res.status == 200 ? 'success': 'error',
+            content: data.msg,
+          });
+          console.log(res)
+          if(res.status===200){
+            categoryFetch();
+          }
+      };
   return(
   <div className='form'>
 
@@ -59,7 +85,8 @@ export const index = () => {
       initialValues={{
        
         categoryName : '',
-        maxWeight: ''
+        maxWeight: '',
+        PricePerUnitKm:''
         
       }}
       // validationSchema={SignupSchema}
@@ -77,20 +104,30 @@ export const index = () => {
           <Field name="maxWeight" type="text" placeholder="Enter your maxWeight" />
           {errors.maxWeight && touched.maxWeight ? <div>{errors.maxWeight}</div> : null}
           <br />
+          <Field name="PricePerUnitKm" type="text" placeholder="Enter your Price/Unit Km" />
+          {errors.PricePerUnitKm && touched.PricePerUnitKm ? <div>{errors.PricePerUnitKm}</div> : null}
+          <br />
           <button type="submit">Submit</button>
           <br />
           
         </Form>
       )}
     </Formik>
-
-    <h2>Valid Cateories List:</h2>
-
-    
-    {categoryList.length> 0 && categoryList.map((item)=>{
-      return <p key={index}>{item.categoryName}</p>
+    <Card title="Valid Categories list">
+        
+    {categoryList.length> 0 && categoryList.map((item,id)=>{
+      return  <Card.Grid style={gridStyle}>
+      {id+1}.  {item.categoryName}
+        <p onClick={()=>deleteCat(item._id)}>Del</p>
+        <p onClick={showModal}>Edit</p>
+        </Card.Grid>
     })}
-
-  </div>
+         </Card>
+         <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+    </div>
 )};
 export default index 

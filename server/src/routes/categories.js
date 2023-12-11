@@ -17,6 +17,13 @@ router.get('/categories',async(req,res)=>{
     res.json({msg: "categories created successfully"})
   }
  })
+ router.delete('/categories',async(req,res)=>{
+  const data= await Category.delete(req.body)
+  if(data){
+    res.json({msg: "categories created successfully"})
+  }
+ })
+
 
 
 // router.post('/products',async(req,res)=>{
