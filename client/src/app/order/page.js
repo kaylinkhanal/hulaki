@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {  message } from 'antd';
+import { setOrderDetails } from '@/redux/reducerSlices/orderSlice';
 
 
 const SignupSchema = Yup.object().shape({
@@ -36,6 +37,17 @@ const SignupSchema = Yup.object().shape({
   useEffect(()=>{
     categoryFetch()
   },[])
+
+  const onSave = () => async(dispatch, getState) => {
+      const order = getState().order;
+      await fetch('http://localhost:4000/order', {
+    method:'POST', 
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order)
+  })
+  alert("order saved")
+  }
+  
   const handleOrder = async(values) => {
     const res = await fetch('http://localhost:4000/order', {
         method:'POST', 
@@ -141,6 +153,7 @@ const SignupSchema = Yup.object().shape({
         <Form className='form1'>
               {contextHolder}
           <FormDisplay errors={errors} touched={touched}/>
+          <button onClick={onSave}>save</button>
           {formStep==2 && <button type="submit">Submit</button> } 
         </Form>
       )}
