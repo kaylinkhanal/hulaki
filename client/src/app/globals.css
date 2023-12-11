@@ -131,7 +131,6 @@ p{
   font-weight: 700;
 }
 button{
-  border-radius: 40%;
-  background: blue !important;
-  color: #ffff;
+  border-radius: 5%;
+    
 }

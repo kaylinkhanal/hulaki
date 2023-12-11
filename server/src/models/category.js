@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const categories = new Schema({
  categoryName: String, // String is shorthand for {type: String}
- maxWeight: Number
+ maxWeight: Number,
+ PricePerUnitKm:Number,
 });
 
 const Category = mongoose.model('Category', categories);
