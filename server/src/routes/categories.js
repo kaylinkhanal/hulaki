@@ -19,9 +19,10 @@ router.get('/categories',async(req,res)=>{
  })
  router.delete('/categories',async(req,res)=>{
   // const data= await Category.delete(req.body)
-  if(data){
-    res.json({msg: "categories created successfully"})
-  }
+
+  // if(data){
+  //   res.json({msg: "categories created successfully"})
+  // }
  })
 
 
