@@ -127,10 +127,69 @@
   background-color: rgb(227, 227, 234);
   padding: 10px;
 }
-p{
-  font-weight: 700;
+
+
+
+/* Categories page*/
+.icons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
 }
-button{
-  border-radius: 5%;
-    
+.icons p{
+  cursor: pointer;
 }
+.editForm{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 0px;
+}
+.editForm input,button{
+  padding: 5px;
+  border-radius: 7px;
+  width: 50%;
+}
+.editForm button{
+  cursor: pointer;
+  background-color: #1677ff;
+  color: white;
+  border: none;
+}
+.editForm label{
+  display: inline-block;
+  width: 140px;
+  font-size: 0.8rem;
+}
+.ant-modal-footer{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px !important;
+}
+.addCategoryForm{
+  background-color: rgba(0,0,0,0.2);
+  width: 450px;
+}
+.formDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 25px;
+}
+.formDiv input{
+  width: 300px;
+  padding: 5px;
+  border-radius: 7px;
+}
+.submitBtn{
+  width: 300px;
+  background-color: #1677ff;
+  color: white;
+  cursor: pointer;
+}
+

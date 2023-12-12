@@ -17,12 +17,21 @@ router.get('/categories',async(req,res)=>{
     res.json({msg: "categories created successfully"})
   }
  })
+ router.put('/categories',async(req,res)=>{
+  const id = req.body._id;
+  const data= await Category.findByIdAndUpdate(id,req.body);
+  if(data){
+    res.json({msg: "categories updated successfully"})
+  }else{
+    res.json({msg:'couldnot update category'});
+  }
+ })
  router.delete('/categories',async(req,res)=>{
-  // const data= await Category.delete(req.body)
+  const data= await Category.findByIdAndDelete(req.body.id)
 
-  // if(data){
-  //   res.json({msg: "categories created successfully"})
-  // }
+  if(data){
+    res.json({msg: "category deleted successfully"})
+  }
  })
 
 
