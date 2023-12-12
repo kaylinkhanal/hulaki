@@ -1,18 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userDetails: {},
-  isLoggedIn: false,
+  orderDetails: {},
+
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setLoginDetails: (state, actions) => {
-    
-    },
-    handleLogout: (state) => {
+   
+    setOrderDetails: (state) => {
    
     },
   }

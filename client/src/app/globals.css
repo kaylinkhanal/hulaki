@@ -144,14 +144,10 @@
   cursor: pointer;
   width: 40%;
 }
-.submitBtn:hover{
-  background-color: blue !important;
-}
-/* profile page css  */
 
 
 .form1{
-  width: 300px;
+  width: 30%;
   margin: 0 auto;
   border: 2px solid black;
   text-align: center;
@@ -162,7 +158,5 @@ p{
   font-weight: 700;
 }
 button{
-  border-radius: 40%;
-  background: blue !important;
-  color: #ffff;
+  border-radius: 5%;
 }

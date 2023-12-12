@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {  message } from 'antd';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 
 const SignupSchema = Yup.object().shape({
@@ -31,23 +32,32 @@ const SignupSchema = Yup.object().shape({
     const data = await res.json()
     setCategoryList(data.categoryList) 
   }
- 
+  const containerStyle = {
+    width: '400px',
+    height: '400px'
+  };
+
+  const center = {
+    lat: 27.685536,
+    lng: 85.344498
+  };
 
   useEffect(()=>{
     categoryFetch()
   },[])
   const handleOrder = async(values) => {
-    const res = await fetch('http://localhost:4000/order', {
-        method:'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-      })
-      const data = await res.json()
-        messageApi.open({
-          type: res.status == 200 ? 'success': 'error',
-          content: data.msg,
-        });
-      console.log(res)
+    dispatch(setOrderDetails(values))
+    // const res = await fetch('http://localhost:4000/order', {
+    //     method:'POST', 
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(values)
+    //   })
+    //   const data = await res.json()
+    //     messageApi.open({
+    //       type: res.status == 200 ? 'success': 'error',
+    //       content: data.msg,
+    //     });
+    //   console.log(res)
     }
 
     const [formStep, setFormStep]= useState(1)
@@ -117,6 +127,26 @@ const SignupSchema = Yup.object().shape({
   }
 
 
+  const Map = ()=> {
+    return (
+      <LoadScript
+  
+    >
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+      >
+       <div style={{width:'240px', left:'10px', top:'60px', height:'40px',position:'absolute'}}>
+      <input/>
+       </div>
+        { /* Child components, such as markers, info windows, etc. */ }
+        <></>
+      </GoogleMap>
+    </LoadScript>
+    )
+  }
+
   return(
   <div>
   <Formik
@@ -141,7 +171,8 @@ const SignupSchema = Yup.object().shape({
         <Form className='form1'>
               {contextHolder}
           <FormDisplay errors={errors} touched={touched}/>
-          {formStep==2 && <button type="submit">Submit</button> } 
+          {/* {formStep === 2 &&   <Map/>} */}
+          {formStep === 2 && <button type="submit">Submit</button> } 
         </Form>
       )}
     </Formik>

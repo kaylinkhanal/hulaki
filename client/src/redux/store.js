@@ -11,14 +11,14 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-  user: userSlice,
 
+  user: userSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer)
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: [logger]
+//  middleware: [logger]
 })
 
 export const persistor = persistStore(store)

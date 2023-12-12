@@ -4,8 +4,12 @@ import React,{useState, useEffect} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-import {  message } from 'antd';
+import {  message ,Button, Modal, Card} from 'antd';
 
+const gridStyle = {
+  width: '25%',
+  textAlign: 'center',
+};
 
 const SignupSchema = Yup.object().shape({
 
@@ -20,6 +24,16 @@ const SignupSchema = Yup.object().shape({
 
 export const index = () => {
   const [categoryList, setCategoryList] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const categoryFetch = async()=> {
     const res = await fetch(`http://localhost:4000/categories`)
     const data = await res.json()
@@ -39,11 +53,25 @@ export const index = () => {
       })
       const data = await res.json()
         messageApi.open({
-          type: res.status == 200 ? 'success': 'error',
+          type: res.status === 200 ? 'success': 'error',
           content: data.msg,
         });
       console.log(res)
+
+      if(res.status === 200 ){
+        categoryFetch()
+      }
     } 
+
+    const deleteCat=async(id) => {
+      const res = await fetch('http://localhost:4000/categories', {
+          method:'DELETE', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({id})
+        })
+       
+      } 
+  
   
   return(
   <div className='form'>
@@ -79,13 +107,25 @@ export const index = () => {
       )}
     </Formik>
 
-    <h1>Valid Cateories List:</h1>
 
-    {JSON.stringify(categoryList)}
-    {categoryList.length> 0 && categoryList.map((item)=>{
-      return <p>{item.categoryName}</p>
+    <Card title="Valid Cateories List">
+    {categoryList.length> 0 && categoryList.map((item,id)=>{
+      return     <Card.Grid style={gridStyle}>
+      {id+1}.  {item.categoryName}
+        <p onClick={()=> deleteCat(item._id)}>Del </p>
+        <p onClick={showModal}>Edit</p>
+        
+      </Card.Grid>
     })}
 
+   
+  </Card>
+   
+  <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
   </div>
 )};
 export default index 

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.11.0",
     "formik": "^2.4.5",
