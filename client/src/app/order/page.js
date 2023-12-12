@@ -4,7 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {  message } from 'antd';
-
+import {setOrderDetails} from '../../redux/reducerSlices/orderSlice'
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation'
 
 const SignupSchema = Yup.object().shape({
   orderCateogry: Yup.string()
@@ -24,6 +26,8 @@ const SignupSchema = Yup.object().shape({
 });
 
  const Home = () => {
+  const router = useRouter()
+  const dispatch= useDispatch()
   const [messageApi, contextHolder] = message.useMessage();
   const [categoryList, setCategoryList] = useState({})
   const categoryFetch = async()=> {
@@ -133,8 +137,9 @@ const SignupSchema = Yup.object().shape({
       enableReinitialize
       // validationSchema={SignupSchema}
       onSubmit={values => {
-    
-        handleOrder(values);
+        dispatch(setOrderDetails(values))
+        router.push('/location')
+        // handleOrder(values);
       }}
     >
       {({ errors, touched }) => (
