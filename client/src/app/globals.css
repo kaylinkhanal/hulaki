@@ -116,6 +116,37 @@
 .uploadBtn{
   background-color: #ffff !important;
 }
+.editProfile{
+ margin-left: 100px;
+}
+.editForm{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: rgba(0,0,0,0.04);
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 70%;
+  gap: 20px;
+  padding: 50px;
+  margin-bottom: 27px;
+}
+.editForm input,select{
+  padding: 5px;
+  border-radius: 5px;
+  width: 40%;
+}
+.submitBtn{
+  background-color: black !important;
+  color: white !important;
+  border-radius: 5px !important;
+  padding: 5px !important;
+  cursor: pointer;
+  width: 40%;
+}
+.submitBtn:hover{
+  background-color: blue !important;
+}
 /* profile page css  */
 
 

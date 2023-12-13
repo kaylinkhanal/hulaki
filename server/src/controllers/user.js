@@ -65,6 +65,22 @@ const loginUser = async (req,res)=>{
    
   }
 
+
+
+
+
+  const updateUserDetails = async(req,res)=>{
+    const data = await User.findByIdAndUpdate(req.params.id,req.body);
+    console.log(data);
+    if(data){
+      res.json({msg:'successfully updated profile details',userDetails:data})
+    }else{
+      res.json({msg:'couldnot update profile details'});
+    }
+   }
+
+
+
   const changePassword = async (req,res)=>{
     //1. check if phoneNumber exists
    
@@ -84,7 +100,7 @@ const loginUser = async (req,res)=>{
   
 
 
-   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById,changePassword}
+   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById,changePassword,updateUserDetails}
 
 
    
