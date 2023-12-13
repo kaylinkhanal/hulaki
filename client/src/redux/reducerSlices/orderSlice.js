@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   orderDetails: {},
+  senderLocDetails: {},
+  receiverLocDetails: {}
 };
 
 const orderSlice = createSlice({
@@ -11,8 +13,11 @@ const orderSlice = createSlice({
     setOrderDetails: (state, actions) => {
     state.orderDetails = actions.payload
     },
+    setSenderLocDetails: (state,actions) => {
+      state.senderLocDetails = actions.payload
+      },
   }
 });
 
-export const { setOrderDetails } = orderSlice.actions;
+export const { setOrderDetails ,setSenderLocDetails} = orderSlice.actions;
 export default orderSlice.reducer;
