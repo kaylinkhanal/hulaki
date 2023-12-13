@@ -39,6 +39,7 @@ export const index = () => {
     setIsModalOpen1(true);
   };
   const showModal2 = (item) => {
+    setSelectedEditCat(item);
     setIsModalOpen2(true);
   };
   const handleCancel = () => {
@@ -191,9 +192,14 @@ export const index = () => {
           </Form>
         )}
       </Formik>
-
+      <Modal title="Edit category" open={isModalOpen1} onCancel={handleCancel} footer={null}>
+              <EditForm />
+            </Modal>
+            <Modal title="Delete category" open={isModalOpen2} onCancel={handleCancel} onOk={()=>deleteCat(selectedEditCat._id)}>
+              <p>Are you sure you want to delete this category ?</p>
+            </Modal>
       <Card title="Valid Categories list">
-        {categoryList.length > 0 && categoryList.map((item, id) => {
+        {categoryList.length > 0 ? categoryList.map((item, id) => {
           return <Card.Grid style={gridStyle}>
             <h3> {id + 1}.  {item.categoryName}</h3>
             <br />
@@ -202,14 +208,9 @@ export const index = () => {
               <p onClick={() => showModal1(item)}><FaEdit size={30} color='green' /></p>
             </div>
 
-            <Modal title="Edit category" open={isModalOpen1} onCancel={handleCancel} footer={null}>
-              <EditForm />
-            </Modal>
-            <Modal title="Delete category" open={isModalOpen2} onCancel={handleCancel} onOk={()=>deleteCat(item._id)}>
-              <p>Are you sure you want to delete this category ?</p>
-            </Modal>
+          
           </Card.Grid>
-        })}
+        }) : "No categories"}
       </Card>
 
 

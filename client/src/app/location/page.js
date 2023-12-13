@@ -14,7 +14,7 @@ function page() {
       };
       
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: ""
+        googleMapsApiKey: "AIzaSyCBYY-RtAAYnN1w_wAFmsQc2wz0ReCjriI"
       })
 
 
