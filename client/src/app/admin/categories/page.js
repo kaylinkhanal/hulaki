@@ -9,7 +9,7 @@ import { FaEdit } from "react-icons/fa";
 
 
 const gridStyle = {
-  width: '10%',
+  width: '15%',
   textAlign: 'center',
   margin: '0px 10px'
 };
