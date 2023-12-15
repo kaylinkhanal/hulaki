@@ -112,6 +112,7 @@ function page() {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={14}
+          onClick={()=>setIsSearchBoxOpen(false)}
         >
           {mapStep === 1 ? (
             <MarkerF
