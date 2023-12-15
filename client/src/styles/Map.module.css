@@ -72,5 +72,11 @@
   display: flex;
   border-radius: 50%;
   background-color: black;
-
+}
+.alertBox{
+  height: 35px;
+  width: 30%;
+  position: absolute;
+  bottom: 10px;
+  left: 36%;
 }

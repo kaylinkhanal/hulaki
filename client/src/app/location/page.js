@@ -10,6 +10,8 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowRoundForward } from "react-icons/io";
 import { GiConfirmed } from "react-icons/gi";
 import { Tooltip } from 'antd';
+import Marquee from 'react-fast-marquee';
+import { Alert } from 'antd';
 const { Search } = Input;
 
 
@@ -30,7 +32,7 @@ function page() {
     lat: 27.7172,
     lng: 85.3240
   }
-  const { senderLocDetails} = useSelector(state => state.order)
+  const { senderLocDetails } = useSelector(state => state.order)
   const dispatch = useDispatch()
   const containerStyle = {
     width: '100vw',
@@ -112,7 +114,7 @@ function page() {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={14}
-          onClick={()=>setIsSearchBoxOpen(false)}
+          onClick={() => setIsSearchBoxOpen(false)}
         >
           {mapStep === 1 ? (
             <MarkerF
@@ -182,6 +184,18 @@ function page() {
             }
 
           </div>
+          <Alert
+           className={styles.alertBox}
+            banner
+            message={
+              <Marquee pauseOnHover gradient={false} speed={20}>
+              {
+                mapStep===1 ? "Enter sender location details from the google map to continue  and proceed to the next page ."
+                : "Enter receiver location details from the google map to continue and to proceed click on the confirm button"
+               }
+              </Marquee>
+            }
+          />
         </GoogleMap>
       </div>
     )
