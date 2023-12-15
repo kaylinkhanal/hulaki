@@ -1,6 +1,6 @@
 .header{
     background-color: whitesmoke;
-    height: 50px;
+    height: 500px;
     width: 300px;
     position: absolute;
     margin: 40px;
@@ -9,6 +9,37 @@
     margin-top: 8px;
   }
 
+  .guide{
+    background-color: whitesmoke;
+    height: 80px;
+    width: 300px;
+    position: absolute;
+    margin: 40px;
+    padding: 5px;
+    margin-left: 500px;
+    margin-top: 8px;
+  }
+
+.back{
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  margin: 40px;
+  padding: 5px;
+  top: 50%;
+}
+.proceed{
+  height: 80px;
+  width: 115px;
+  position: absolute;
+  margin: 40px;
+    margin-top: 40px;
+    margin-left: 40px;
+  padding: 5px;
+  margin-left: 500px;
+  top: 50%;
+  right: 0;
+}
   .map{
   
     height:150px;

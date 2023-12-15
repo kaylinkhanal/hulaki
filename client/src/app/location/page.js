@@ -1,11 +1,11 @@
 'use client'
-import React, {useState, useEffect} from 'react'
-import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api'
+import React, {useState, useEffect, useRef} from 'react'
+import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-maps/api'
 import styles from '../../styles/Map.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import {setSenderLocDetails} from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
-import { Input,Avatar, } from 'antd';
+import { Input,Avatar,List ,Typography} from 'antd';
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -15,18 +15,47 @@ const suffix = (
     }}
   />
  );
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+ 
 function page() {
+const inputRef = useRef(null)
+const initialCenter = {
+  lat: 27.7172,
+  lng: 85.3240
+}
   const {senderLocDetails} = useSelector(state=>state.order)
   const dispatch= useDispatch()
     const containerStyle = {
         width: '100vw',
         height: '100vh'
       };
-      const [center, setCenter] = useState({
-        lat: 27.7172,
-        lng: 85.3240
-      })
+      const [searchList, setSearchList] = useState([])
+      const [mapStep, setMapStep] = useState(1)
+      const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false)
+      const [receiverPosition, setReceiverPosition] = useState(initialCenter)
+      const [center, setCenter] = useState(initialCenter)
+ 
+      const listSelect = (item) => {
+        if(formStep == 1 ){
+          setSenderPosition({lat: item.lat, lng: item.lon})
+        }else{
+          setReceiverPosition({lat: item.lat, lng: item.lon})
+        }
+      
+          dispatch(setSenderLocDetails({city: item.city, formatted:item.formatted, address_line1: item.address_line1}))
+          setIsSearchBoxOpen(false)
+      }
+      const onSearch = async(value) => {
+        setIsSearchBoxOpen(true)
+        //save to redux
+        dispatch(setSenderLocDetails({city: value, formatted:value, address_line1: value}))
+        const res = await fetch(
+          `https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&format=json&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+        );
+        const data = await res.json()
+        setSearchList(data.results)
+        //get autocomplete places list
+       
+      }
   
       useEffect(()=>{
         if(navigator.geolocation.getCurrentPosition){
@@ -41,8 +70,10 @@ function page() {
    
       
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyCBYY-RtAAYnN1w_wAFmsQc2wz0ReCjriI"
+        googleMapsApiKey: "AIzaSyCBYY-RtAAYnN1w_wAFmsQc2wz0ReCjriI",
+        libraries:["places"]
       })
+      
       const addSenderLocation = async(e)=> {
         const lat = e.latLng.lat()
         const lng = e.latLng.lng()
@@ -52,12 +83,12 @@ function page() {
         const data = await res.json()
        if(data){
         const {city, formatted, address_line1} = data.features[0].properties
-        dispatch(setSenderLocDetails({city, formatted, address_line1}))
+        dispatch(setSenderLocDetails({city, formatted, address_line1,senderCoords: {lat, lng}}))
        }
       }
 
       if(loadError) return "error loading map"
-      
+
      if(isLoaded) {
         return (
             <div>
@@ -66,23 +97,71 @@ function page() {
                center={center}
             zoom={14}
     >    
+    { mapStep === 1  ? (
+      <MarkerF
+      onDragEnd={addSenderLocation}
+      draggable={true}
+      position={senderLocDetails.senderCoords}
+      />
+    ) : (
     <MarkerF
-    onDragEnd={addSenderLocation}
-    draggable={true}
-    position={center}
-    />
-     <div className={styles.header}>
-Select order pick up address:
-
-</div>    
-        <Search className={styles.map}
+        onDragEnd={addSenderLocation}
+        draggable={true}
+        position={receiverPosition}
+        />
+    )}
+  
+     
+    <Search 
+    ref={inputRef}
+    className={styles.map}
         value={senderLocDetails?.formatted || ''}
+        onChange={(e)=>onSearch(e.target.value)}
      placeholder="Search location on Google Map"
      onSearch={onSearch} enterButton />
+
+   {isSearchBoxOpen && (<div className={styles.header}>
+    <List
+     bordered
+     dataSource={searchList}
+     renderItem={(item) => (
+       <List.Item onClick={()=>listSelect(item)}>
+         {item.formatted}
+       </List.Item>
+     )}
+   />
+ <button onClick={()=>setIsSearchBoxOpen(false)}>Close</button>
+
+</div>    
+)}
+
+     {mapStep === 1 ?  (
+      <div className={styles.guide}>Enter senders location</div>
+     ):
+    (
+      <div className={styles.guide}>Enter Receiver location</div>
+    )
+    
+    }
+    
+
+
+       
      <Avatar 
      className={styles.avatar}
      src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
       
+      <div  onClick={()=> setMapStep(1)} className={styles.back}>
+        Back
+        </div>
+        <div onClick={()=>{
+          setMapStep(2)  
+          if(mapStep == 2 ){
+            alert("Your order has been requested, Please wait for admin approval")
+          }
+          }} className={styles.proceed}>
+        {mapStep === 2 ? 'Confrim'  : 'Proceed'}
+        </div>
     </GoogleMap>   
             </div>
         )

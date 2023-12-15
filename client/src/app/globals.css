@@ -182,8 +182,8 @@
 }
 .editForm input,button{
   padding: 5px;
-  border-radius: 7px;
-  width: 50%;
+  /* border-radius: 7px; */
+  /* width: 50%; */
 }
 .editForm button{
   cursor: pointer;
