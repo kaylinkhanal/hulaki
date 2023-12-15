@@ -9,7 +9,7 @@ const initialState = {
     }
   },
   receiverLocDetails: {
-    senderCoords: {
+    receiverCoords: {
       lat: 27.7172,
       lng: 85.3240
     }
