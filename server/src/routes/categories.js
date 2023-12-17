@@ -35,6 +35,15 @@ router.get('/categories',async(req,res)=>{
   }
  })
 
+ router.put('/categories',async(req,res)=>{
+  const data = await Category.findByIdAndUpdate(req.params.id,req.body);
+  console.log(data);
+  if(data){
+    res.json({msg:'successfully updated profile details',categoryList:data})
+  }else{
+    res.json({msg:'couldnot update profile details'});
+  }
+ })
 
 
 // router.post('/products',async(req,res)=>{

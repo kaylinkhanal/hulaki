@@ -3,7 +3,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-maps/api'
 import styles from '../../styles/Map.module.css'
 import { useSelector, useDispatch } from 'react-redux';
-import {setSenderLocDetails} from '../../redux/reducerSlices/orderSlice'
+import {setSenderLocDetails,setRecieverLocDetails} from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
 import { Input,Avatar,List ,Typography} from 'antd';
 const { Search } = Input;
@@ -23,6 +23,7 @@ const initialCenter = {
   lng: 85.3240
 }
   const {senderLocDetails} = useSelector(state=>state.order)
+  const {recieverLocDetails} = useSelector(state=>state.order)
   const dispatch= useDispatch()
     const containerStyle = {
         width: '100vw',
@@ -31,14 +32,15 @@ const initialCenter = {
       const [searchList, setSearchList] = useState([])
       const [mapStep, setMapStep] = useState(1)
       const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false)
-      const [receiverPosition, setReceiverPosition] = useState(initialCenter)
+      const [recieverPosition, setRecieverPosition] = useState(initialCenter)
       const [center, setCenter] = useState(initialCenter)
+      
  
       const listSelect = (item) => {
         if(formStep == 1 ){
           setSenderPosition({lat: item.lat, lng: item.lon})
         }else{
-          setReceiverPosition({lat: item.lat, lng: item.lon})
+          setRecieverPosition({lat: item.lat, lng: item.lon})
         }
       
           dispatch(setSenderLocDetails({city: item.city, formatted:item.formatted, address_line1: item.address_line1}))
@@ -87,6 +89,21 @@ const initialCenter = {
        }
       }
 
+      
+      
+      const addRecieverLocation = async(e)=> {
+        const lat = e.latLng.lat()
+        const lng = e.latLng.lng()
+        const res = await fetch(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+        );
+        const data = await res.json()
+       if(data){
+        const {city, formatted, address_line1} = data.features[0].properties
+        dispatch(setSenderLocDetails({city, formatted, address_line1,recieverCoords: {lat, lng}}))
+       }
+      }
+
       if(loadError) return "error loading map"
 
      if(isLoaded) {
@@ -105,9 +122,9 @@ const initialCenter = {
       />
     ) : (
     <MarkerF
-        onDragEnd={addSenderLocation}
+        onDragEnd={addRecieverLocation}
         draggable={true}
-        position={receiverPosition}
+        position={recieverPosition}
         />
     )}
   
