@@ -136,10 +136,11 @@ const SignupSchema = Yup.object().shape({
       }}
       enableReinitialize
       // validationSchema={SignupSchema}
-      onSubmit={values => {
+      onSubmit={(values, { resetForm }) => {
         dispatch(setOrderDetails(values))
         router.push('/location')
-        // handleOrder(values);
+         resetForm();
+    setFormStep(1);
       }}
     >
       {({ errors, touched }) => (

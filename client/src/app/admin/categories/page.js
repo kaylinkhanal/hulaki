@@ -152,13 +152,12 @@ export const index = () => {
             </div>
 
             <br />
-            <button type="submit">Submit</button>
+            <button type="submit" onClick={resetForm}>Submit</button>
           </Form>
         )}
       </Formik>
     )
   }
-
 
   return (
     <div className='form'>
@@ -172,7 +171,7 @@ export const index = () => {
         }}
         // validationSchema={SignupSchema}
         onSubmit={(values,{resetForm}) => {
-          registerValidCateogries(values,resetForm)
+          registerValidCateogries(values,resetForm);
         }}
       >
         {({ errors, touched }) => (
