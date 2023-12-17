@@ -110,11 +110,12 @@ export const index = () => {
     if (res.status === 200) {
       categoryFetch();
       handleCancel();
+      resetForm();
     }
   };
 
 
-  const EditForm = () => {
+  const EditForm = ({resetForm}) => {
     return (
       <Formik
         initialValues={selectedEditCat}
@@ -151,7 +152,7 @@ export const index = () => {
             </div>
 
             <br />
-            <button type="submit">Submit</button>
+            <button type="submit" onClick={resetForm}>Submit</button>
           </Form>
         )}
       </Formik>
@@ -170,8 +171,8 @@ export const index = () => {
           PricePerUnitKg: ''
         }}
         // validationSchema={SignupSchema}
-        onSubmit={values => {
-          registerValidCateogries(values)
+        onSubmit={(values,{resetForm}) => {
+          registerValidCateogries(values);
         }}
       >
         {({ errors, touched }) => (
