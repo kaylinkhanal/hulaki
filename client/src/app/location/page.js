@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-maps/api'
 import styles from '../../styles/Map.module.css'
 import { useSelector, useDispatch } from 'react-redux';
-import {setSenderLocDetails,setReceiverLocDetails} from '../../redux/reducerSlices/orderSlice'
+import {setSenderLocDetails,setReceiverLocDetails,setSenderPosition, setReceiverPosition} from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
 import { Input, Avatar, List, Typography } from 'antd';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -43,15 +43,13 @@ function page() {
   const [searchList, setSearchList] = useState([])
   const [mapStep, setMapStep] = useState(1)
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false)
-  const [senderPosition, setSenderPosition] = useState(initialCenter)
-  const [receiverPosition, setReceiverPosition] = useState(initialCenter)
   const [center, setCenter] = useState(initialCenter)
 
   const listSelect = (item) => {
     if (mapStep == 1) {
-      setSenderPosition({ lat: item.lat, lng: item.lon })
+      dispatch(setSenderPosition({ lat: item.lat, lng: item.lon }))
     } else {
-      setReceiverPosition({ lat: item.lat, lng: item.lon })
+      dispatch(setReceiverPosition({ lat: item.lat, lng: item.lon }))
     }
     dispatch(setSenderLocDetails({ city: item.city, formatted: item.formatted, address_line1: item.address_line1 }))
     setIsSearchBoxOpen(false)

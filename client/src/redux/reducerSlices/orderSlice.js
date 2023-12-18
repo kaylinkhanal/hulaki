@@ -25,14 +25,26 @@ const orderSlice = createSlice({
     state.orderDetails = actions.payload
     },
     setSenderLocDetails: (state,actions) => {
-      state.senderLocDetails = actions.payload
+          return{
+            ...state,
+            senderLocDetails: {...state.senderLocDetails, ...actions.payload}
+        }
       },
       setReceiverLocDetails: (state,actions) => {
-        state.receiverLocDetails = actions.payload
+        return{
+            ...state,
+            receiverLocDetails: {...state.receiverLocDetails, ...actions.payload}
+        }
         },
-
+        setSenderPosition: (state,actions) => {
+          state.senderLocDetails.senderCoords = actions.payload
+        },
+          setReceiverPosition: (state,actions) => {
+            state.receiverLocDetails.receiverCoords = actions.payload
+            },
+        
   }
 });
 
-export const { setOrderDetails ,setSenderLocDetails,setReceiverLocDetails} = orderSlice.actions;
+export const { setOrderDetails ,setSenderLocDetails,setReceiverLocDetails,setSenderPosition, setReceiverPosition} = orderSlice.actions;
 export default orderSlice.reducer;

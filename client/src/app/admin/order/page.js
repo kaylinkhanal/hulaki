@@ -4,9 +4,9 @@ import Table from '../../../components/Table/page'
 const App=()=>{
     const [userList, setUserList] = useState([])
     const userFetch = async () => {
-        const res = await fetch(`http://localhost:4000/users`)
+        const res = await fetch(`http://localhost:4000/orders`)
         const data = await res.json()
-        setUserList(data.list)
+        setUserList(data.orderList)
       }
     
     
@@ -15,7 +15,7 @@ const App=()=>{
       }, [])
     return(
         <div>
-            <Table list={userList} title={['email', 'password', 'phoneNumber']} endpoint="/users" />
+            <Table list={userList} title={['productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
         </div>
     )
 }

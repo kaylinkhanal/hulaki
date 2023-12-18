@@ -152,7 +152,7 @@ export const index = () => {
             </div>
 
             <br />
-            <button type="submit" onClick={resetForm}>Submit</button>
+            <button type="submit">Submit</button>
           </Form>
         )}
       </Formik>
