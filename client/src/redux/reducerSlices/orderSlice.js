@@ -9,7 +9,7 @@ const initialState = {
     }
   },
   receiverLocDetails: {
-    recieverCoords: {
+    receiverCoords: {
       lat: 27.7172,
       lng: 85.3240
     }
@@ -27,12 +27,12 @@ const orderSlice = createSlice({
     setSenderLocDetails: (state,actions) => {
       state.senderLocDetails = actions.payload
       },
-      setRecieverLocDetails: (state,actions) => {
-        state.recieverLocDetails = actions.payload
+      setReceiverLocDetails: (state,actions) => {
+        state.receiverLocDetails = actions.payload
         },
 
   }
 });
 
-export const { setOrderDetails ,setSenderLocDetails,setRecieverLocDetails} = orderSlice.actions;
+export const { setOrderDetails ,setSenderLocDetails,setReceiverLocDetails} = orderSlice.actions;
 export default orderSlice.reducer;

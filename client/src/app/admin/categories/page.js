@@ -59,7 +59,7 @@ export const index = () => {
   }, [])
 
 
-  const registerValidCateogries = async (values) => {
+  const registerValidCateogries = async (values, resetForm) => {
     const res = await fetch('http://localhost:4000/categories', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -73,6 +73,7 @@ export const index = () => {
     console.log(res)
     if (res.status === 200) {
       categoryFetch();
+      resetForm();
     }
   };
 
@@ -95,8 +96,7 @@ export const index = () => {
   };
 
 
-  const editCat = async (values) => {
-    debugger;
+  const editCat = async (values,resetForm) => {
     const res = await fetch('http://localhost:4000/categories', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -110,6 +110,7 @@ export const index = () => {
     if (res.status === 200) {
       categoryFetch();
       handleCancel();
+      resetForm()
     }
   };
 
@@ -120,8 +121,8 @@ export const index = () => {
         initialValues={selectedEditCat}
         enableReinitialize
         // validationSchema={SignupSchema}
-        onSubmit={values => {
-          editCat(values)
+        onSubmit={(values,{ resetForm }) => {
+          editCat(values,resetForm)
         }}
       >
         {({ errors, touched }) => (
@@ -170,8 +171,8 @@ export const index = () => {
           PricePerUnitKg: ''
         }}
         // validationSchema={SignupSchema}
-        onSubmit={values => {
-          registerValidCateogries(values)
+        onSubmit={(values,{resetForm}) => {
+          registerValidCateogries(values,resetForm)
         }}
       >
         {({ errors, touched }) => (
