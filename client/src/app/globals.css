@@ -149,6 +149,9 @@
 }
 /* profile page css  */
 
+.ant-input-group-addon{
+  background-color: rgb(92, 176, 202) !important;
+}
 
 .form1{
   width: 300px;
@@ -180,17 +183,7 @@
   justify-content: center;
   padding: 7px 0px;
 }
-.editForm input,button{
-  padding: 5px;
-  /* border-radius: 7px; */
-  /* width: 50%; */
-}
-.editForm button{
-  cursor: pointer;
-  background-color: #1677ff;
-  color: white;
-  border: none;
-}
+
 .editForm label{
   display: inline-block;
   width: 140px;
