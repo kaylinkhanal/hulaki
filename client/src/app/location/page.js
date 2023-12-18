@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-maps/api'
 import styles from '../../styles/Map.module.css'
 import { useSelector, useDispatch } from 'react-redux';
-import { setSenderLocDetails } from '../../redux/reducerSlices/orderSlice'
+import {setSenderLocDetails,setReceiverLocDetails} from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
 import { Input, Avatar, List, Typography } from 'antd';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -14,7 +14,7 @@ import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
 const { Search } = Input;
 
-
+const lib = ["places"]
 const suffix = (
   <AudioOutlined
     style={{
@@ -32,7 +32,8 @@ function page() {
     lat: 27.7172,
     lng: 85.3240
   }
-  const { senderLocDetails } = useSelector(state => state.order)
+  const { senderLocDetails, receiverLocDetails , orderDetails } = useSelector(state => state.order)
+  const {userDetails } = useSelector(state=> state.user)
   const dispatch = useDispatch()
   const containerStyle = {
     width: '100vw',
@@ -73,6 +74,18 @@ function page() {
     //get autocomplete places list
 
   }
+  const addReceiverLocation = async(e)=> {
+    const lat = e.latLng.lat()
+    const lng = e.latLng.lng()
+    const res = await fetch(
+      `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
+    );
+    const data = await res.json()
+   if(data){
+    const {city, formatted, address_line1} = data.features[0].properties
+    dispatch(setReceiverLocDetails({city, formatted, address_line1,receiverCoords: {lat, lng}}))
+   }
+  }
 
   useEffect(() => {
     if (navigator.geolocation.getCurrentPosition) {
@@ -88,7 +101,7 @@ function page() {
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyCBYY-RtAAYnN1w_wAFmsQc2wz0ReCjriI",
-    libraries: ["places"]
+    libraries: lib
   })
 
   const addSenderLocation = async (e) => {
@@ -102,6 +115,15 @@ function page() {
       const { city, formatted, address_line1 } = data.features[0].properties
       dispatch(setSenderLocDetails({ city, formatted, address_line1, senderCoords: { lat, lng } }))
     }
+  }
+
+  const saveOrder  = async()=> {
+    const res = await fetch('http://localhost:4000/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ senderLocDetails, receiverLocDetails, ...orderDetails ,senderDetails: userDetails._id})
+    })
+    const data = await res.json()
   }
 
   if (loadError) return "error loading map"
@@ -124,23 +146,36 @@ function page() {
             />
           ) : (
             <MarkerF
-              onDragEnd={addSenderLocation}
+               onDragEnd={addReceiverLocation}
               draggable={true}
-              position={receiverPosition}
+              position={receiverLocDetails.receiverCoords}
             />
           )}
 
           <div className={styles.searchDiv}>
             <div>
-              <Search
+              {mapStep == 1 ? (
+                <Search
                 size='large'
                 ref={inputRef}
                 className={styles.map}
                 value={senderLocDetails?.formatted || ''}
                 onChange={(e) => onSearch(e.target.value)}
-                placeholder={mapStep == 1 ? "Enter sender location details here" : "Enter reviever location details here"}
+                placeholder={ "Enter sender location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
+              ): (
+              <Search
+                size='large'
+                ref={inputRef}
+                className={styles.map}
+                value={receiverLocDetails?.formatted || ''}
+                onChange={(e) => onSearch(e.target.value)}
+                placeholder={ "Enter reviever location details here"}
+                onSearch={() => { setIsSearchBoxOpen(false) }}
+                enterButton />
+              )}
+              
             </div>
 
             <div>
@@ -175,6 +210,7 @@ function page() {
             setMapStep(2)
             if (mapStep == 2) {
               alert("Your order has been requested, Please wait for admin approval")
+              saveOrder()
             }
           }} className={styles.proceed}>
 

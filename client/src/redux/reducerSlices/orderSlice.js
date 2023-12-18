@@ -27,9 +27,12 @@ const orderSlice = createSlice({
     setSenderLocDetails: (state,actions) => {
       state.senderLocDetails = actions.payload
       },
+      setReceiverLocDetails: (state,actions) => {
+        state.receiverLocDetails = actions.payload
+        },
 
   }
 });
 
-export const { setOrderDetails ,setSenderLocDetails} = orderSlice.actions;
+export const { setOrderDetails ,setSenderLocDetails,setReceiverLocDetails} = orderSlice.actions;
 export default orderSlice.reducer;

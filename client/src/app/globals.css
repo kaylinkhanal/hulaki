@@ -168,6 +168,9 @@
 }
 /* profile page css  */
 
+.ant-input-group-addon{
+  background-color: rgb(92, 176, 202) !important;
+}
 
 .form1{
   width: 300px;
@@ -199,17 +202,7 @@
   justify-content: center;
   padding: 7px 0px;
 }
-.editForm input,button{
-  padding: 5px;
-  /* border-radius: 7px; */
-  /* width: 50%; */
-}
-.editForm button{
-  cursor: pointer;
-  background-color: #1677ff;
-  color: white;
-  border: none;
-}
+
 .editForm label{
   display: inline-block;
   width: 140px;
@@ -243,3 +236,21 @@
   cursor: pointer;
 }
 
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}

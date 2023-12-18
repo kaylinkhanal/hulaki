@@ -6,8 +6,7 @@ router.use(express.json());
 
 
 
-   router.post('/order',async(req,res)=>{
-
+   router.post('/orders',async(req,res)=>{
       const data= await Order.create(req.body)
      if(data){
       
