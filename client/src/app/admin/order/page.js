@@ -1,7 +1,10 @@
 'use client'
 import React, {useState, useEffect} from "react";
 import Table from '../../../components/Table/page'
+import {  message } from 'antd';
+
 const App=()=>{
+  const [messageApi, contextHolder] = message.useMessage();
     const [orderList, setorderList] = useState([])
     const orderFetch = async () => {
         const res = await fetch('http://localhost:4000/orders')
@@ -47,7 +50,12 @@ const App=()=>{
       }, [])
     return(
         <div>
-            <Table list={orderList} title={['categoryName','productName','productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
+          {contextHolder}
+            <Table
+            onDelete={deleteorder}
+            onEdit={editorder}
+            list={orderList}
+            title={['categoryName','productName','productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
         </div>
     )
 }
