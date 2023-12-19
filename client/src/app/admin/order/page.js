@@ -2,10 +2,12 @@
 import React, {useState, useEffect} from "react";
 import Table from '../../../components/Table/page'
 import {  message } from 'antd';
-
+import { Modal, Upload } from 'antd';
 const App=()=>{
   const [messageApi, contextHolder] = message.useMessage();
     const [orderList, setorderList] = useState([])
+    const [ open , setOpen] = useState(false)
+    const [editFields, setEditFields ] = useState({})
     const orderFetch = async () => {
         const res = await fetch('http://localhost:4000/orders')
         const data = await res.json()
@@ -30,20 +32,22 @@ const App=()=>{
   };
 
 
-  const editorder = async (values) => {
-    const res = await fetch('http://localhost:4000/orders', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values)
-    })
-    const data = await res.json()
-    messageApi.open({
-      type: res.status == 200 ? 'success' : 'error',
-      content: data.msg,
-    });
-    if (res.status === 200) {
-      orderFetch();
-    }
+  const editorder = async (item) => {
+    setEditFields(item)
+    setOpen(true)
+    // const res = await fetch('http://localhost:4000/orders', {
+    //   method: 'PUT',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(values)
+    // })
+    // const data = await res.json()
+    // messageApi.open({
+    //   type: res.status == 200 ? 'success' : 'error',
+    //   content: data.msg,
+    // });
+    // if (res.status === 200) {
+    //   orderFetch();
+    // }
   };
      useEffect(() => {
         orderFetch()
@@ -51,6 +55,10 @@ const App=()=>{
     return(
         <div>
           {contextHolder}
+          <Modal title="Delete category" open={open} onCancel={()=> setOpen(false)}>
+              <p>{JSON.stringify(editFields)}</p>
+            </Modal>
+            
             <Table
             onDelete={deleteorder}
             onEdit={editorder}
