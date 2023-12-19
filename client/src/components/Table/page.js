@@ -20,7 +20,7 @@ const App = (props) => {
       render={(item) => (
         <Space size="middle">
           <a>Edit </a>
-          <a onClick={()=>deleteUser(item._id)}>Delete</a>
+          <a onClick={()=>deleteorder(item._id)}>Delete</a>
         </Space>
       )}
     /> 
