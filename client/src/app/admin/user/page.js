@@ -1,10 +1,14 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Table from '../../../components/Table/page';
-import { message } from 'antd';
+import { Formik, Form, Field } from 'formik';
+import { message, Modal } from 'antd';
+
 const App = () => {
   const [userList, setUserList] = useState([])
-  const [messageApi, contextHolder] = message.useMessage();
+    const [messageApi, contextHolder] = message.useMessage();
+    const [ open , setOpen] = useState(false)
+    const [editFields, setEditFields ] = useState({})
 
 
   const userFetch = async () => {
@@ -35,7 +39,9 @@ const App = () => {
     }
   };
 
-  const editUser = async (values, resetForm) => {
+  const editUser = async (item) => {
+    setEditFields(item)
+     setOpen(true)
     const res = await fetch('http://localhost:4000/users', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -47,8 +53,8 @@ const App = () => {
       content: data.msg,
     });
     if (res.status === 200) {
-      userFetch();
-      resetForm()
+      userFetch()
+      
     }
   };
 
@@ -56,6 +62,26 @@ const App = () => {
   return (
     <div>
       {contextHolder}
+           <Modal title="Edit User" open={open} onCancel={()=> setOpen(false)}>
+          <Formik
+        initialValues={editFields}
+        enableReinitialize
+        // validationSchema={SignupSchema}
+        onSubmit={(values,{ resetForm }) => {
+       
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form className='editForm'> 
+              <Field name="fullName"/>
+              <Field name="email"/>
+              <Field name="address"/>
+              <Field name="phoneNumber"/>
+              
+            </Form>
+        )}
+            </Formik>
+            </Modal>
 
       <Table 
       onDelete={deleteUser}
