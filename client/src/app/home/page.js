@@ -64,15 +64,7 @@ const App = () => {
   };
   return (
     <Layout className="layout">
-     
-
-
-
-   
-         
-
-
-
+  
         <Menu
           theme="dark"
           mode="horizontal"
