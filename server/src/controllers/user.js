@@ -97,10 +97,29 @@ const loginUser = async (req,res)=>{
       }
     }
   
+    const editUser=async(req,res)=>{
+      const id = req.body._id;
+      const data= await Order.findByIdAndUpdate(id,req.body);
+      if(data){
+        res.json({msg: "user updated successfully"})
+      }else{
+        res.json({msg:'couldnot update user'});
+      }
+     }
+     const deleteUser= async(req,res)=>{
+      const data= await Order.findByIdAndDelete(req.body.id)
+    
+      if(data){
+        res.json({msg: "user deleted successfully"})
+      }
+      else{
+         res.json({msg:'couldnot delete user'});
+       }
+     }
   
 
 
-   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById,changePassword,updateUserDetails}
+   module.exports = {registerNewUser,loginUser,getAllUsers,getUserImageById,changePassword,updateUserDetails, editUser, deleteUser}
 
 
    

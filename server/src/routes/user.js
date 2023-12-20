@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const {registerNewUser, loginUser ,getAllUsers,getUserImageById, changePassword,updateUserDetails}  =require('../controllers/user')
+const {registerNewUser, loginUser ,getAllUsers,getUserImageById, changePassword,updateUserDetails, editUser, deleteUser}  =require('../controllers/user')
 const multer  = require('multer')
 const User = require('../models/user')
 
@@ -27,6 +27,8 @@ router.post('/register', upload.single('avatar'),registerNewUser)
 
    router.post('/profile/edit/:id',updateUserDetails);
    router.post('/change-password', changePassword)
+   router.put('/users', editUser)
+   router.delete('/users', deleteUser)
 
 
    module.exports=router;
