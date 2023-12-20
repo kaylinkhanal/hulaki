@@ -6,10 +6,11 @@ import * as Yup from 'yup';
 import { message, Button, Modal, Card } from 'antd';
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
+import Styles from "@/styles/Category.module.css";
 
 
 const gridStyle = {
-  width: '10%',
+  width: '250px',
   textAlign: 'center',
   margin: '0px 10px'
 };
@@ -126,7 +127,7 @@ export const index = () => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className='editForm'>
+          <Form className={Styles.editForm}>
             <div>
               <label>Category name:</label>
               <Field name="categoryName" placeholder="categoryName" />
@@ -160,9 +161,10 @@ export const index = () => {
   }
 
   return (
-    <div className='form'>
-
-      <h3>Add new category:</h3>
+    <div className={Styles.Container}>
+       <div className={Styles.Box}>
+    <div className={Styles.form}>
+      <h3 className={Styles.heading}>Add new category:</h3>
       <Formik
         initialValues={{
           categoryName: '',
@@ -175,8 +177,8 @@ export const index = () => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className='addCategoryForm'>
-              <div className='formDiv'>
+          <Form className={Styles.addCategoryForm}>
+              <div className={Styles.formDiv}>
             {contextHolder}
             <Field name="categoryName" type="text" placeholder="Enter your  categoryName" />
             {errors.categoryName && touched.categoryName ? <div>{errors.categoryName}</div> : null}
@@ -187,23 +189,27 @@ export const index = () => {
             <Field name="PricePerUnitKg" type="text" placeholder="Enter your Price/Unit kg" />
             {errors.PricePerUnitKg && touched.PricePerUnitKg ? <div>{errors.PricePerUnitKg}</div> : null}
             <br />
-            <button className='submitBtn' type="submit">Submit</button>
+            <button className={Styles.submitBtn} type="submit">Submit</button>
             </div>
           </Form>
         )}
       </Formik>
-      <Modal title="Edit category" open={isModalOpen1} onCancel={handleCancel} footer={null}>
+    
+
+    </div>
+    <div className={Styles.Category}>
+    <Modal title="Edit category" open={isModalOpen1} onCancel={handleCancel} footer={null}>
               <EditForm />
             </Modal>
             <Modal title="Delete category" open={isModalOpen2} onCancel={handleCancel} onOk={()=>deleteCat(selectedEditCat._id)}>
               <p>Are you sure you want to delete this category ?</p>
             </Modal>
-      <Card title="Valid Categories list">
+      <Card title="Valid Categories list" style={{padding:'10px'}}>
         {categoryList.length > 0 ? categoryList.map((item, id) => {
           return <Card.Grid style={gridStyle}>
             <h3> {id + 1}.  {item.categoryName}</h3>
             <br />
-            <div className='icons'>
+            <div className={Styles.icons}>
               <p onClick={() => showModal2(item)}><RiDeleteBin2Fill size={30} color='red' /></p>
               <p onClick={() => showModal1(item)}><FaEdit size={30} color='green' /></p>
             </div>
@@ -213,7 +219,8 @@ export const index = () => {
         }) : "No categories"}
       </Card>
 
-
+    </div>
+    </div>
     </div>
   )
 };
