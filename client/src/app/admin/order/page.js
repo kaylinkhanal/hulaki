@@ -56,7 +56,20 @@ const App=()=>{
         <div>
           {contextHolder}
           <Modal title="Delete category" open={open} onCancel={()=> setOpen(false)}>
-              <p>{JSON.stringify(editFields)}</p>
+          <Formik
+        initialValues={editFields}
+        enableReinitialize
+        // validationSchema={SignupSchema}
+        onSubmit={(values,{ resetForm }) => {
+       
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form className='editForm'> 
+              <Field name="categoryName"/>
+            </Form>
+        )}
+            </Formik>
             </Modal>
             
             <Table

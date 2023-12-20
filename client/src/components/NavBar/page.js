@@ -1,11 +1,67 @@
+'use client'
 import React from 'react'
-
-function page(props) {
-  return (
+import Image from 'next/image'
+import Link from 'next/link'
+import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
+import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider  } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import {handleLogout} from '../../redux/reducerSlices/userSlice'
+const Nav = ()=> {
+  const dispatch= useDispatch()
+  const {userDetails,isLoggedIn} = useSelector(state=>state.user)
+  const text = <span>{userDetails.email}</span>;
+  const content = (
     <div>
-        {props.name}
+     <Link href="/profile"><span>Profile</span></Link>
+      <p onClick={()=>dispatch(handleLogout())}>Logout</p>
     </div>
-  )
+  );
+    return (
+     
+      <Menu
+      theme="dark"
+      mode="horizontal"
+      defaultSelectedKeys={['2']}
+    
+      
+    >
+      <Link href="/" >
+        <Menu.Item key="alipay">
+        Logo here
+        </Menu.Item>
+      
+      </Link>
+      {isLoggedIn ? (
+            <div
+            style={{
+              marginInlineStart: 80,
+              clear: 'both',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Popover placement="bottomRight" title={text} content={content}>
+            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+            </Popover>
+          </div>
+      ): (
+        <>
+         <Link href="/login" >
+        <Menu.Item key="alipay">
+        Login
+        </Menu.Item>
+      
+      </Link>
+      <Link href="/register" >
+        <Menu.Item key="alipay">
+        Register
+        </Menu.Item>
+        </Link>
+        </>
+      )}
+  </Menu>
+    )
 }
 
-export default page
+
+
+export default Nav
