@@ -52,6 +52,7 @@ const App = () => {
     setSearchList(data.productList)
   };
   return (
+    <>
     <Layout className="layout">
      <Search
       placeholder="Enter Your Traking Order"
@@ -59,6 +60,7 @@ const App = () => {
       size="medium"
       suffix={suffix}
       onChange={onSearch}
+      style={{width:'50%',marginTop:'50px'}}
     />
    
     
@@ -73,17 +75,17 @@ const App = () => {
           }}
         >
           <Row gutter={24}>
-    <Col span={8}>
+    <Col span={5}>
       <Card onClick={()=> router.push('/order')}  title="Order" bordered={false}>
         Place order
       </Card>
     </Col>
-    <Col span={8}>
+    <Col span={5}>
       <Card onClick={()=> router.push('/history')} title="History" bordered={false}>
         Order History
       </Card>
     </Col>
-    <Col span={8}>
+    <Col span={5}>
       <Card onClick={()=> router.push('/track')} title="Ongoing" bordered={false}>
         Ongoing deliveries
       </Card>
@@ -92,15 +94,9 @@ const App = () => {
        
         </Breadcrumb>
       </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        {/* <Top/> */}
-        Hulaki ©2023
-      </Footer>
     </Layout>
+    </>
+
   );
 };
 export default App;
