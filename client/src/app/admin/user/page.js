@@ -58,12 +58,6 @@ const App = () => {
       {contextHolder}
 
       <Table 
-      //  <Modal title="Edit category" open={isModalOpen1} onCancel={handleCancel} footer={null}>
-        
-      // </Modal>
-      // <Modal title="Delete category" open={isModalOpen2} onCancel={handleCancel} onOk={() => deleteCat(selectedEditCat._id)}>
-      //   <p>Are you sure you want to delete this category ?</p>
-      // </Modal>
       onDelete={deleteUser}
       onEdit={editUser}
       list={userList} title={['fullName', 'email', 'address', 'phoneNumber', 'role']} endpoint="/users" />
