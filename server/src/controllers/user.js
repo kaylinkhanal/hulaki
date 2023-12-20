@@ -99,7 +99,7 @@ const loginUser = async (req,res)=>{
   
     const editUser=async(req,res)=>{
       const id = req.body._id;
-      const data= await Order.findByIdAndUpdate(id,req.body);
+      const data= await User.findByIdAndUpdate(id,req.body);
       if(data){
         res.json({msg: "user updated successfully"})
       }else{
@@ -107,7 +107,7 @@ const loginUser = async (req,res)=>{
       }
      }
      const deleteUser= async(req,res)=>{
-      const data= await Order.findByIdAndDelete(req.body.id)
+      const data= await User.findByIdAndDelete(req.body.id)
     
       if(data){
         res.json({msg: "user deleted successfully"})
