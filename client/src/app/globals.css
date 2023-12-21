@@ -285,6 +285,11 @@
   width: 100vw;
 }
 
+/* Admin/order page */
+/* .submitBtn{
+  background-color: #1677ff !important;
+  color: white;
+} */
 
 @tailwind base;
 @tailwind components;
