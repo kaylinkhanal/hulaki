@@ -42,7 +42,12 @@ const App = () => {
   const editUser = async (values) => {
     setEditFields(values)
      setOpen(true)
-    const res = await fetch('http://localhost:4000/users', {
+
+  };
+
+
+  const submitEditUser=async(values)=>{
+        const res = await fetch('http://localhost:4000/users', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values)
@@ -54,28 +59,30 @@ const App = () => {
     });
     if (res.status === 200) {
       userFetch()
-      
+      setOpen(false)
     }
-  };
 
+  }
 
   return (
     <div>
       {contextHolder}
-           <Modal title="Edit User" open={open} onCancel={()=> setOpen(false)}>
+      
+           <Modal title="Edit User" open={open} footer={null} onCancel={()=> {setOpen(false); setEditFields({})}}>
           <Formik
-        initialValues={editFields}
+        initialValues={{fullName:'', ...editFields}}
         enableReinitialize
         // validationSchema={SignupSchema}
         onSubmit={(values,{ resetForm }) => {
-       
+          submitEditUser(values)
+          resetForm()
         }}
       >
         {({ errors, touched }) => (
           <Form className='editForm'> 
           <div>
           <label>Full Name name:</label>
-          <Field name="fullName" placeholder="Full Name:" />
+          <Field  name="fullName" id="fullName" placeholder="Full Name:" />
           </div>
           <div>
           <label>Email: </label>
@@ -90,7 +97,7 @@ const App = () => {
           <Field name="phoneNumber" placeholder="Phone Number" />
           </div>    
                    
-              
+              <button type="submit">Save</button>
             </Form>
         )}
             </Formik>

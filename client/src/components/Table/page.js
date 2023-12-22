@@ -17,7 +17,7 @@ const App = (props) => {
       key="action"
       render={(item) => (
         <Space size="middle">
-          <a onClick={()=>props.onEdit()}>Edit </a>
+          <a onClick={()=>props.onEdit(item)}>Edit </a>
           <a onClick={()=>props.onDelete(item._id)}>Delete</a>
         </Space>
       )}
