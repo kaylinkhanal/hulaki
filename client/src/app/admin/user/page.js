@@ -39,8 +39,8 @@ const App = () => {
     }
   };
 
-  const editUser = async (item) => {
-    setEditFields(item)
+  const editUser = async (values) => {
+    setEditFields(values)
      setOpen(true)
     const res = await fetch('http://localhost:4000/users', {
       method: 'PUT',
@@ -73,10 +73,23 @@ const App = () => {
       >
         {({ errors, touched }) => (
           <Form className='editForm'> 
-              <Field name="fullName"/>
-              <Field name="email"/>
-              <Field name="address"/>
-              <Field name="phoneNumber"/>
+          <div>
+          <label>Full Name name:</label>
+          <Field name="fullName" placeholder="Full Name:" />
+          </div>
+          <div>
+          <label>Email: </label>
+          <Field name="email" placeholder="Email:" />
+          </div>   
+          <div>
+          <label> Address: </label>
+          <Field name="address" placeholder="Address" />
+          </div> 
+          <div>
+          <label>Phone Number:</label>
+          <Field name="phoneNumber" placeholder="Phone Number" />
+          </div>    
+                   
               
             </Form>
         )}
