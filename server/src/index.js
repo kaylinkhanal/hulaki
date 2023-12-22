@@ -18,6 +18,12 @@ const orderRoute=require('./routes/order')
 
 io.on('connection', (socket) => {
   console.log('conneted')
+
+  socket.on('order', (msg) => {
+    console.log(msg);
+  });
+
+
   socket.on('msg', (msg) => {
     console.log(msg);
   });
