@@ -73,17 +73,17 @@ const SignupSchema = Yup.object().shape({
     initialValues={{
       remember: true,
     }}
-    onFinish={onFinish}
+    onFinish={handleLogin}
     onFinishFailed={onFinishFailed}
     autoComplete="off"
   >
     <Form.Item
-      label="Username"
-      name="username"
+      label="phoneNumber"
+      name="phoneNumber"
       rules={[
         {
           required: true,
-          message: 'Please input your username!',
+          message: 'Please input your phoneNumber!',
         },
       ]}
     >

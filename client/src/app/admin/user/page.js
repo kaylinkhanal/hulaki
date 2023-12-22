@@ -106,6 +106,7 @@ const App = () => {
       <Table 
       onDelete={deleteUser}
       onEdit={editUser}
+      action={true}
       list={userList} title={['fullName', 'email', 'address', 'phoneNumber', 'role']} endpoint="/users" />
     </div>
   )

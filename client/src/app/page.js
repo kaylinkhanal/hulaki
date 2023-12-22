@@ -1,9 +1,17 @@
-import React from 'react'
+'use client'
+import React, {useEffect} from 'react'
 import Home from './home/page'
+import Admin from './admin/page'
+import { useSelector } from 'react-redux'
+
+import NavBar from '../components/NavBar/page'
 function page() {
+  const {userDetails} = useSelector(state=>state.user)
   return (
     <div>
-      <Home/>
+          hi
+          <NavBar />
+          {userDetails.role === 'admin' ?<Admin/>: <Home/>}
     </div>
   )
 }

@@ -12,16 +12,19 @@ const App = (props) => {
     })}
   
   
-  <Column
-      title="Action"
-      key="action"
-      render={(item) => (
-        <Space size="middle">
-          <a onClick={()=>props.onEdit(item)}>Edit </a>
-          <a onClick={()=>props.onDelete(item._id)}>Delete</a>
-        </Space>
-      )}
-    /> 
+  {props.action && (
+ <Column
+ title="Action"
+ key="action"
+ render={(item) => (
+   <Space size="middle">
+     <a onClick={()=>props.onEdit(item)}>Edit </a>
+     <a onClick={()=>props.onDelete(item._id)}>Delete</a>
+   </Space>
+ )}
+/> 
+  )}
+ 
 
   </Table>
 )};

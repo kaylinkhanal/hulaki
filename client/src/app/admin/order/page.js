@@ -15,7 +15,9 @@ const App=()=>{
       }, [])
     return(
         <div>
-            <Table list={userList} title={['productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
+            <Table
+            action={false}
+            list={userList} title={['productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
         </div>
     )
 }
