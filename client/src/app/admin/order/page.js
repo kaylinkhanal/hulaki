@@ -2,10 +2,6 @@
 import React, {useState, useEffect} from "react";
 import Table from '../../../components/Table/page'
 import {  message } from 'antd';
-import { Formik } from 'formik';
-
-// ... rest of your code
-
 import { Modal, Upload } from 'antd';
 const App=()=>{
   const [messageApi, contextHolder] = message.useMessage();
@@ -37,25 +33,50 @@ const App=()=>{
 
 
   const editorder = async (item) => {
-       const res = await fetch('http://localhost:4000/orders', {
-      method: 'PUT',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify(values)
-    })
-     const data = await res.json()
-     messageApi.open({
-     type: res.status == 200 ? 'success' : 'error',
-     content: data.msg,
-   });
-   if (res.status === 200) {
-     orderFetch();
-   }
+    setEditFields(item)
+    setOpen(true)
+    // const res = await fetch('http://localhost:4000/orders', {
+    //   method: 'PUT',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(values)
+    // })
+    // const data = await res.json()
+    // messageApi.open({
+    //   type: res.status == 200 ? 'success' : 'error',
+    //   content: data.msg,
+    // });
+    // if (res.status === 200) {
+    //   orderFetch();
+    // }
   };
     useEffect(() => {
         orderFetch()
       }, [])
     return(
         <div>
+          {contextHolder}
+          <Modal title="Delete category" open={open} onCancel={()=> setOpen(false)}>
+          <Formik
+        initialValues={editFields}
+        enableReinitialize
+        // validationSchema={SignupSchema}
+        onSubmit={(values,{ resetForm }) => {
+       
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form className='editForm'> 
+              <Field name="categoryName"/>
+            </Form>
+        )}
+            </Formik>
+            </Modal>
+            
+            <Table
+            onDelete={deleteorder}
+            onEdit={editorder}
+            list={orderList}
+            title={['categoryName','productName','productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
           {contextHolder}
           <Modal title="Delete category" open={open} onCancel={()=> setOpen(false)}>
           <Formik
