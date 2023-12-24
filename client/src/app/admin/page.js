@@ -68,7 +68,7 @@ const SignupSchema = Yup.object().shape({
                 <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
               </svg>
             </div>
-            <Link href="/order">
+            <Link href="/admin/order">
             <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Order Management</h2>
             </Link>
             <p class="leading-relaxed text-base">Check pending orders,refunds and change status.</p>

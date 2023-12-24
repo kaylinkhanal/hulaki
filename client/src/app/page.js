@@ -9,7 +9,6 @@ function page() {
   const {userDetails} = useSelector(state=>state.user)
   return (
     <div>
-          hi
           <NavBar />
           {userDetails.role === 'admin' ?<Admin/>: <Home/>}
     </div>
