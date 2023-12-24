@@ -92,7 +92,9 @@ const index = (props) => {
   }
 
   return (
+
     <div>
+     <NavBar/>
       <Image
         src="/hulakilogo.png"
         width={60}
@@ -182,6 +184,7 @@ const index = (props) => {
       )}
     </Formik>
   </div>
+
 )};
 
 export default index

@@ -11,7 +11,7 @@ import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider  } from 'antd
 // import Card from '../../components/Card/page'
 import Table from '../../components/Table/page'
 import { Pagination } from 'antd';
-import {handleLogout} from '../../redux/reducerSlices/userSlice'
+
 //import Top from '../components/Top/page'
 
 const { Search } = Input;
@@ -22,20 +22,9 @@ const App = () => {
 
   const dispatch= useDispatch()
   const {userDetails,isLoggedIn} = useSelector(state=>state.user)
-  // const [productList, setProductList] = useState([])
-  const [searchList, setSearchList] = useState([])
-  // const [count,setCount] = useState(0)
-  // const fetchProducts = async(page=1)=> {
-  //   const res = await fetch('http://localhost:4000/users')
-  //   const data = await res.json()
-  //   setProductList(data.list) 
-  //   setCount(data.totalCount)
-  // }
- 
 
-  // useEffect(()=>{
-  // fetchProducts()
-  // },[])
+  const [searchList, setSearchList] = useState([])
+
 
   const text = <span>{userDetails.email}</span>;
   const content = (
@@ -63,63 +52,15 @@ const App = () => {
     setSearchList(data.productList)
   };
   return (
+    <>
     <Layout className="layout">
-     
-
-
-
-   
-         
-
-
-
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-        
-          
-        >
-          <Link href="/" >
-            <Menu.Item key="alipay">
-            Logo here
-            </Menu.Item>
-          
-          </Link>
-          {isLoggedIn ? (
-                <div
-                style={{
-                  marginInlineStart: 80,
-                  clear: 'both',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <Popover placement="bottomRight" title={text} content={content}>
-                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
-                </Popover>
-              </div>
-          ): (
-            <>
-             <Link href="/login" >
-            <Menu.Item key="alipay">
-            Login
-            </Menu.Item>
-          
-          </Link>
-          <Link href="/register" >
-            <Menu.Item key="alipay">
-            Register
-            </Menu.Item>
-            </Link>
-            </>
-          )}
-      </Menu>
      <Search
       placeholder="Enter Your Traking Order"
       enterButton="Search"
       size="medium"
       suffix={suffix}
       onChange={onSearch}
+      style={{width:'50%',marginTop:'50px'}}
     />
    
     
@@ -134,17 +75,17 @@ const App = () => {
           }}
         >
           <Row gutter={24}>
-    <Col span={8}>
+    <Col span={5}>
       <Card onClick={()=> router.push('/order')}  title="Order" bordered={false}>
         Place order
       </Card>
     </Col>
-    <Col span={8}>
+    <Col span={5}>
       <Card onClick={()=> router.push('/history')} title="History" bordered={false}>
         Order History
       </Card>
     </Col>
-    <Col span={8}>
+    <Col span={5}>
       <Card onClick={()=> router.push('/track')} title="Ongoing" bordered={false}>
         Ongoing deliveries
       </Card>
@@ -153,15 +94,9 @@ const App = () => {
        
         </Breadcrumb>
       </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        {/* <Top/> */}
-        Hulaki ©2023
-      </Footer>
     </Layout>
+    </>
+
   );
 };
 export default App;

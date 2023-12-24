@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const orderSchema = new mongoose.Schema({
   categoryName: String, // String is shorthand for {type: String}
   productWeight: Number,
+  productName: String,
   description: String,
   receiverName:String,
   receiverPhoneNumber:Number,

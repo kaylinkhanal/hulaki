@@ -16,3 +16,14 @@ function page() {
 }
 
 export default page
+
+
+// import NavBar from '../components/NavBar/page'
+// import { io } from 'socket.io-client';
+// const URL =  'http://localhost:4000';
+// const socket = io(URL);
+// function page() {
+//   useEffect(()=>{
+//     socket.on('connection');
+   
+//   },[])
