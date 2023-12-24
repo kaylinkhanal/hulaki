@@ -6,6 +6,8 @@ import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
 import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider  } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import {handleLogout} from '../../redux/reducerSlices/userSlice'
+
+
 const Nav = ()=> {
   const dispatch= useDispatch()
   const {userDetails,isLoggedIn} = useSelector(state=>state.user)
@@ -22,19 +24,18 @@ const Nav = ()=> {
       theme="dark"
       mode="horizontal"
       defaultSelectedKeys={['2']}
-    
       
     >
       <Link href="/" >
         <Menu.Item key="alipay">
-        Logo here
+        <Image src='/hulakilogo.png' alt='' width={55} height={55} />
         </Menu.Item>
       
       </Link>
       {isLoggedIn ? (
             <div
             style={{
-              marginInlineStart: 80,
+              marginInlineStart:1000,
               clear: 'both',
               whiteSpace: 'nowrap',
             }}
