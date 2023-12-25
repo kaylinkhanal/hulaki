@@ -4,10 +4,10 @@ import React,{useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import Image from 'next/image'
 import { message } from 'antd';
 import { Modal, Upload } from 'antd';
 import Link from 'next/link';
+import styles from '../../styles/register.module.css'
 import NavBar from '../../components/NavBar/page'
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -95,13 +95,7 @@ const index = (props) => {
 
     <div>
      <NavBar/>
-      <Image
-        src="/hulakilogo.png"
-        width={60}
-        height={60}
-        alt="Logo"
-      />
-      <h1>Sign up</h1>
+      <h1 className={styles.h1}>Sign up</h1>
       <Formik
         initialValues={{
           fullName: '',
@@ -117,31 +111,36 @@ const index = (props) => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className='authForm'>
+          <Form className={styles.authForm}>
             {contextHolder}
-            <Field name="fullName" type="fullName" placeholder="Full Name:" />
+            <div className={styles.input}>
+            <Field name="fullName" type="fullName" placeholder="Full Name:"/>
             {errors.fullName && touched.fullName ? (
               <div>{errors.fullName}</div>
             ) : null}
             <br />
-            <Field name="phoneNumber" placeholder="PhoneNumber:" />
+            <br/>
+            <Field name="phoneNumber" placeholder="Phone number:" />
             {errors.phoneNumber && touched.phoneNumber ? (
               <div>{errors.phoneNumber}</div>
             ) : null}
             <br />
+            <br/>
             <Field name="email" placeholder="Email:" />
             {errors.email && touched.email ? (
               <div>{errors.email}</div>
             ) : null}
             <br />
+            <br/>
 
         
-          <Field name="address" type="address" placeholder="address" />
+          <Field name="address" type="address" placeholder="Address" />
           {errors.address && touched.address ? (
             <div className='errors'>{errors.address}</div>
           ) : null}
           <br/>
-          <Field component='select' name='role' id='roles' placeholder='Choose your role'>
+          <br/>
+          <Field className={styles.option}component='select' name='role' id='roles' placeholder='Choose your role'>
             <option disabled >Choose your role</option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
@@ -150,10 +149,12 @@ const index = (props) => {
             <div className='errors'>{errors.role}</div>
           ) : null}
           <br/>
-          <Field name="password" type="password"  placeholder="password" /> 
+          <br/>
+          <Field name="password" type="password"  placeholder="Password" /> 
           {errors.password && touched.password ? (
             <div className='errors'>{errors.password}</div>
           ) : null}
+          <br/>
           <br/>
 
           <input type="file" onChange={saveImage}/>
@@ -180,6 +181,7 @@ const index = (props) => {
           <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
           <br/>
           <button type="submit">Submit</button>
+          </div>
         </Form>
       )}
     </Formik>
