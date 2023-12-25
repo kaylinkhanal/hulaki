@@ -140,7 +140,7 @@ const SignupSchema = Yup.object().shape({
         dispatch(setOrderDetails(values))
         router.push('/location')
          resetForm();
-    setFormStep(1);
+    // setFormStep(1);
       }}
     >
       {({ errors, touched }) => (
