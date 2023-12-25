@@ -12,7 +12,13 @@ const App=()=>{
     const orderFetch = async () => {
         const res = await fetch('http://localhost:4000/orders')
         const data = await res.json()
-        setorderList(data.orderList)
+        if(data.orderList){
+         const refactoredList = data.orderList.map((item)=>{
+            return {...item, ...item.senderDetails, ...item.receiverLocDetails}
+        })
+        setorderList(refactoredList)
+        }
+       
       }    
      
   const deleteorder = async (id) => {
@@ -36,23 +42,12 @@ const App=()=>{
   const editorder = async (item) => {
     setEditFields(item)
     setOpen(true)
-    // const res = await fetch('http://localhost:4000/orders', {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(values)
-    // })
-    // const data = await res.json()
-    // messageApi.open({
-    //   type: res.status == 200 ? 'success' : 'error',
-    //   content: data.msg,
-    // });
-    // if (res.status === 200) {
-    //   orderFetch();
-    // }
   };
      useEffect(() => {
         orderFetch()
       }, [])
+
+
     return(
         <div>
           {contextHolder}
@@ -72,12 +67,13 @@ const App=()=>{
         )}
             </Formik>
             </Modal>
-            
+
             <Table
             onDelete={deleteorder}
             onEdit={editorder}
+            actions = "acceptReject"
             list={orderList}
-            title={['categoryName','productName','productWeight', 'receiverPhoneNumber']} endpoint="/orders" />
+            title={['categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber','status']} endpoint="/orders" />
         </div>
     )
 }

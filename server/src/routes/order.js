@@ -36,7 +36,7 @@ router.use(express.json());
         })
 
         router.get('/orders',async(req,res)=>{
-          const data= await Order.find()
+          const data= await Order.find().populate('senderDetails')
           if(data){
             res.json({orderList: data})
           }
