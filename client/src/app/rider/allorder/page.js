@@ -65,6 +65,7 @@ const page = () => {
 
   return (
     <>
+    jhgjhgj
     <NavBar/>
     <div style={{marginTop:'20px'}}>
     {contextHolder}

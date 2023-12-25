@@ -130,6 +130,7 @@ function page(props) {
   const UserSection = () => {
     return (
       <div>
+      
               <div className={styles.searchDiv}>
             <div>
               {mapStep == 1 ? (
@@ -143,6 +144,7 @@ function page(props) {
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
               ): (
+            
               <Search
                 size='large'
                 ref={inputRef}
@@ -172,8 +174,8 @@ function page(props) {
             </div>
 
           </div>
-
-          <Avatar
+         
+           <Avatar
             className={styles.avatar}
             src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
 
@@ -203,6 +205,7 @@ function page(props) {
             banner
             message={
               <>
+               <h1 className={styles.first}>total distance:</h1>
              
                <Marquee pauseOnHover gradient={false} speed={20}>
               {
@@ -210,10 +213,9 @@ function page(props) {
                 : "Enter receiver location details from the google map to continue and to proceed click on the confirm button"
                }
               </Marquee>
-     
+       
               </>
-             
-            }
+             }
           />
       </div>
     )
@@ -244,7 +246,7 @@ function page(props) {
             />
         )}
           
-          
+       
 
        {props.userType !== 'rider' &&  <UserSection/>}
         </GoogleMap>

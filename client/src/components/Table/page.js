@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import { Button, Space, Table, Tag } from 'antd';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 const { Column } = Table;
 
 const App = (props) => {
@@ -49,7 +50,7 @@ const App = (props) => {
           title="View"
           key="View"
           render={(item) => (
-              <Button onClick={()=>props.handleMapView(item)}>View </Button>
+              <VisibilityIcon onClick={()=>props.handleMapView(item)}/>
           )}
         />
        
