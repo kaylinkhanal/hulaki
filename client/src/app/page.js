@@ -3,14 +3,16 @@ import React, {useEffect} from 'react'
 import Home from './home/page'
 import Admin from './admin/page'
 import { useSelector } from 'react-redux'
-
 import NavBar from '../components/NavBar/page'
+import Footer from '@/components/Footer/page'
+
 function page() {
   const {userDetails} = useSelector(state=>state.user)
   return (
     <div>
           <NavBar />
           {userDetails.role === 'admin' ?<Admin/>: <Home/>}
+          <Footer/>
     </div>
   )
 }

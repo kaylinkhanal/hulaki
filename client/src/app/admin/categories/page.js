@@ -6,13 +6,22 @@ import * as Yup from 'yup';
 import { message, Button, Modal, Card } from 'antd';
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
-
+import styles from '@/styles/Categories.module.css';
+import Nav from '@/components/NavBar/page';
+import Footer from '@/components/Footer/page';
 
 const gridStyle = {
-  width: '10%',
+  width: '200px',
   textAlign: 'center',
-  margin: '0px 10px'
+  margin: '0px 10px',
+  marginBottom:'20px'
+
 };
+const modalFooter = {
+  display:'flex',
+  flexDirection: 'row',
+  marginTop: '30px' 
+}
 
 const SignupSchema = Yup.object().shape({
 
@@ -96,7 +105,7 @@ export const index = () => {
   };
 
 
-  const editCat = async (values,resetForm) => {
+  const editCat = async (values, resetForm) => {
     const res = await fetch('http://localhost:4000/categories', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -121,12 +130,12 @@ export const index = () => {
         initialValues={selectedEditCat}
         enableReinitialize
         // validationSchema={SignupSchema}
-        onSubmit={(values,{ resetForm }) => {
-          editCat(values,resetForm)
+        onSubmit={(values, { resetForm }) => {
+          editCat(values, resetForm)
         }}
       >
         {({ errors, touched }) => (
-          <Form className='editForm'>
+          <Form className={styles.editForm}>
             <div>
               <label>Category name:</label>
               <Field name="categoryName" placeholder="categoryName" />
@@ -152,7 +161,7 @@ export const index = () => {
             </div>
 
             <br />
-            <button type="submit">Submit</button>
+            <button className={styles.submitBtn} type="submit">Submit</button>
           </Form>
         )}
       </Formik>
@@ -160,9 +169,11 @@ export const index = () => {
   }
 
   return (
-    <div className='form'>
-
-      <h3>Add new category:</h3>
+    <>
+    <Nav/>
+    <div className={styles.container}>
+    <div className={styles.Box}>
+    <h3 style={{fontSize:'30px',fontWeight:'bold',textAlign:'center'}}>Add new category</h3>
       <Formik
         initialValues={{
           categoryName: '',
@@ -170,51 +181,51 @@ export const index = () => {
           PricePerUnitKg: ''
         }}
         // validationSchema={SignupSchema}
-        onSubmit={(values,{resetForm}) => {
-          registerValidCateogries(values,resetForm);
+        onSubmit={(values, { resetForm }) => {
+          registerValidCateogries(values, resetForm);
         }}
       >
         {({ errors, touched }) => (
-          <Form className='addCategoryForm'>
-              <div className='formDiv'>
-            {contextHolder}
-            <Field name="categoryName" type="text" placeholder="Enter your  categoryName" />
-            {errors.categoryName && touched.categoryName ? <div>{errors.categoryName}</div> : null}
-  
-            <Field name="maxWeight" type="text" placeholder="Enter your maxWeight" />
-            {errors.maxWeight && touched.maxWeight ? <div>{errors.maxWeight}</div> : null}
- 
-            <Field name="PricePerUnitKg" type="text" placeholder="Enter your Price/Unit kg" />
-            {errors.PricePerUnitKg && touched.PricePerUnitKg ? <div>{errors.PricePerUnitKg}</div> : null}
-            <br />
-            <button className='submitBtn' type="submit">Submit</button>
+          <Form className={styles.addCategoryForm}>
+            <div className={styles.formDiv}>
+              {contextHolder}
+              <Field name="categoryName" type="text" placeholder="Enter your  categoryName" />
+              {errors.categoryName && touched.categoryName ? <div>{errors.categoryName}</div> : null}
+
+              <Field name="maxWeight" type="text" placeholder="Enter your maxWeight" />
+              {errors.maxWeight && touched.maxWeight ? <div>{errors.maxWeight}</div> : null}
+
+              <Field name="PricePerUnitKg" type="text" placeholder="Enter your Price/Unit kg" />
+              {errors.PricePerUnitKg && touched.PricePerUnitKg ? <div>{errors.PricePerUnitKg}</div> : null}
+              <br />
+              <button className={styles.submitBtn} type="submit">Submit</button>
             </div>
           </Form>
         )}
       </Formik>
       <Modal title="Edit category" open={isModalOpen1} onCancel={handleCancel} footer={null}>
-              <EditForm />
-            </Modal>
-            <Modal title="Delete category" open={isModalOpen2} onCancel={handleCancel} onOk={()=>deleteCat(selectedEditCat._id)}>
-              <p>Are you sure you want to delete this category ?</p>
-            </Modal>
-      <Card title="Valid Categories list">
+        <EditForm />
+      </Modal>
+      <Modal title="Delete category" open={isModalOpen2} onCancel={handleCancel} onOk={() => deleteCat(selectedEditCat._id)}>
+        <p>Are you sure you want to delete this category ?</p>
+      </Modal>
+      <Card title="Valid Categories list" style={{width:'90vw'}}>
         {categoryList.length > 0 ? categoryList.map((item, id) => {
           return <Card.Grid style={gridStyle}>
-            <h3> {id + 1}.  {item.categoryName}</h3>
+            <h3> {id + 1}.{item.categoryName}</h3>
             <br />
-            <div className='icons'>
-              <p onClick={() => showModal2(item)}><RiDeleteBin2Fill size={30} color='red' /></p>
+            <div className={styles.icons}>
               <p onClick={() => showModal1(item)}><FaEdit size={30} color='green' /></p>
+              <p onClick={() => showModal2(item)}><RiDeleteBin2Fill size={30} color='red' /></p>
             </div>
-
-          
           </Card.Grid>
         }) : "No categories"}
       </Card>
-
-
     </div>
+    </div>
+    <Footer/>
+    </>
+
   )
 };
 export default index 

@@ -3,12 +3,15 @@ import React, { useState, useEffect } from "react";
 import Table from '../../../components/Table/page';
 import { Formik, Form, Field } from 'formik';
 import { message, Modal } from 'antd';
+import styles from '@/styles/Form.module.css';
+import Nav from "@/components/NavBar/page";
+import Footer from "@/components/Footer/page";
 
 const App = () => {
   const [userList, setUserList] = useState([])
-    const [messageApi, contextHolder] = message.useMessage();
-    const [ open , setOpen] = useState(false)
-    const [editFields, setEditFields ] = useState({})
+  const [messageApi, contextHolder] = message.useMessage();
+  const [open, setOpen] = useState(false)
+  const [editFields, setEditFields] = useState({})
 
 
   const userFetch = async () => {
@@ -41,13 +44,13 @@ const App = () => {
 
   const editUser = async (values) => {
     setEditFields(values)
-     setOpen(true)
+    setOpen(true)
 
   };
 
 
-  const submitEditUser=async(values)=>{
-        const res = await fetch('http://localhost:4000/users', {
+  const submitEditUser = async (values) => {
+    const res = await fetch('http://localhost:4000/users', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values)
@@ -65,50 +68,55 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
+   <Nav/>
+   <div style={{minHeight:'84.5vh',maxHeight:'maxContent'}}>
+   <h3 style={{fontSize:'30px',textAlign:'center',fontWeight:'bold'}}>Users list</h3>
       {contextHolder}
-      
-           <Modal title="Edit User" open={open} footer={null} onCancel={()=> {setOpen(false); setEditFields({})}}>
-          <Formik
-        initialValues={{fullName:'', ...editFields}}
-        enableReinitialize
-        // validationSchema={SignupSchema}
-        onSubmit={(values,{ resetForm }) => {
-          submitEditUser(values)
-          resetForm()
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form className='editForm'> 
-          <div>
-          <label>Full Name name:</label>
-          <Field  name="fullName" id="fullName" placeholder="Full Name:" />
-          </div>
-          <div>
-          <label>Email: </label>
-          <Field name="email" placeholder="Email:" />
-          </div>   
-          <div>
-          <label> Address: </label>
-          <Field name="address" placeholder="Address" />
-          </div> 
-          <div>
-          <label>Phone Number:</label>
-          <Field name="phoneNumber" placeholder="Phone Number" />
-          </div>    
-                   
-              <button type="submit">Save</button>
-            </Form>
-        )}
-            </Formik>
-            </Modal>
+      <Modal title="Edit User" open={open} footer={null} onCancel={() => { setOpen(false); setEditFields({}) }}>
+        <Formik
+          initialValues={{ fullName: '', ...editFields }}
+          enableReinitialize
+          // validationSchema={SignupSchema}
+          onSubmit={(values, { resetForm }) => {
+            submitEditUser(values)
+            resetForm()
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className={styles.editForm}>
+              <div>
+                <label>Full Name name:</label>
+                <Field name="fullName" id="fullName" placeholder="Full Name:" />
+              </div>
+              <div>
+                <label>Email: </label>
+                <Field name="email" placeholder="Email:" />
+              </div>
+              <div>
+                <label> Address: </label>
+                <Field name="address" placeholder="Address" />
+              </div>
+              <div>
+                <label>Phone Number:</label>
+                <Field name="phoneNumber" placeholder="Phone Number" />
+              </div>
 
-      <Table 
-      onDelete={deleteUser}
-      onEdit={editUser}
-      action={true}
-      list={userList} title={['fullName', 'email', 'address', 'phoneNumber', 'role']} endpoint="/users" />
+              <button className={styles.submitBtn} type="submit">Save</button>
+            </Form>
+          )}
+        </Formik>
+      </Modal>
+
+      <Table
+        onDelete={deleteUser}
+        onEdit={editUser}
+        action={true}
+        list={userList} title={['fullName', 'email', 'address', 'phoneNumber', 'role']} endpoint="/users" />
     </div>
+   <Footer/>
+    </>
+
   )
 }
 export default App

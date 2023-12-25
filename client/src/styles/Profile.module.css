@@ -1,0 +1,123 @@
+.profileContainer {
+    padding: 20px;
+    width: 95vw;
+    height: 83vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.sider {
+    background-color: yellow;
+    width: 25%;
+    min-height: 50vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+.heading {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.heading img {
+    border-radius: 30px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu span {
+    cursor: pointer;
+    width: 80%;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.menu span:hover {
+    background-color: blue;
+    color: white;
+}
+
+.content {
+    /* background-color: rgba(0,0,0,0.2); */
+    width: 72%;
+    min-height: 90vh;
+    padding: 20px;
+}
+
+.contentBox {
+    border: 1px solid black;
+    box-shadow: 5px 5px 8px 10px #888888;
+    max-height: max-content;
+    margin-top: -15px;
+}
+
+.detailsHeading {
+    font-weight: bolder;
+    font-size: 1.5rem;
+    padding-left: 37px;
+    padding-top: 30px !important;
+}
+
+.personalInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 25px;
+}
+
+.basicInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+}
+
+.profilePic {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.profilePic img {
+    border: 1px solid black;
+}
+
+.uploadBtn {
+    background-color: #ffff !important;
+}
+
+.editProfile {
+    margin-left: 100px;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 0.04);
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 70%;
+    gap: 20px;
+    padding: 50px;
+    margin-bottom: 27px;
+}
+.submitBtn {
+    background-color: blue !important;
+    color: white !important;
+    border-radius: 5px !important;
+    padding: 5px !important;
+    cursor: pointer;
+    width: 40%;
+}

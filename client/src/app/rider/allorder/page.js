@@ -2,6 +2,7 @@
 import React,{useEffect, useState} from 'react';
 import Table from '../../../components/Table/page';
 import NavBar from '@/components/NavBar/page';
+import Footer from '@/components/Footer/page';
 import {  message } from 'antd';
 
 
@@ -42,7 +43,7 @@ const page = () => {
   return (
     <>
     <NavBar/>
-    <div style={{marginTop:'20px'}}>
+    <div style={{marginTop:'20px',minHeight:'81.7vh'}}>
     {contextHolder}
       <h2 style={{fontWeight:'bold',textAlign:'center',fontSize:'30px'}}>Available orders</h2>
      <Table
@@ -51,6 +52,7 @@ const page = () => {
             list={orderList}
             title={['productName','categoryName', 'productWeight', 'receiverName', 'receiverPhoneNumber']} endpoint="/orders" />
     </div> 
+    <Footer/>
     </>
    
   )

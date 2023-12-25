@@ -1,0 +1,28 @@
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 0px;
+  
+  }
+  
+  .editForm label {
+    display: inline-block;
+    width: 140px;
+    font-size: 0.8rem;
+  }
+  
+  .editForm input {
+    border: 2px solid black;
+    padding: 4px;
+  }
+  .submitBtn {
+    width: 300px;
+    background-color: #1677ff !important;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+  }
+  

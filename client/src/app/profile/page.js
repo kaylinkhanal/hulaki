@@ -9,6 +9,9 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginDetails } from '@/redux/reducerSlices/userSlice';
+import styles from '../../styles/Profile.module.css';
+import Nav from '@/components/NavBar/page';
+import Footer from '@/components/Footer/page';
 
 const props = {
     name: 'file',
@@ -35,20 +38,20 @@ const PersonalDetails = () => {
 
     return (
         <>
-            <div className='detailsHeading'>Customer profile</div>
+            <div className={styles.detailsHeading}>Customer profile</div>
             <Divider style={{ backgroundColor: 'black' }} />
-            <div className='personalInfo'>
-                <div className='basicInfo'>
+            <div className={styles.personalInfo}>
+                <div className={styles.basicInfo}>
                     <span>Name: {userDetails.fullName}</span>
                     <span>Role: {userDetails.role}</span>
                     <span>Email: {userDetails.email}</span>
                     <span>Phone: {userDetails.phoneNumber}</span>
                     <span>Address: {userDetails.address}</span>
                 </div>
-                <div className='profilePic'>
+                <div className={styles.profilePic}>
                     <Image style={{ objectFit: 'cover' }} src={`http://localhost:4000/user-avatar?userId=${userDetails._id}&id=${Math.random()}`} width={220} height={220} alt='profilepic' />
                     <Upload {...props} >
-                        <Button className='uploadBtn' icon={<UploadOutlined />}>Change profile pic</Button>
+                        <Button className={styles.uploadBtn} icon={<UploadOutlined />}>Change profile pic</Button>
                     </Upload>
                 </div>
 
@@ -82,9 +85,9 @@ const EditProfile = () => {
     return (
         <>
          {contextHolder}
-            <div className='detailsHeading'>Edit Customer profile</div>
+            <div className={styles.detailsHeading}>Edit Customer profile</div>
             <Divider style={{ backgroundColor: 'black' }} />
-            <div className='editProfile'>
+            <div className={styles.editProfile}>
              <h4>Edit your profile details and submit to make changes</h4>
             <Formik
                 initialValues={userDetails}
@@ -94,7 +97,7 @@ const EditProfile = () => {
                 }}
             >
                 {({ errors, touched }) => (
-                    <Form className='editForm'>
+                    <Form className={styles.editForm}>
                         <Field name="fullName" type="fullName" placeholder="Full Name:" />
                         {errors.fullName && touched.fullName ? (
                             <div>{errors.fullName}</div>
@@ -114,7 +117,7 @@ const EditProfile = () => {
 
                         <Field name="address" type="address" placeholder="address" />
                         {errors.address && touched.address ? (
-                            <div className='errors'>{errors.address}</div>
+                            <div className={styles.errors}>{errors.address}</div>
                         ) : null}
                         <br />
                         <Field component='select' name='role' id='roles' placeholder='Choose your role'>
@@ -123,10 +126,10 @@ const EditProfile = () => {
                             <option value="admin">Admin</option>
                         </Field>
                         {errors.role && touched.role ? (
-                            <div className='errors'>{errors.role}</div>
+                            <div className={styles.errors}>{errors.role}</div>
                         ) : null}
                         <br />
-                        <button className='submitBtn' type="submit">Submit</button>
+                        <button className={styles.submitBtn} type="submit">Submit</button>
                     </Form>
                 )}
             </Formik>
@@ -157,28 +160,29 @@ const page = () => {
 
     return (
         <>
-            <div className='profileContainer'>
-                <div className='sider'>
-                    <div className='heading'>
+        <Nav/>
+            <div className={styles.profileContainer}>
+                <div className={styles.sider}>
+                    <div className={styles.heading}>
                         <Image style={{ objectFit: 'cover' }} src={`http://localhost:4000/user-avatar?userId=${userDetails._id}&id=${Math.random()}`} width={50} height={50} />
                         <span>Hi {userDetails.fullName}!</span>
                     </div>
                     <Divider style={{ backgroundColor: 'white' }} />
-                    <div className='menu'>
+                    <div className={styles.menu}>
                         <span onClick={() => activeTab('personalDetails')}>Personal details</span>
                         <span onClick={() => activeTab('editProfile')}>Edit your profile</span>
-                        <span>Your orders</span>
                         <span>Change Password</span>
                         <span>Logout</span>
                     </div>
                 </div>
-                <div className='content'>
-                    <div className='contentBox'>
+                <div className={styles.content}>
+                    <div className={styles.contentBox}>
                         {personalDetails && <PersonalDetails />}
                         {editProfile && <EditProfile />}
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
 
     )
