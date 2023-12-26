@@ -7,7 +7,7 @@ import {  message } from 'antd';
 import {setOrderDetails} from '../../redux/reducerSlices/orderSlice'
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation'
-
+import Date from '../../components/Date/page';
 const SignupSchema = Yup.object().shape({
   orderCateogry: Yup.string()
     .min(2, 'Too Short!')
@@ -17,12 +17,17 @@ const SignupSchema = Yup.object().shape({
     .min(0.2, 'Too low!')
     .max(20, 'Too big!')
     .required('Required'),
+    productQuantity: Yup.number()
+    .min(0.2, 'Too low!')
+    .max(20, 'Too big!')
+    .required('Required'),
     description: Yup.string()
     .min(5, 'Too short!')
     .max(250, 'Too long!')
     .required('Required'),
     receiverName: Yup.string(),
-    receiverPhoneNumber:Yup.number()
+    receiverPhoneNumber:Yup.number(),
+    orderDate:Yup.string(),
 });
 
  const Home = () => {
@@ -84,12 +89,22 @@ const SignupSchema = Yup.object().shape({
               <div>{errors.productWeight}</div>
             ) : null}
             <br/> <hr />
+            <p>Quantity:</p>
+            <Field name="productQuantity" type="number" placeholder="Enter your  product Quantity" />
+            {errors.productQuantity && touched.productQuantity ? (
+              <div>{errors.productQuantity}</div>
+            ) : null}
+            <br/> <hr />
             <p>About your Product:</p>
             <Field  as="textarea" name="description" type="string" placeholder="Describe about your product" />
             {errors.content && touched.content ? (
               <div>{errors.content}</div>
             ) : null}
      
+            <br/> <hr />
+            <p>Pic Order Date:</p>
+            <Date />
+            
             <br/> <hr />
             <button onClick={()=>setFormStep(2)}>Next</button>
       </div>
