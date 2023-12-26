@@ -63,7 +63,13 @@ function page() {
     }
 
     //save to redux
-    dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }))
+    if(mapStep===1){
+      dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }));
+    }
+    if(mapStep===2){
+      dispatch(setReceiverLocDetails({ city: value, formatted: value, address_line1: value }));
+    }
+    
     const res = await fetch(
       `https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&format=json&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
     );
@@ -162,7 +168,7 @@ function page() {
                 placeholder={ "Enter sender location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
-              ): (
+              ):(
               <Search
                 size='large'
                 ref={inputRef}
