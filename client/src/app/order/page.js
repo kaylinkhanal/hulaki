@@ -17,10 +17,15 @@ const SignupSchema = Yup.object().shape({
     .min(0.2, 'Too low!')
     .max(20, 'Too big!')
     .required('Required'),
+    productQuantity: Yup.number()
+    .min(0.2, 'Too low!')
+    .max(20, 'Too big!')
+    .required('Required'),
     description: Yup.string()
     .min(5, 'Too short!')
     .max(250, 'Too long!')
     .required('Required'),
+    orderDate: Yup.string(),
     receiverName: Yup.string(),
     receiverPhoneNumber:Yup.number()
 });
@@ -84,6 +89,12 @@ const SignupSchema = Yup.object().shape({
               <div>{errors.productWeight}</div>
             ) : null}
             <br/> <hr />
+            <p>Quantity:</p>
+            <Field name="productQuantity" type="number" placeholder="Enter your  product Quantity" />
+            {errors.productQuantity && touched.productQuantity ? (
+              <div>{errors.productQuantity}</div>
+            ) : null}
+            <br/> <hr />
             <p>About your Product:</p>
             <Field  as="textarea" name="description" type="string" placeholder="Describe about your product" />
             {errors.content && touched.content ? (
@@ -91,6 +102,10 @@ const SignupSchema = Yup.object().shape({
             ) : null}
      
             <br/> <hr />
+            <label for="orderDate">Pick your order date:</label>
+              <Field name="orderDate" type="date" className="input input-bordered" />
+              <br />
+
             <button onClick={()=>setFormStep(2)}>Next</button>
       </div>
 
