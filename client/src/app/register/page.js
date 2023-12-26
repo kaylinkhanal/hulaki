@@ -10,6 +10,7 @@ import { Modal, Upload } from 'antd';
 import Link from 'next/link';
 import NavBar from '../../components/NavBar/page';
 import Footer from '@/components/Footer/page';
+import styles from '../../styles/register.module.css'
 
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -97,13 +98,6 @@ const index = (props) => {
 
     <>
       <NavBar />
-      <Image
-        src="/hulakilogo.png"
-        width={60}
-        height={60}
-        alt="Logo"
-      />
-      <h1>Sign up</h1>
       <Formik
         initialValues={{
           fullName: '',
@@ -119,23 +113,27 @@ const index = (props) => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className='authForm'>
+          <Form className={styles.authForm}>
             {contextHolder}
-            <Field name="fullName" type="fullName" placeholder="Full Name:" />
+            <div className={styles.input}>
+            <Field name="fullName" type="fullName" placeholder="Full Name:"/>
             {errors.fullName && touched.fullName ? (
               <div>{errors.fullName}</div>
             ) : null}
             <br />
-            <Field name="phoneNumber" placeholder="PhoneNumber:" />
+            <br/>
+            <Field name="phoneNumber" placeholder="Phone number:" />
             {errors.phoneNumber && touched.phoneNumber ? (
               <div>{errors.phoneNumber}</div>
             ) : null}
             <br />
+            <br/>
             <Field name="email" placeholder="Email:" />
             {errors.email && touched.email ? (
               <div>{errors.email}</div>
             ) : null}
             <br />
+            <br/>
 
 
             <Field name="address" type="address" placeholder="address" />
@@ -159,29 +157,10 @@ const index = (props) => {
             <br />
 
             <input type="file" onChange={saveImage} />
-            {/* <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-        onChange={handleChange}
-      >
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="avatar"
-            style={{
-              width: '100%',
-            }}
-          />
-        ) : (
-          uploadButton
-        )}
-      </Upload> */}
             <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
             <br />
             <button type="submit">Submit</button>
+            </div>
           </Form>
         )}
       </Formik>

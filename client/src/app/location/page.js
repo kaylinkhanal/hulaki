@@ -24,7 +24,7 @@ const suffix = (
   />
 );
 
-function page() {
+function page(props) {
 
 
   const inputRef = useRef(null)
@@ -126,31 +126,11 @@ function page() {
 
   if (loadError) return "error loading map"
 
-  if (isLoaded) {
 
+  const UserSection = () => {
     return (
       <div>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={14}
-          onClick={() => setIsSearchBoxOpen(false)}
-        >
-          {mapStep === 1 ? (
-            <MarkerF
-              onDragEnd={addSenderLocation}
-              draggable={true}
-              position={senderLocDetails.senderCoords}
-            />
-          ) : (
-            <MarkerF
-               onDragEnd={addReceiverLocation}
-              draggable={true}
-              position={receiverLocDetails.receiverCoords}
-            />
-          )}
-
-          <div className={styles.searchDiv}>
+              <div className={styles.searchDiv}>
             <div>
               {mapStep == 1 ? (
                 <Search
@@ -222,14 +202,51 @@ function page() {
            className={styles.alertBox}
             banner
             message={
-              <Marquee pauseOnHover gradient={false} speed={20}>
+              <>
+             
+               <Marquee pauseOnHover gradient={false} speed={20}>
               {
                 mapStep===1 ? "Enter sender location details from the google map to continue  and proceed to the next page ."
                 : "Enter receiver location details from the google map to continue and to proceed click on the confirm button"
                }
               </Marquee>
+     
+              </>
+             
             }
           />
+      </div>
+    )
+  }
+  if (isLoaded) {
+
+    return (
+      <div>
+        <GoogleMap
+          mapContainerStyle={props.containerStyle || containerStyle}
+          center={center}
+          zoom={props.userType==='rider' ? 12 : 14}
+          onClick={() => setIsSearchBoxOpen(false)}
+        >
+        {(mapStep === 1 || props.userType == 'rider' ) && (
+              <MarkerF
+              onDragEnd={addSenderLocation}
+              draggable={props.userType !== 'rider'}
+              position={senderLocDetails.senderCoords}
+              />
+        )}
+           
+           {(mapStep === 2 || props.userType == 'rider' )&& (
+              <MarkerF
+              onDragEnd={addReceiverLocation}
+              draggable={props.userType !== 'rider'}
+              position={receiverLocDetails.receiverCoords}
+            />
+        )}
+          
+          
+
+       {props.userType !== 'rider' &&  <UserSection/>}
         </GoogleMap>
       </div>
     )

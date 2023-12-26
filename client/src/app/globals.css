@@ -9,7 +9,9 @@
 
 
 
-
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: none !important
+}
 
 @tailwind base;
 @tailwind components;

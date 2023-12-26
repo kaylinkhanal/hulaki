@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Button, Space, Table, Tag } from 'antd';
 const { Column } = Table;
 
 const App = (props) => {
@@ -26,19 +26,34 @@ const App = (props) => {
       )}
       {
         props.rider &&
-        <Column
+       (<>
+       <Column
           title="Status"
           key="status"
           render={(item) => (
             <Space size="large">
+
               <select style={{ width: '150px' }} onChange={(e)=>props.handleStatus(e,item)}>
                 <option value={item.status} disabled selected>{item.status}</option>
-                <option value="accepted">Accepted</option>
-                <option value="completed">Completed</option>
+                <option value="accepted">Rider Accepted</option>
+                <option value="Reached Pickup point">Reached Pickup point</option>
+                <option value="Picked up">Picked up</option>
+                <option value="Reached Destination point">Reached Destination point</option>
+                <option value="Order Delivered">Order Delivered</option>
               </select>
             </Space>
           )}
         />
+
+          <Column
+          title="View"
+          key="View"
+          render={(item) => (
+              <Button onClick={()=>props.handleMapView(item)}>View </Button>
+          )}
+        />
+       
+       </> )
       }
       
 
