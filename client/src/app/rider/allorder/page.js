@@ -2,6 +2,7 @@
 import React,{useEffect, useState} from 'react';
 import Table from '../../../components/Table/page';
 import NavBar from '@/components/NavBar/page';
+import Footer from '@/components/Footer/page';
 import {  message } from 'antd';
 import { Button, Modal } from 'antd';
 import Location from '../../location/page'
@@ -66,7 +67,7 @@ const page = () => {
   return (
     <>
     <NavBar/>
-    <div style={{marginTop:'20px'}}>
+    <div style={{marginTop:'20px',minHeight:'81.7vh'}}>
     {contextHolder}
     <Modal title="Order location" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Location containerStyle={containerStyle} userType="rider"/>
@@ -79,6 +80,7 @@ const page = () => {
             handleMapView={handleMapView}
             title={['productName','categoryName', 'productWeight', 'receiverName', 'receiverPhoneNumber']} endpoint="/orders" />
     </div> 
+    <Footer/>
     </>
    
   )

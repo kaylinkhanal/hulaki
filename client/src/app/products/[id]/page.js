@@ -1,5 +1,7 @@
 "use client"
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState} from 'react';
+import Nav from '@/components/NavBar/page';
+import Footer from '@/components/Footer/page';
 
 function page({params}) {
   const [productDetail, setProductDetail] = useState({})
@@ -15,7 +17,9 @@ function page({params}) {
   },[])
   // http://localhost:4000/products/656402c5aa665f9bbff681d0
   return (
-    <section class="text-gray-600 body-font">
+    <>
+      <Nav/>
+      <section class="text-gray-600 body-font" style={{height:'84.5vh'}}>
     <div class="container px-5 py-24 mx-auto flex flex-col">
       <div class="lg:w-4/6 mx-auto">
         <div class="rounded-lg h-64 overflow-hidden">
@@ -49,6 +53,9 @@ function page({params}) {
       </div>
     </div>
   </section>
+      <Footer/>
+    </>
+
   )
 }
 
