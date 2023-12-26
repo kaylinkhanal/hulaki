@@ -54,7 +54,7 @@ function page(props) {
     dispatch(setSenderLocDetails({ city: item.city, formatted: item.formatted, address_line1: item.address_line1 }))
     setIsSearchBoxOpen(false)
   }
-  const onSearch = async (value) => {
+  const onSearch = async (value, section) => {
     if (value === '') {
       setIsSearchBoxOpen(false);
     }
@@ -63,7 +63,12 @@ function page(props) {
     }
 
     //save to redux
-    dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }))
+    if(section === 'receiver'){
+      dispatch(setReceiverLocDetails({ city: value, formatted: value, address_line1: value }))
+    }else{
+      dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }))
+    }
+
     const res = await fetch(
       `https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&format=json&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
     );
@@ -138,7 +143,7 @@ function page(props) {
                 ref={inputRef}
                 className={styles.map}
                 value={senderLocDetails?.formatted || ''}
-                onChange={(e) => onSearch(e.target.value)}
+                onChange={(e) => onSearch(e.target.value, 'sender')}
                 placeholder={ "Enter sender location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
@@ -148,7 +153,7 @@ function page(props) {
                 ref={inputRef}
                 className={styles.map}
                 value={receiverLocDetails?.formatted || ''}
-                onChange={(e) => onSearch(e.target.value)}
+                onChange={(e) => onSearch(e.target.value, 'receiver')}
                 placeholder={ "Enter reviever location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
@@ -244,7 +249,7 @@ function page(props) {
             />
         )}
           
-          
+      
 
        {props.userType !== 'rider' &&  <UserSection/>}
         </GoogleMap>

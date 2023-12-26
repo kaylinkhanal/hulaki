@@ -10,7 +10,7 @@
 
 
 .ant-menu-dark .ant-menu-item-selected {
-  background-color: none !important
+  background-color: transparent !important
 }
 
 @tailwind base;
