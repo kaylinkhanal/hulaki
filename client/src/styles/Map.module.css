@@ -1,0 +1,82 @@
+.searchDiv {
+  width: 30%;
+  height: max-content;
+  z-index: 9;
+  position: absolute;
+  top: 12px;
+  left: 200px;
+}
+.header {
+  background-color: rgb(245, 245, 245) ;
+  width: 100%;
+}
+.listItem{
+  padding: 8px !important;
+}
+.listItem:hover{
+  background-color: #1677ff;
+  color: white;
+  cursor: pointer;
+}
+.guide {
+  background-color: whitesmoke ;
+  height: 80px;
+  width: 300px;
+  position: absolute;
+  margin: 40px;
+  padding: 5px;
+  margin-left: 500px;
+  margin-top: 8px;
+}
+
+.back {
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  margin-left: 40px;
+  padding: 5px;
+  top: 48%;
+  background-color: rgba(0, 0,0,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back:hover{
+  cursor: pointer;
+}
+.proceed {
+  height: 80px;
+  width: 80px;
+  padding: 5px;
+  margin-right: 40px;
+  margin-left: 500px;
+  position: absolute;
+  top: 48%;
+  right: 0;
+  background-color: rgba(0, 0,0,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.proceed:hover{
+  cursor: pointer;
+}
+.avatar {
+  position: fixed;
+  top: 10px;
+  right: 65px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  border-radius: 50%;
+  background-color: black;
+}
+.alertBox{
+  height: 35px;
+  width: 30%;
+  position: absolute;
+  bottom: 10px;
+  left: 36%;
+}
