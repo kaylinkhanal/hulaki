@@ -177,7 +177,11 @@ function page(props) {
             </div>
 
           </div>
-
+          <div>
+            <input type='text' className={styles.price} placeholder='Enter Distance'/>
+            <input type='text' className={styles.price1} placeholder='Enter Price'/>
+          
+      </div>
           <Avatar
             className={styles.avatar}
             src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
@@ -195,14 +199,18 @@ function page(props) {
               alert("Your order has been requested, Please wait for admin approval")
               saveOrder()
             }
+        
           }} className={styles.proceed}>
 
             {
               mapStep === 2 ? (<Tooltip title="Confirm" mouseEnterDelay={0.7}><GiConfirmed size={50} color='green' /></Tooltip>)
                 : <IoMdArrowRoundForward size={50} />
+                
             }
 
           </div>
+    
+ 
           <Alert
            className={styles.alertBox}
             banner

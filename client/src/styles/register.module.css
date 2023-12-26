@@ -1,24 +1,27 @@
-.authForm{
-    background-color: rgb(163, 208, 208);
+.authForm {
+    background-color: rgb(102, 179, 223);
     padding: 10px;
     width: 340px;
     border-radius: 13px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .authForm input,select{
+    margin: 0 auto;
+    padding-top: 20px
+}
+.input{
+    width: 45%;
+    padding-top: 10px;
+    padding-left: 50px;
     color: black;
-    padding: 5px;
-    width: 80%;
-    cursor: pointer;
-  }
-  .errors{
-    color: red;
-    font-size: 0.8rem;
-  }
-  .formFooter{
-    display: flex;
-    font-size: 0.8rem;
-  }
+    border-color: black;
+    margin-bottom: 10px;
+  
+}
+.option{
+    width: 100%;
+}
+.h1{
+    font-size: 27px;
+    font-weight: bold;
+    text-align: center;
+}
