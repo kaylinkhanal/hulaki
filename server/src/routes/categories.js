@@ -1,49 +1,20 @@
 const express = require('express')
 var router = express.Router();
 
+const{createCategory,getCategory,updateCategory,deleteCategory,editCategory}=require('../controllers/categories')
 const Category=require('../models/category')
 router.use(express.json());
 
-router.get('/categories',async(req,res)=>{
-  const data= await Category.find()
-  if(data){
-    res.json({categoryList: data})
-  }
- })
+router.post('/categories',createCategory)
 
- router.post('/categories',async(req,res)=>{
-  const data= await Category.create(req.body)
-  if(data){
-    res.json({msg: "categories created successfully"})
-  }
- })
- router.put('/categories',async(req,res)=>{
-  const id = req.body._id;
-  const data= await Category.findByIdAndUpdate(id,req.body);
-  if(data){
-    res.json({msg: "categories updated successfully"})
-  }else{
-    res.json({msg:'couldnot update category'});
-  }
- })
- router.delete('/categories',async(req,res)=>{
-  console.log(req.body)
-  const data= await Category.findByIdAndDelete(req.body.id)
+router.get('/categories',getCategory)
 
-  if(data){
-    res.json({msg: "category deleted successfully"})
-  }
- })
+ 
+ router.put('/categories',updateCategory)
 
- router.put('/categories',async(req,res)=>{
-  const data = await Category.findByIdAndUpdate(req.params.id,req.body);
-  console.log(data);
-  if(data){
-    res.json({msg:'successfully updated profile details',categoryList:data})
-  }else{
-    res.json({msg:'couldnot update profile details'});
-  }
- })
+ router.delete('/categories',deleteCategory)
+
+ router.put('/categories',editCategory)
 
 
 // router.post('/products',async(req,res)=>{
