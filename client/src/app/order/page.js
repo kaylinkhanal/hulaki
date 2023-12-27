@@ -68,7 +68,7 @@ const SignupSchema = Yup.object().shape({
       <div>
           <h1>Product Detail form</h1>
             <p> Category:</p>
-          <Field as='select'   name='categoryName' >
+          <Field as='select' name='categoryName' >
             {categoryList.length>0 && categoryList.map((item)=>{
               return   <option value={item.categoryName}>{item.categoryName}</option>
             })}
