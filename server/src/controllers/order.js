@@ -10,7 +10,8 @@ const createOrder=async(req,res)=>{
       
 
 const updateOrder=async(req,res)=>{
-    const id = req.body._id;
+  console.log(req.body)
+    const id = req.params.id;
     const data= await Order.findByIdAndUpdate(id,req.body);
     if(data){
       res.json({msg: "order updated successfully"})

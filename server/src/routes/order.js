@@ -8,7 +8,7 @@ router.use(express.json());
 
    router.post('/orders',createOrder)
      
-   router.put('/orders',updateOrder)
+   router.put('/orders/:id',updateOrder)
 
 
    router.delete('/orders',deleteOrder)

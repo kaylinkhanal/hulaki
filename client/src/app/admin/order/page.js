@@ -17,13 +17,32 @@ const App=()=>{
         const data = await res.json()
         if(data.orderList){
          const refactoredList = data.orderList.map((item)=>{
-            return {...item, ...item.senderDetails, ...item.receiverLocDetails}
+            return {...item, orderId: item._id, ...item.senderDetails, ...item.receiverLocDetails}
         })
         setorderList(refactoredList)
         }
        
       }    
      
+      const adminStatus=async(e,orderId)=>{
+        debugger;
+           const updatedOrder = {status:e.target.value};
+  
+        const res = await fetch('http://localhost:4000/orders/'+orderId ,{
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedOrder)
+        })
+        const data = await res.json()
+        messageApi.open({ 
+          type: res.status == 200 ? 'success' : 'error',
+          content: "Changed the status of the order successfully",
+        });
+        if (res.status === 200) {
+          orderFetch();
+        }
+  
+        } 
      useEffect(() => {
         orderFetch()
       }, [])
@@ -34,9 +53,10 @@ const App=()=>{
          <Nav/>
          <div style={{minHeight:'84.5vh',maxHeight:'maxContent'}}>
             <Table
-            actions = "acceptReject"
+             admin={true}
+             adminStatus={adminStatus}
             list={orderList}
-            title={['categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber','status']} endpoint="/orders" />
+            title={['categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber']} endpoint="/orders" />
         </div>
         <Footer/>
          </>
