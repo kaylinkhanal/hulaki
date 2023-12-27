@@ -7,7 +7,7 @@ import {  message } from 'antd';
 import {setOrderDetails} from '../../redux/reducerSlices/orderSlice'
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation'
-
+import styles from '../../styles/order.module.css';
 const SignupSchema = Yup.object().shape({
   orderCateogry: Yup.string()
     .min(2, 'Too Short!')
@@ -66,8 +66,9 @@ const SignupSchema = Yup.object().shape({
     if(formStep==1){
       return (
       <div>
-          <h1>Product Detail form</h1>
-            <p> Category:</p>
+          <h1 className={styles.heading}>Product Detail form</h1>
+            <p className={styles.para}> Category:</p>
+            <div className={styles.container}>
           <Field as='select'   name='categoryName' >
             {categoryList.length>0 && categoryList.map((item)=>{
               return   <option value={item.categoryName}>{item.categoryName}</option>
@@ -77,57 +78,59 @@ const SignupSchema = Yup.object().shape({
           {errors.role && touched.role ? (
             <div className='errors'>{errors.role}</div>
           ) : null}
+          <br/>
           <Field name="productName"  placeholder="productName" /> 
             {errors.productName && touched.productName ? (
               <div>{errors.productName}</div>
             ) : null}
             <br/>
-            <hr />
             <p>Weight:</p>
             <Field name="productWeight" type="number" placeholder="Enter your  productWeight" />
             {errors.productWeight && touched.productWeight ? (
               <div>{errors.productWeight}</div>
             ) : null}
-            <br/> <hr />
+            <br/> 
             <p>Quantity:</p>
             <Field name="productQuantity" type="number" placeholder="Enter your  product Quantity" />
             {errors.productQuantity && touched.productQuantity ? (
               <div>{errors.productQuantity}</div>
             ) : null}
-            <br/> <hr />
+            <br/> 
             <p>About your Product:</p>
             <Field  as="textarea" name="description" type="string" placeholder="Describe about your product" />
             {errors.content && touched.content ? (
               <div>{errors.content}</div>
             ) : null}
      
-            <br/> <hr />
+            <br/> 
             <label for="orderDate">Pick your order date:</label>
               <Field name="orderDate" type="date" className="input input-bordered" />
               <br />
-
-            <button onClick={()=>setFormStep(2)}>Next</button>
+      <button className={styles.button}onClick={()=>setFormStep(2)}>Next</button>
       </div>
+      </div>
+
 
       )
     }else{
       return (
         <div>
-            <h1>Reciever Details:</h1>
-              <p> Full Name:</p>
+            <h1 className={styles.heading}>Reciever Details:</h1>
+            <div className={styles.container1}>
+               <p> Full Name:</p>
             <Field name="receiverName"  placeholder="receiverName" /> 
               {errors.receiverName && touched.receiverName ? (
                 <div>{errors.receiverName}</div>
               ) : null}
               <br/>
-              <hr />
               <p>PhoneNumber:</p>
               <Field name="receiverPhoneNumber" placeholder="Enter your  phoneNumber" />
               {errors.receiverPhoneNumber && touched.receiverPhoneNumber ? (
                 <div>{errors.receiverPhoneNumber}</div>
               ) : null}
-              <br/> <hr />
-              <button onClick={()=>setFormStep(1)}>Back</button>
+              <br/> 
+              <button className={styles.button} onClick={()=>setFormStep(1)}>Back</button>
+              </div>
         </div>
   
         )
@@ -162,7 +165,7 @@ const SignupSchema = Yup.object().shape({
         <Form className='form1'>
               {contextHolder}
           <FormDisplay errors={errors} touched={touched}/>
-          {formStep==2 && <button type="submit">Submit</button> } 
+          {formStep==2 && <div className={styles.container2}><button className={styles.button1} type="submit">Submit</button></div> } 
         </Form>
       )}
     </Formik>

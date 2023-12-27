@@ -1,0 +1,30 @@
+.heading{
+    text-align: center;
+    margin-top: 150px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.para{
+ font-weight: bold;
+ padding-left: 720px;
+}
+.container{
+    margin-left: 600px;
+    background-color:rgb(117, 185, 237); 
+    width: 20vw;
+    padding-left: 40px;
+    padding-top: 18px;
+    height: 250px;
+    border-radius: 8%;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(117, 185, 237, 0.7);
+}
+.button{
+    background-color: rgb(117, 185, 237); 
+    border: 1px solid rgb(0, 0, 0);
+    cursor: pointer;
+    margin-top: 8px;
+}
+.button:active {
+    background-color:blanchedalmond;
+}

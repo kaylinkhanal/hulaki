@@ -115,33 +115,32 @@ const index = (props) => {
         {({ errors, touched }) => (
           <Form className={styles.authForm}>
             {contextHolder}
-            <div className={styles.input}>
+            <div className={styles.input} >
             <Field name="fullName" type="fullName" placeholder="Full Name:"/>
             {errors.fullName && touched.fullName ? (
               <div>{errors.fullName}</div>
             ) : null}
-            <br />
-            <br/>
-            <Field name="phoneNumber" placeholder="Phone number:" />
+           <br/>
+           <br/>
+            <Field  name="phoneNumber" placeholder="Phone number:" />
             {errors.phoneNumber && touched.phoneNumber ? (
               <div>{errors.phoneNumber}</div>
             ) : null}
-            <br />
             <br/>
-            <Field name="email" placeholder="Email:" />
+            <br/>
+             <Field  name="email" placeholder="Email:" />
             {errors.email && touched.email ? (
               <div>{errors.email}</div>
             ) : null}
-            <br />
             <br/>
-
-
-            <Field name="address" type="address" placeholder="address" />
+            <br/>
+           <Field  name="address" type="address" placeholder="address" />
             {errors.address && touched.address ? (
               <div className='errors'>{errors.address}</div>
             ) : null}
-            <br />
-            <Field  component='select' name='role' id='roles' placeholder='Choose your role'>
+           <br/>
+           <br/>
+            <Field component='select' name='role' id='roles' placeholder='Choose your role'>
               <option disabled >Choose your role</option>
               <option value="User">User</option>
               <option value="Rider">Rider</option>
@@ -149,18 +148,23 @@ const index = (props) => {
             {errors.role && touched.role ? (
               <div className='errors'>{errors.role}</div>
             ) : null}
-            <br />
-            <Field name="password" type="password" placeholder="password" />
+            <br/>
+            <br/>
+          
+            <Field  name="password" type="password" placeholder="password" />
             {errors.password && touched.password ? (
               <div className='errors'>{errors.password}</div>
             ) : null}
             <br />
-
-            <input type="file" onChange={saveImage} />
-            <span className='formFooter'>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
-            <br />
-            <button type="submit">Submit</button>
+            <br/>
+            
+            <input  type="file" onChange={saveImage} />
             </div>
+            
+            <span>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
+            <div className={styles.button}>
+            <button type="submit">Submit</button>
+        </div>
           </Form>
         )}
       </Formik>

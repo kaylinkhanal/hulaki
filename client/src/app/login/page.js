@@ -7,7 +7,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux';
 import {setLoginDetails} from '../../redux/reducerSlices/userSlice'
-import Link from 'next/link'
+import Link from 'next/link';
+import styles from '../../styles/login.module.css'
 import {  message } from 'antd';
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -51,7 +52,7 @@ const SignupSchema = Yup.object().shape({
       alt="Logo"
     />
     {contextHolder}
-    <h1>Login</h1>
+    <h1 className={styles.heading}>Login</h1>
     <Formik
       initialValues={{
         phoneNumber: '',
@@ -63,20 +64,20 @@ const SignupSchema = Yup.object().shape({
       }}
     >
       {({ errors, touched }) => (
-        <Form>
-          <Field name="phoneNumber"  placeholder="phoneNumber" /> 
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
+        <Form className={styles.container}>
+          <Field name="phoneNumber"  placeholder="PhoneNumber" /> 
+          {errors.phoneNumber && touched.phoneNumber ? (
+            <div>{errors.phoneNumber}</div>
           ) : null}
           <br/>
-          <Field name="password" type="password" placeholder="password" />
+          <Field name="password" type="password" placeholder="Password" />
           {errors.password && touched.password ? (
             <div>{errors.password}</div>
           ) : null}
           <br/>
           Dont have an account yet ? <Link href="/register">Sign Up</Link> instead
           <br/>
-          <button type="submit">Submit</button>
+          <button className={styles.button} type="submit">Submit</button>
         </Form>
       )}
     </Formik>

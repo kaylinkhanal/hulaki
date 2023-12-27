@@ -25,7 +25,6 @@ const App=()=>{
       }    
      
       const adminStatus=async(e,orderId)=>{
-        debugger;
            const updatedOrder = {status:e.target.value};
   
         const res = await fetch('http://localhost:4000/orders/'+orderId ,{

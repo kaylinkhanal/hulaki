@@ -184,10 +184,14 @@ function page(props) {
             </div>
 
           </div>
-          <div>
-            <input type='text' className={styles.price} placeholder='Enter Distance'/>
-            <input type='text' className={styles.price1} placeholder='Enter Price'/>
-          
+          <div className={styles.cont}>
+         
+          <div className={styles.price}>
+          Total Distance: 
+              </div> 
+            <div className={styles.price1}>
+            Estimated Price:
+              </div>          
       </div>
           <Avatar
             className={styles.avatar}
