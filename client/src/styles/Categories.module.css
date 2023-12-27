@@ -1,0 +1,76 @@
+.container {
+    background-image: linear-gradient(#4cb6eb,#7db8d6);
+    min-height: 84.5vh;
+    max-height: max-content;
+    width: 100vw;
+}
+.Box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100vw;
+    min-height: 88vh;
+    max-height: max-content;
+    gap: 15px;
+}
+.addCategoryForm {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 450px;
+    margin-top: 15px;
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 25px;
+}
+
+.formDiv input {
+    width: 300px;
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 0px;
+
+}
+
+.editForm label {
+    display: inline-block;
+    width: 140px;
+    font-size: 0.8rem;
+}
+
+.editForm input {
+    border: 2px solid black;
+    padding: 4px;
+}
+
+.submitBtn {
+    width: 300px;
+    background-color: #1677ff;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 75px;
+}
+
+.icons p {
+    cursor: pointer;
+}

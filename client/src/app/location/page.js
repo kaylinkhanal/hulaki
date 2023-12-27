@@ -12,6 +12,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { Tooltip } from 'antd';
 import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
+import { useRouter } from 'next/navigation'
 const { Search } = Input;
 
 const lib = ["places"]
@@ -34,18 +35,21 @@ function page(props) {
   }
   const { senderLocDetails, receiverLocDetails , orderDetails } = useSelector(state => state.order)
   const {userDetails } = useSelector(state=> state.user)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const containerStyle = {
     width: '100vw',
     height: '100vh',
     display: 'flex'
   };
   const [searchList, setSearchList] = useState([])
+  const router = useRouter()
   const [mapStep, setMapStep] = useState(1)
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false)
   const [center, setCenter] = useState(initialCenter)
 
   const listSelect = (item) => {
+  
     if (mapStep == 1) {
       dispatch(setSenderPosition({ lat: item.lat, lng: item.lon }))
     } else {
@@ -54,7 +58,7 @@ function page(props) {
     dispatch(setSenderLocDetails({ city: item.city, formatted: item.formatted, address_line1: item.address_line1 }))
     setIsSearchBoxOpen(false)
   }
-  const onSearch = async (value) => {
+  const onSearch = async (value, section) => {
     if (value === '') {
       setIsSearchBoxOpen(false);
     }
@@ -63,7 +67,12 @@ function page(props) {
     }
 
     //save to redux
-    dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }))
+    if(section === 'receiver'){
+      dispatch(setReceiverLocDetails({ city: value, formatted: value, address_line1: value }))
+    }else{
+      dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }))
+    }
+
     const res = await fetch(
       `https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&format=json&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
     );
@@ -103,6 +112,7 @@ function page(props) {
   })
 
   const addSenderLocation = async (e) => {
+  
     const lat = e.latLng.lat()
     const lng = e.latLng.lng()
     const res = await fetch(
@@ -138,7 +148,7 @@ function page(props) {
                 ref={inputRef}
                 className={styles.map}
                 value={senderLocDetails?.formatted || ''}
-                onChange={(e) => onSearch(e.target.value)}
+                onChange={(e) => onSearch(e.target.value, 'sender')}
                 placeholder={ "Enter sender location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
@@ -148,7 +158,7 @@ function page(props) {
                 ref={inputRef}
                 className={styles.map}
                 value={receiverLocDetails?.formatted || ''}
-                onChange={(e) => onSearch(e.target.value)}
+                onChange={(e) => onSearch(e.target.value, 'receiver')}
                 placeholder={ "Enter reviever location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
@@ -189,6 +199,8 @@ function page(props) {
             if (mapStep == 2) {
               alert("Your order has been requested, Please wait for admin approval")
               saveOrder()
+              router.push('/order')
+             
             }
           }} className={styles.proceed}>
 
@@ -244,7 +256,7 @@ function page(props) {
             />
         )}
           
-          
+      
 
        {props.userType !== 'rider' &&  <UserSection/>}
         </GoogleMap>
