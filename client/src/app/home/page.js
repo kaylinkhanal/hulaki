@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider } from 'antd';
 // import Card from '../../components/Card/page'
 import Table from '../../components/Table/page'
+import NavBar from '@/components/NavBar/page';
 import { Pagination } from 'antd';
 import styles from "@/styles/Home.module.css";
 
@@ -54,6 +55,7 @@ const App = () => {
   };
   return (
     <>
+      <NavBar/>
       <Layout className={styles.layout}>
         <Search
           placeholder="Enter Your Traking Order"

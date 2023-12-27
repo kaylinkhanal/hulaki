@@ -12,12 +12,10 @@ function page() {
     
     
       useEffect(() => {
-        orderFetch ()
+        categoryFetch()
       }, [])
   return (
-    <div>
-      
-    </div>
+    <div>page</div>
   )
 }
 

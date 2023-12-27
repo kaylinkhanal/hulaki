@@ -10,6 +10,7 @@
   }
   .authForm input,select{
     color: black;
+<<<<<<< HEAD
     padding: 5px;
     width: 80%;
     cursor: pointer;
@@ -22,3 +23,17 @@
     display: flex;
     font-size: 0.8rem;
   }
+=======
+    border-color: black;
+    margin-bottom: 10px;
+  
+}
+.option{
+    width: 100%;
+}
+.h1{
+    font-size: 27px;
+    font-weight: bold;
+    text-align: center;
+}
+>>>>>>> 5e722c1111a989318dbbd83989e54da8c2c26773
