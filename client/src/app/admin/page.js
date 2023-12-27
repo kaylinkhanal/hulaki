@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Formik, Form, Field } from 'formik';
 import Link from 'next/link';
 import * as Yup from 'yup';
@@ -8,7 +8,9 @@ import HelpIcon from '@mui/icons-material/Help';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import CategoryIcon from '@mui/icons-material/Category';
 import { UserOutlined } from '@ant-design/icons';
-
+import { io } from 'socket.io-client';
+const URL =  'http://localhost:4000';
+const socket = io(URL);
 import {  message } from 'antd';
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -36,6 +38,11 @@ const SignupSchema = Yup.object().shape({
         });
       console.log(res)
     }
+    useEffect(()=>{
+      socket.on('orderDetails', (orderDetails)=>{
+        console.log(orderDetails)
+      })
+    })
   
   return(
     <section class="text-gray-600 body-font">
