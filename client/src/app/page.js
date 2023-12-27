@@ -11,7 +11,7 @@ function page() {
   return (
     <div>
           <NavBar />
-          {userDetails.role === 'admin' ?<Admin/>: <Home/>}
+          {userDetails?.role === 'admin' ?<Admin/>: <Home/>}
           <Footer/>
     </div>
   )
