@@ -55,6 +55,27 @@ const App = (props) => {
        
        </> )
       }
+      {
+        props.admin &&(
+          <>
+            <Column
+          title="Status"
+          key="status"
+          render={(item) => (
+            <Space size="large">
+
+              <select style={{ width: '150px' }} onChange={(e,item)=>props.adminStatus(e)}>
+                <option value={item.status} disabled selected>{item.status}</option>
+                <option value="accepted"> Accepted</option>
+                <option value="rejected">Rejected</option>
+               
+              </select>
+            </Space>
+          )}
+        />
+          </>
+        )
+      }
       
 
 
