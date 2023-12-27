@@ -39,4 +39,13 @@ const updateOrder=async(req,res)=>{
     }
    }
 
-module.exports={createOrder,updateOrder,deleteOrder,findOrder}
+  const findOrderById =async(req,res)=>{
+    console.log(req.params.id)
+    const data= await Order.find({senderDetails: req.params.id})
+    if(data){
+      res.json({orderList: data})
+    }
+   }
+
+
+module.exports={createOrder,updateOrder,deleteOrder,findOrder,findOrderById}
