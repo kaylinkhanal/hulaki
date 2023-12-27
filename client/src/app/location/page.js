@@ -13,6 +13,10 @@ import { Tooltip } from 'antd';
 import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
 const { Search } = Input;
+import { io } from 'socket.io-client';
+const URL =  'http://localhost:4000';
+const socket = io(URL);
+
 
 const lib = ["places"]
 const suffix = (
@@ -24,9 +28,11 @@ const suffix = (
   />
 );
 
+
 function page(props) {
-
-
+  useEffect(()=>{
+    socket.on('connection');
+  },[])
   const inputRef = useRef(null)
   const initialCenter = {
     lat: 27.7172,
@@ -121,12 +127,13 @@ function page(props) {
   }
 
   const saveOrder  = async()=> {
-    const res = await fetch('http://localhost:4000/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ senderLocDetails, receiverLocDetails, ...orderDetails ,senderDetails: userDetails._id})
-    })
-    const data = await res.json()
+    socket.emit('orderDetails',{ senderLocDetails, receiverLocDetails, ...orderDetails ,senderDetails: userDetails._id} )
+    // const res = await fetch('http://localhost:4000/orders', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ senderLocDetails, receiverLocDetails, ...orderDetails ,senderDetails: userDetails._id})
+    // })
+    // const data = await res.json()
   }
 
   if (loadError) return "error loading map"
@@ -177,7 +184,11 @@ function page(props) {
             </div>
 
           </div>
-
+          <div>
+            <input type='text' className={styles.price} placeholder='Enter Distance'/>
+            <input type='text' className={styles.price1} placeholder='Enter Price'/>
+          
+      </div>
           <Avatar
             className={styles.avatar}
             src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
@@ -193,16 +204,21 @@ function page(props) {
             setMapStep(2)
             if (mapStep == 2) {
               alert("Your order has been requested, Please wait for admin approval")
+
               saveOrder()
             }
+        
           }} className={styles.proceed}>
 
             {
               mapStep === 2 ? (<Tooltip title="Confirm" mouseEnterDelay={0.7}><GiConfirmed size={50} color='green' /></Tooltip>)
                 : <IoMdArrowRoundForward size={50} />
+                
             }
 
           </div>
+    
+ 
           <Alert
            className={styles.alertBox}
             banner

@@ -8,7 +8,7 @@ import Table from "../../components/Table/page";
 
 const App=()=>{
   
-    const {userDetails} = useSelector
+    const {userDetails} = useSelector(state=>state.user)
     const [orderList, setorderList] = useState([])
     const orderFetch = async () => {
         const res = await fetch(`http://localhost:4000/orders/${userDetails._id}`)
