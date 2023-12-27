@@ -17,7 +17,8 @@ function page() {
   }
   return (
     <div>
-          <ConditionalRoute/>
+          <NavBar />
+          {userDetails?.role === 'admin' ?<Admin/>: <Home/>}
           <Footer/>
     </div>
   )

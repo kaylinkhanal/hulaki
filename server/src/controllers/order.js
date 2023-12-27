@@ -39,6 +39,15 @@ const updateOrder=async(req,res)=>{
     }
    }
 
+<<<<<<< HEAD
+
+const findOrderById=async(req,res)=>{
+  const data= await Order.find({senderDetails:req.params._id})
+  if(data){
+    res.json({orderList: data})
+  }
+ }
+=======
   const findOrderById =async(req,res)=>{
     console.log(req.params.id)
     const data= await Order.find({senderDetails: req.params.id})
@@ -47,5 +56,6 @@ const updateOrder=async(req,res)=>{
     }
    }
 
+>>>>>>> 5e722c1111a989318dbbd83989e54da8c2c26773
 
 module.exports={createOrder,updateOrder,deleteOrder,findOrder,findOrderById}

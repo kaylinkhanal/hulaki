@@ -14,8 +14,13 @@ router.use(express.json());
    router.delete('/orders',deleteOrder)
 
    router.get('/orders', findOrder)
+<<<<<<< HEAD
+    
+   router.get('/orders/_id', findOrderById)
+=======
 
    router.get('/orders/:id', findOrderById)
         
+>>>>>>> 5e722c1111a989318dbbd83989e54da8c2c26773
    
    module.exports=router

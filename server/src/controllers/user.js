@@ -3,26 +3,27 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const path = require('path')
+
 const registerNewUser= async(req, res) => {
-    try{
-      console.log(req.file)
-     //check if user/email/phoneNumber doesnt already exist
-     const userExists = await User.findOne({phoneNumber: req.body.phoneNumber})
-     if(userExists){
-          res.status(409).json({msg :'Phone Number already taken!'})
-     }else{
-       // generate a hash Password
-       const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
-       req.body.password = hashPassword
-       req.body.avatar = req.file.filename
-       // create new user with hash password
-      const data=  await User.create(req.body)
-     if(data) res.json({msg :'User registered. Please login'})
-    }
-    }catch(err){
-     console.log(err)
-    }
-   }
+  try{
+    console.log(req.file)
+   //check if user/email/phoneNumber doesnt already exist
+   const userExists = await User.findOne({phoneNumber: req.body.phoneNumber})
+   if(userExists){
+        res.status(409).json({msg :'Phone Number already taken!'})
+   }else{
+     // generate a hash Password
+     const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
+     req.body.password = hashPassword
+     req.body.avatar = req.file.filename
+     // create new user with hash password
+    const data=  await User.create(req.body)
+   if(data) res.json({msg :'User registered. Please login'})
+  }
+  }catch(err){
+   console.log(err)
+  }
+ }
 
 const loginUser = async (req,res)=>{
     //1. check if phoneNumber exists

@@ -1,12 +1,13 @@
-'use client'
-import React, {useEffect} from 'react'
+import React ,{useEffect} from 'react'
 import { useSelector } from 'react-redux'
 
-const page = () => {
-    const {userDetails } = useSelector(state=>state.user)
-    const categoryFetch = async () => {
-        const res = await fetch(`http://localhost:4000/orders/${userDetails._id}`)
+
+function page() {
+    const {userDetails}=useSelector(state=>state.user)
+    const orderFetch = async () => {
+        const res = await fetch(`http://localhost:4000/order/${userDetails._id}`)
         const data = await res.json()
+        setCategoryList(data.orderList)
       }
     
     
