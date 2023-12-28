@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { message } from 'antd';
 import { Modal, Upload } from 'antd';
 import Link from 'next/link';
-
+import Nav from '@/components/NavBar/page';
 import Footer from '@/components/Footer/page';
 import styles from '../../styles/register.module.css'
 
@@ -97,7 +97,9 @@ const index = (props) => {
   return (
 
     <>
-    
+     <Nav/>
+      <div className={styles.container}>
+       <span className={styles.heading}>Register for hulaki</span>
       <Formik
         initialValues={{
           fullName: '',
@@ -116,59 +118,52 @@ const index = (props) => {
           <Form className={styles.authForm}>
             {contextHolder}
             <div className={styles.input} >
-            <Field name="fullName" type="fullName" placeholder="Full Name:"/>
-            {errors.fullName && touched.fullName ? (
-              <div>{errors.fullName}</div>
-            ) : null}
-           <br/>
-           <br/>
-            <Field  name="phoneNumber" placeholder="Phone number:" />
-            {errors.phoneNumber && touched.phoneNumber ? (
-              <div>{errors.phoneNumber}</div>
-            ) : null}
-            <br/>
-            <br/>
-             <Field  name="email" placeholder="Email:" />
-            {errors.email && touched.email ? (
-              <div>{errors.email}</div>
-            ) : null}
-            <br/>
-            <br/>
-           <Field  name="address" type="address" placeholder="address" />
-            {errors.address && touched.address ? (
-              <div className='errors'>{errors.address}</div>
-            ) : null}
-           <br/>
-           <br/>
-            <Field component='select' name='role' id='roles' placeholder='Choose your role'>
-              <option disabled >Choose your role</option>
-              <option value="User">User</option>
-              <option value="Rider">Rider</option>
-            </Field>
-            {errors.role && touched.role ? (
-              <div className='errors'>{errors.role}</div>
-            ) : null}
-            <br/>
-            <br/>
+              <Field name="fullName" type="fullName" placeholder="Full Name:" />
+              {errors.fullName && touched.fullName ? (
+                <div>{errors.fullName}</div>
+              ) : null}
           
-            <Field  name="password" type="password" placeholder="password" />
-            {errors.password && touched.password ? (
-              <div className='errors'>{errors.password}</div>
-            ) : null}
-            <br />
-            <br/>
-            
-            <input  type="file" onChange={saveImage} />
+              <Field name="phoneNumber" placeholder="Phone number:" />
+              {errors.phoneNumber && touched.phoneNumber ? (
+                <div>{errors.phoneNumber}</div>
+              ) : null}
+          
+              <Field name="email" placeholder="Email:" />
+              {errors.email && touched.email ? (
+                <div>{errors.email}</div>
+              ) : null}
+         
+              <Field name="address" type="address" placeholder="address" />
+              {errors.address && touched.address ? (
+                <div className='errors'>{errors.address}</div>
+              ) : null}
+          
+              <Field style={{width:'70%',color:'black',cursor:'pointer'}} component='select' name='role' id='roles' placeholder='Choose your role'>
+                <option  disabled >Choose your role</option>
+                <option value="User">User</option>
+                <option value="Rider">Rider</option>
+              </Field>
+              {errors.role && touched.role ? (
+                <div className='errors'>{errors.role}</div>
+              ) : null}
+
+              <Field name="password" type="password" placeholder="password" />
+              {errors.password && touched.password ? (
+                <div className='errors'>{errors.password}</div>
+              ) : null}
+
+              <input className={styles.file} type="file" onChange={saveImage} />
             </div>
-            
-            <span>Already registered ?<Link href="/">Login</Link>&nbsp; instead</span>
+
+            <span className={styles.text}>Already registered ?<Link style={{color:'#1677ff'}} href="/"> Login</Link>&nbsp; instead</span>
             <div className={styles.button}>
-            <button type="submit">Submit</button>
-        </div>
+              <button className={styles.submitBtn} type="submit">Submit</button>
+            </div>
           </Form>
         )}
       </Formik>
-      <Footer/>
+      </div>
+      <Footer />
     </>
 
   )

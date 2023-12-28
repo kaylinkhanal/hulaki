@@ -8,10 +8,15 @@ const createCategory=async(req,res)=>{
    }
 
   const getCategory=async(req,res)=>{
-    const data= await Category.find()
-    if(data){
-      res.json({categoryList: data})
+    try{
+      const data= await Category.find()
+      if(data){
+        res.json({categoryList: data})
+      }
+    }catch(err){
+      console.log(err);
     }
+   
    }
 
    const updateCategory=async(req,res)=>{

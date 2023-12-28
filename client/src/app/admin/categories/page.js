@@ -57,9 +57,13 @@ export const index = () => {
   };
 
   const categoryFetch = async () => {
-    const res = await fetch(`http://localhost:4000/categories`)
-    const data = await res.json()
-    setCategoryList(data.categoryList)
+    try{
+      const res = await fetch(`http://localhost:4000/categories`)
+      const data = await res.json()
+      setCategoryList(data.categoryList)
+    }catch(err){
+      console.log(err);
+    }
   }
 
 
@@ -68,7 +72,7 @@ export const index = () => {
   }, [])
 
 
-  const registerValidCateogries = async (values, resetForm) => {
+  const registerValidCateogries = async(values, resetForm) => {
     const res = await fetch('http://localhost:4000/categories', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
