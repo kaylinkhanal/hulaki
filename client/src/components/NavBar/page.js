@@ -10,9 +10,9 @@ import {  BellOutlined } from '@ant-design/icons';
 import {  Badge, Button, Switch, Space } from 'antd';
 import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 
-const Nav = () => {
+const Nav = (props) => {
   const [count, setCount] = useState(5);
-  const [show, setShow] = useState(true);
+
   const dispatch = useDispatch()
   const { userDetails, isLoggedIn } = useSelector(state => state.user)
 
@@ -73,7 +73,7 @@ const Nav = () => {
         </div>
       )}
       <Space size="large">
-      <Badge dot={show}>
+      <Badge dot={props.initialCount>=props.orderCount}>
           {/* <Avatar shape="square" size="large"  /> */}
           <BellOutlined  twoToneColor="#eb2f96"/>
           </Badge>

@@ -4,7 +4,7 @@ const connection = require('./db/connection')
 const app = express()
 const { createServer } = require('node:http');
 const { Server } = require('socket.io');
-
+const Order = require('./models/order')
 const server = createServer(app);
 const io = new Server(server,{
   cors: {
@@ -19,8 +19,12 @@ const orderRoute=require('./routes/order')
 io.on('connection', (socket) => {
   console.log('conneted')
 
-  socket.on('orderDetails', (orderDetails) => {
-    io.emit('orderDetails', orderDetails)
+  socket.on('orderDetails',async (orderDetails) => {
+     await Order.create(orderDetails)
+    const totalOrders = await Order.find().count() 
+    if(totalOrders){
+      io.emit('orderDetails', totalOrders)
+    }
   });
 
   socket.on('msg', (msg) => {

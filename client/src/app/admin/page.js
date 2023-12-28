@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import Link from 'next/link';
 import * as Yup from 'yup';
@@ -26,28 +26,29 @@ const SignupSchema = Yup.object().shape({
 
  const Home = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const handleLogin = async(values) => {
-    const res = await fetch('http://localhost:4000/login', {
-        method:'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-      })
+  const [orderCount, setOrderCount] = useState(0)
+  const [initialCount, setInitialCount] = useState(0)
+
+  const getOrderCount = async(values) => {
+      const res = await fetch('http://localhost:4000/order-count')
       const data = await res.json()
-        messageApi.open({
-          type: res.status == 200 ? 'success': 'error',
-          content: data.msg,
-        });
-      console.log(res)
+      setOrderCount(data.count)
     }
+
+    useEffect(()=>{
+      getOrderCount()
+    },[])
+
     useEffect(()=>{
       socket.on('orderDetails', (orderDetails)=>{
-        console.log(orderDetails)
+        setInitialCount(orderDetails)
       })
     })
   
   return(
     <>
-    <NavBar/>
+    <NavBar initialCount={initialCount} orderCount={orderCount}/>
+    {initialCount} {orderCount}
     <section class="text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto">
       <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">

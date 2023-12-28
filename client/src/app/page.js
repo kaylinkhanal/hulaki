@@ -2,6 +2,8 @@
 import React, {useEffect} from 'react'
 import Home from './home/page'
 import Admin from './admin/page'
+import Login from './login/page'
+
 import Rider from './rider/page'
 
 import { useSelector } from 'react-redux'
@@ -12,8 +14,8 @@ function page() {
   const {userDetails} = useSelector(state=>state.user)
   const ConditionalRoute = () => {
     if(userDetails?.role === 'admin') return <Admin/>
-    else if(userDetails?.role === 'user') return <Home/>
-    else return <Rider/>
+    else  if(userDetails?.role === 'rider') return <Rider/>
+    else return <Home/>
   }
   return (
     <div>

@@ -83,23 +83,25 @@
 .price{
   background-color: #f1f8ff;
   position:absolute;
-  top:300px;
-  left:1220px;
   width: 180px;
   height: 40px;
   border: 1.5px solid blue;
   box-shadow: 0 0 3px 1.5px #c98540;
   margin-bottom: 10px;
-
+  bottom: 80px;
+  margin: 10px;
+  left: 10px;
 }
+
 .price1{
   background-color: #f1f8ff;
   position:absolute;
-  top:340px;
-  left:1220px;
   width:180px;
   height: 40px;
   border: 1.5px solid blue;
   box-shadow: 0 0 3px 1.5px #c98540;
   margin-top: 10px;
+  bottom: 20px;
+  margin: 10px;
+  left: 10px;
 }

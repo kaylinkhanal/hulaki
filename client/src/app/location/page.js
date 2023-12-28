@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-maps/api'
 import styles from '../../styles/Map.module.css'
+import { getDistance } from 'geolib';
 import { useSelector, useDispatch } from 'react-redux';
 import {setSenderLocDetails,setReceiverLocDetails,setSenderPosition, setReceiverPosition} from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
@@ -39,6 +40,10 @@ function page(props) {
     lng: 85.3240
   }
   const { senderLocDetails, receiverLocDetails , orderDetails } = useSelector(state => state.order)
+  const distance =  getDistance(
+    { latitude: senderLocDetails?.senderCoords?.lat, longitude: senderLocDetails?.senderCoords?.lng},
+    { latitude: receiverLocDetails?.receiverCoords?.lat, longitude: receiverLocDetails?.receiverCoords?.lng},
+)/1000;
   const {userDetails } = useSelector(state=> state.user)
   const dispatch = useDispatch()
   const containerStyle = {
@@ -187,10 +192,10 @@ function page(props) {
           <div className={styles.cont}>
          
           <div className={styles.price}>
-          Total Distance: 
+          Total Distance: {distance} km
               </div> 
             <div className={styles.price1}>
-            Estimated Price:
+            Estimated Price: {distance }
               </div>          
       </div>
           <Avatar
