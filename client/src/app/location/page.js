@@ -9,6 +9,7 @@ import { Input, Avatar, List, Typography } from 'antd';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowRoundForward } from "react-icons/io";
 import { GiConfirmed } from "react-icons/gi";
+import { useRouter } from 'next/navigation';
 import { Tooltip } from 'antd';
 import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
@@ -30,6 +31,7 @@ const suffix = (
 
 
 function page(props) {
+  const router = useRouter()
   useEffect(()=>{
     socket.on('connection');
   },[])
@@ -206,6 +208,7 @@ function page(props) {
               alert("Your order has been requested, Please wait for admin approval")
 
               saveOrder()
+              router.push('/track')
             }
         
           }} className={styles.proceed}>
