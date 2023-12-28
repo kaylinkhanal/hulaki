@@ -29,13 +29,13 @@ const Nav = (props) => {
       marginInlineStart: 1100,
       clear: 'both',
       whiteSpace: 'nowrap',
-     
+      marginTop:'5px'
   }
  
   return (
 
     <Menu
-      theme="light"
+      theme="dark"
       mode="horizontal"
       defaultSelectedKeys={['2']}
     >
