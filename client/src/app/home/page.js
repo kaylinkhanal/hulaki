@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Card, Col, Row } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
+import { Timeline } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
@@ -18,6 +19,7 @@ import styles from "@/styles/Home.module.css";
 
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
+
 const App = () => {
   const router = useRouter()
 
@@ -26,8 +28,27 @@ const App = () => {
   const { userDetails, isLoggedIn } = useSelector(state => state.user)
 
   const [searchList, setSearchList] = useState([])
-
-
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
+  const showModal1 = () => {
+   
+    setIsModalOpen1(true);
+  };
+  <Timeline
+  items={[
+    {
+      children: 'Create a services site 2015-09-01',
+    },
+    {
+      children: 'Solve initial network problems 2015-09-01',
+    },
+    {
+      children: 'Technical testing 2015-09-01',
+    },
+    {
+      children: 'Network problems being solved 2015-09-01',
+    },
+  ]}
+/>
   const text = <span>{userDetails.email}</span>;
   const content = (
     <div>
@@ -57,7 +78,7 @@ const App = () => {
     <>
       <NavBar/>
       <Layout className={styles.layout}>
-        <Search
+        <Search onClick={() => showModal1()}
           placeholder="Enter Your Traking Order"
           enterButton="Search"
           size="medium"
@@ -66,6 +87,25 @@ const App = () => {
           style={{ width: '50%', marginTop: '50px' }}
         />
 
+
+{isModalOpen1 && ( // Render Timeline when the modal is open
+          <Timeline
+            items={[
+              {
+                children: 'Create a services site 2015-09-01',
+              },
+              {
+                children: 'Solve initial network problems 2015-09-01',
+              },
+              {
+                children: 'Technical testing 2015-09-01',
+              },
+              {
+                children: 'Network problems being solved 2015-09-01',
+              },
+            ]}
+          />
+        )}
 
         <Content
           style={{
