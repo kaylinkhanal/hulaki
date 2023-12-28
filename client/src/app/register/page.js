@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { message } from 'antd';
 import { Modal, Upload } from 'antd';
 import Link from 'next/link';
-import NavBar from '../../components/NavBar/page';
+
 import Footer from '@/components/Footer/page';
 import styles from '../../styles/register.module.css'
 
@@ -97,7 +97,7 @@ const index = (props) => {
   return (
 
     <>
-      <NavBar />
+    
       <Formik
         initialValues={{
           fullName: '',
