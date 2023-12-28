@@ -5,13 +5,13 @@ import { UserOutlined } from '@ant-design/icons';
 import HelpIcon from '@mui/icons-material/Help';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import CategoryIcon from '@mui/icons-material/Category';
-import Nav from '@/components/NavBar/page';
+import NavBar from '@/components/NavBar/page';
 import Footer from '@/components/Footer/page';
 
 function page() {
   return (
     <>
-    <Nav/>
+    <NavBar/>
     <section class="text-gray-600 body-font" style={{height:'84.5vh'}}>
     <div class="container px-5 py-24 mx-auto">
       <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">

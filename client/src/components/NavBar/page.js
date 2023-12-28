@@ -1,14 +1,18 @@
 'use client'
-import React from 'react'
+import React,{useState} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
-import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider } from 'antd';
+import { Avatar, Divider, Tooltip, Popover, ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleLogout } from '../../redux/reducerSlices/userSlice'
-
+import {  BellOutlined } from '@ant-design/icons';
+import {  Badge, Button, Switch, Space } from 'antd';
+import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 
 const Nav = () => {
+  const [count, setCount] = useState(5);
+  const [show, setShow] = useState(true);
   const dispatch = useDispatch()
   const { userDetails, isLoggedIn } = useSelector(state => state.user)
 
@@ -27,11 +31,11 @@ const Nav = () => {
       whiteSpace: 'nowrap',
      
   }
-
+ 
   return (
 
     <Menu
-      theme="dark"
+      theme="light"
       mode="horizontal"
       defaultSelectedKeys={['2']}
     >
@@ -41,6 +45,8 @@ const Nav = () => {
         </Menu.Item>
 
       </Link>
+      
+     
       {isLoggedIn ? (
         <div
           style={navDiv}
@@ -66,6 +72,13 @@ const Nav = () => {
           </Link>
         </div>
       )}
+      <Space size="large">
+      <Badge dot={show}>
+          {/* <Avatar shape="square" size="large"  /> */}
+          <BellOutlined  twoToneColor="#eb2f96"/>
+          </Badge>
+        
+      </Space>
     </Menu>
   )
 }
