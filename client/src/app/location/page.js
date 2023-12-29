@@ -4,7 +4,7 @@ import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-m
 import styles from '../../styles/Map.module.css'
 import { getDistance } from 'geolib';
 import { useSelector, useDispatch } from 'react-redux';
-import {setSenderLocDetails,setReceiverLocDetails,setSenderPosition, setReceiverPosition} from '../../redux/reducerSlices/orderSlice'
+import { setSenderLocDetails, setReceiverLocDetails, setSenderPosition, setReceiverPosition } from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
 import { Input, Avatar, List, Typography } from 'antd';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -15,7 +15,7 @@ import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
 const { Search } = Input;
 import { io } from 'socket.io-client';
-const URL =  'http://localhost:4000';
+const URL = 'http://localhost:4000';
 const socket = io(URL);
 
 
@@ -31,20 +31,24 @@ const suffix = (
 
 
 function page(props) {
-  useEffect(()=>{
+  useEffect(() => {
     socket.on('connection');
-  },[])
+  }, [])
   const inputRef = useRef(null)
   const initialCenter = {
     lat: 27.7172,
     lng: 85.3240
   }
-  const { senderLocDetails, receiverLocDetails , orderDetails } = useSelector(state => state.order)
-  const distance =  getDistance(
-    { latitude: senderLocDetails?.senderCoords?.lat, longitude: senderLocDetails?.senderCoords?.lng},
-    { latitude: receiverLocDetails?.receiverCoords?.lat, longitude: receiverLocDetails?.receiverCoords?.lng},
-)/1000;
-  const {userDetails } = useSelector(state=> state.user)
+  const { senderLocDetails, receiverLocDetails, orderDetails } = useSelector(state => state.order);
+
+  const distance = getDistance(
+    { latitude: senderLocDetails?.senderCoords?.lat, longitude: senderLocDetails?.senderCoords?.lng },
+    { latitude: receiverLocDetails?.receiverCoords?.lat, longitude: receiverLocDetails?.receiverCoords?.lng },
+  ) / 1000;
+
+  const totalPrice = distance;
+
+  const { userDetails } = useSelector(state => state.user)
   const dispatch = useDispatch()
   const containerStyle = {
     width: '100vw',
@@ -74,9 +78,9 @@ function page(props) {
     }
 
     //save to redux
-    if(section === 'receiver'){
+    if (section === 'receiver') {
       dispatch(setReceiverLocDetails({ city: value, formatted: value, address_line1: value }))
-    }else{
+    } else {
       dispatch(setSenderLocDetails({ city: value, formatted: value, address_line1: value }))
     }
 
@@ -88,17 +92,17 @@ function page(props) {
     //get autocomplete places list
 
   }
-  const addReceiverLocation = async(e)=> {
+  const addReceiverLocation = async (e) => {
     const lat = e.latLng.lat()
     const lng = e.latLng.lng()
     const res = await fetch(
       `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=a1dd45a7dfc54f55a44b69d125722fcb`
     );
     const data = await res.json()
-   if(data){
-    const {city, formatted, address_line1} = data.features[0].properties
-    dispatch(setReceiverLocDetails({city, formatted, address_line1,receiverCoords: {lat, lng}}))
-   }
+    if (data) {
+      const { city, formatted, address_line1 } = data.features[0].properties
+      dispatch(setReceiverLocDetails({ city, formatted, address_line1, receiverCoords: { lat, lng } }))
+    }
   }
 
   useEffect(() => {
@@ -131,8 +135,8 @@ function page(props) {
     }
   }
 
-  const saveOrder  = async()=> {
-    socket.emit('orderDetails',{ senderLocDetails, receiverLocDetails, ...orderDetails ,senderDetails: userDetails._id} )
+  const saveOrder = async () => {
+    socket.emit('orderDetails', { senderLocDetails, receiverLocDetails, ...orderDetails, senderDetails: userDetails._id })
     // const res = await fetch('http://localhost:4000/orders', {
     //   method: 'POST',
     //   headers: { 'Content-Type': 'application/json' },
@@ -147,104 +151,104 @@ function page(props) {
   const UserSection = () => {
     return (
       <div>
-              <div className={styles.searchDiv}>
-            <div>
-              {mapStep == 1 ? (
-                <Search
+        <div className={styles.searchDiv}>
+          <div>
+            {mapStep == 1 ? (
+              <Search
                 size='large'
                 ref={inputRef}
                 className={styles.map}
                 value={senderLocDetails?.formatted || ''}
                 onChange={(e) => onSearch(e.target.value, 'sender')}
-                placeholder={ "Enter sender location details here"}
+                placeholder={"Enter sender location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
-              ): (
+            ) : (
               <Search
                 size='large'
                 ref={inputRef}
                 className={styles.map}
                 value={receiverLocDetails?.formatted || ''}
                 onChange={(e) => onSearch(e.target.value, 'receiver')}
-                placeholder={ "Enter reviever location details here"}
+                placeholder={"Enter reviever location details here"}
                 onSearch={() => { setIsSearchBoxOpen(false) }}
                 enterButton />
-              )}
-              
-            </div>
-
-            <div>
-              {isSearchBoxOpen && (<div className={styles.header}>
-                <List
-                  bordered
-                  dataSource={searchList}
-                  renderItem={(item) => (
-                    <List.Item onClick={() => listSelect(item)} className={styles.listItem}>
-                      {item.formatted}
-                    </List.Item>
-                  )}
-                />
-              </div>
-              )}
-            </div>
+            )}
 
           </div>
-          <div className={styles.cont}>
-         
-          <div className={styles.price}>
-          Total Distance: {distance} km
-              </div> 
-            <div className={styles.price1}>
-            Estimated Price: {distance }
-              </div>          
-      </div>
-          <Avatar
-            className={styles.avatar}
-            src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
 
-
-          {mapStep !== 1 &&
-            <div onClick={() => setMapStep(1)} className={styles.back}>
-              <IoMdArrowRoundBack size={50} />
+          <div>
+            {isSearchBoxOpen && (<div className={styles.header}>
+              <List
+                bordered
+                dataSource={searchList}
+                renderItem={(item) => (
+                  <List.Item onClick={() => listSelect(item)} className={styles.listItem}>
+                    {item.formatted}
+                  </List.Item>
+                )}
+              />
             </div>
+            )}
+          </div>
+
+        </div>
+        <div className={styles.cont}>
+
+          <div className={styles.price}>
+            Total Distance: {distance} km
+          </div>
+          <div className={styles.distance}>
+            Estimated Price: Rs. {totalPrice}
+          </div>
+        </div>
+        <Avatar
+          className={styles.avatar}
+          src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
+
+
+        {mapStep !== 1 &&
+          <div onClick={() => setMapStep(1)} className={styles.back}>
+            <IoMdArrowRoundBack size={50} />
+          </div>
+        }
+
+        <div onClick={() => {
+          setMapStep(2)
+          if (mapStep == 2) {
+            alert("Your order has been requested, Please wait for admin approval")
+
+            saveOrder()
           }
 
-          <div onClick={() => {
-            setMapStep(2)
-            if (mapStep == 2) {
-              alert("Your order has been requested, Please wait for admin approval")
+        }} className={styles.proceed}>
 
-              saveOrder()
-            }
-        
-          }} className={styles.proceed}>
+          {
+            mapStep === 2 ? (<Tooltip title="Confirm" mouseEnterDelay={0.7}><GiConfirmed size={50} color='green' /></Tooltip>)
+              : <IoMdArrowRoundForward size={50} />
 
-            {
-              mapStep === 2 ? (<Tooltip title="Confirm" mouseEnterDelay={0.7}><GiConfirmed size={50} color='green' /></Tooltip>)
-                : <IoMdArrowRoundForward size={50} />
-                
-            }
+          }
 
-          </div>
-    
- 
-          <Alert
-           className={styles.alertBox}
-            banner
-            message={
-              <>
-             
-               <Marquee pauseOnHover gradient={false} speed={20}>
-              {
-                mapStep===1 ? "Enter sender location details from the google map to continue  and proceed to the next page ."
-                : "Enter receiver location details from the google map to continue and to proceed click on the confirm button"
-               }
+        </div>
+
+
+        <Alert
+          className={styles.alertBox}
+          banner
+          message={
+            <>
+
+              <Marquee pauseOnHover gradient={false} speed={50}>
+                {
+                  mapStep === 1 ? "Enter sender location details from the google map to continue  and proceed to the next page ."
+                    : "Enter receiver location details from the google map to continue and to proceed click on the confirm button"
+                }
               </Marquee>
-     
-              </>
-             
-            }
-          />
+
+            </>
+
+          }
+        />
       </div>
     )
   }
@@ -255,28 +259,28 @@ function page(props) {
         <GoogleMap
           mapContainerStyle={props.containerStyle || containerStyle}
           center={center}
-          zoom={props.userType==='rider' ? 12 : 14}
+          zoom={props.userType === 'rider' ? 12 : 14}
           onClick={() => setIsSearchBoxOpen(false)}
         >
-        {(mapStep === 1 || props.userType == 'rider' ) && (
-              <MarkerF
+          {(mapStep === 1 || props.userType == 'rider') && (
+            <MarkerF
               onDragEnd={addSenderLocation}
               draggable={props.userType !== 'rider'}
               position={senderLocDetails.senderCoords}
-              />
-        )}
-           
-           {(mapStep === 2 || props.userType == 'rider' )&& (
-              <MarkerF
+            />
+          )}
+
+          {(mapStep === 2 || props.userType == 'rider') && (
+            <MarkerF
               onDragEnd={addReceiverLocation}
               draggable={props.userType !== 'rider'}
               position={receiverLocDetails.receiverCoords}
             />
-        )}
-          
-      
+          )}
 
-       {props.userType !== 'rider' &&  <UserSection/>}
+
+
+          {props.userType !== 'rider' && <UserSection />}
         </GoogleMap>
       </div>
     )

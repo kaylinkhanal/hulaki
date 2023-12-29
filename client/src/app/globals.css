@@ -6,11 +6,11 @@
 .ant-btn-primary{
   background-color: #1677ff !important;
 }
-
-
-
 .ant-menu-dark .ant-menu-item-selected {
   background-color: transparent !important
+}
+.anticon-bell{
+  color: white;
 }
 
 @tailwind base;
