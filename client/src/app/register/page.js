@@ -107,7 +107,7 @@ const index = (props) => {
           password: '',
           email: '',
           address: '',
-          role: 'User'
+          role: 'user'
         }}
         // validationSchema={SignupSchema}
         onSubmit={values => {
@@ -140,8 +140,8 @@ const index = (props) => {
           
               <Field style={{width:'70%',color:'black',cursor:'pointer'}} component='select' name='role' id='roles' placeholder='Choose your role'>
                 <option  disabled >Choose your role</option>
-                <option value="User">User</option>
-                <option value="Rider">Rider</option>
+                <option value="user">User</option>
+                <option value="rider">Rider</option>
               </Field>
               {errors.role && touched.role ? (
                 <div className='errors'>{errors.role}</div>
