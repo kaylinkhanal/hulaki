@@ -7,6 +7,16 @@ const App = (props) => {
 
   return (
     <Table dataSource={props.list}>
+    
+        <Column
+          title="S.N"
+          key="action"
+          render={(values,item,id) => (
+            <Space size="middle">
+            { id+1}
+            </Space>  
+          )}
+        />
       {props?.title?.map((item) => {
         return <Column title={item} dataIndex={item} key={item} />
       })}
