@@ -16,7 +16,7 @@ const Nav = (props) => {
   const dispatch = useDispatch()
   const { userDetails, isLoggedIn } = useSelector(state => state.user)
 
-  const text = <span>{userDetails.email}</span>;
+  const text = <span>{userDetails?.email}</span>;
 
   const content = (
     <div>

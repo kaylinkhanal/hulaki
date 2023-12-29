@@ -55,7 +55,7 @@ const App=()=>{
              admin={true}
              adminStatus={adminStatus}
             list={orderList}
-            title={['categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber']} endpoint="/orders" />
+            title={['_id','categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber']} endpoint="/orders" />
         </div>
         <Footer/>
          </>

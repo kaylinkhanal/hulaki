@@ -13,12 +13,15 @@ import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider } from 'antd'
 import Table from '../../components/Table/page'
 import NavBar from '@/components/NavBar/page';
 import { Pagination } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import styles from "@/styles/Home.module.css";
 
 //import Top from '../components/Top/page'
 
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
+
+const status=  ["Pending","Admin Approved", "Order Rejected By Admin", "Reached Pickup point", "Picked up", "Order Rejected By Diver",  "Reached Destination point",  "Order Delivered"]
 
 const App = () => {
   const router = useRouter()
@@ -33,23 +36,8 @@ const App = () => {
    
     setIsModalOpen1(true);
   };
-  <Timeline
-  items={[
-    {
-      children: 'Create a services site 2015-09-01',
-    },
-    {
-      children: 'Solve initial network problems 2015-09-01',
-    },
-    {
-      children: 'Technical testing 2015-09-01',
-    },
-    {
-      children: 'Network problems being solved 2015-09-01',
-    },
-  ]}
-/>
-  const text = <span>{userDetails.email}</span>;
+
+  const text = <span>{userDetails?.email}</span>;
   const content = (
     <div>
       <Link href="/profile"><span>Profile</span></Link>
@@ -74,11 +62,14 @@ const App = () => {
     const data = await res.json()
     setSearchList(data.productList)
   };
+
+  
   return (
     <>
       <NavBar/>
       <Layout className={styles.layout}>
-        <Search onClick={() => showModal1()}
+        <Search 
+        onSearch={() => showModal1()}
           placeholder="Enter Your Traking Order"
           enterButton="Search"
           size="medium"
@@ -90,21 +81,11 @@ const App = () => {
 
 {isModalOpen1 && ( // Render Timeline when the modal is open
           <Timeline
-            items={[
-              {
-                children: 'Create a services site 2015-09-01',
-              },
-              {
-                children: 'Solve initial network problems 2015-09-01',
-              },
-              {
-                children: 'Technical testing 2015-09-01',
-              },
-              {
-                children: 'Network problems being solved 2015-09-01',
-              },
-            ]}
-          />
+          items={status.map((item,id)=>{
+            const statusId = status.indexOf('Reached Pickup point')
+            return {'children': item,dot:id<=statusId ?<SmileOutlined />: null}
+          })}
+        />
         )}
 
         <Content
