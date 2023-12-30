@@ -18,6 +18,17 @@ const createCategory=async(req,res)=>{
     }
    
    }
+  const getCategoryDetails=async(req,res)=>{
+    try{
+      const data= await Category.find({categoryName:req.query.categoryname});
+      if(data){
+        res.json({categorDetails: data})
+      }
+    }catch(err){
+      console.log(err);
+    }
+   
+   }
 
    const updateCategory=async(req,res)=>{
     const id = req.body._id;
@@ -48,5 +59,5 @@ const editCategory=async(req,res)=>{
     }
    }
 
-   module.exports={createCategory,getCategory,updateCategory,deleteCategory,editCategory}
+   module.exports={createCategory,getCategory,getCategoryDetails,updateCategory,deleteCategory,editCategory}
 

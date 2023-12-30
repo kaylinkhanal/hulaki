@@ -1,16 +1,18 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { GoogleMap, useLoadScript, MarkerF, Autocomplete } from '@react-google-maps/api'
 import styles from '../../styles/Map.module.css'
 import { getDistance } from 'geolib';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSenderLocDetails, setReceiverLocDetails, setSenderPosition, setReceiverPosition } from '../../redux/reducerSlices/orderSlice'
+import { setSenderLocDetails, setReceiverLocDetails, setSenderPosition, setReceiverPosition, addPriceDetails } from '../../redux/reducerSlices/orderSlice'
 import { AudioOutlined, } from '@ant-design/icons';
 import { Input, Avatar, List, Typography } from 'antd';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowRoundForward } from "react-icons/io";
 import { GiConfirmed } from "react-icons/gi";
 import { Tooltip } from 'antd';
+import { Divider } from 'antd';
 import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
 const { Search } = Input;
@@ -46,9 +48,20 @@ function page(props) {
     { latitude: receiverLocDetails?.receiverCoords?.lat, longitude: receiverLocDetails?.receiverCoords?.lng },
   ) / 1000;
 
-  const totalPrice = distance;
+  const calculatePrice = async () => {
+    const res = await fetch(`http://localhost:4000/category-Details?categoryname=${orderDetails.categoryName}`);
+    const data = await res.json();
+    const categoryDetails = data.categorDetails[0];
+    const totalPrice = ((orderDetails.productWeight) * (categoryDetails.pricePerUnitKg) * distance).toFixed();
+    dispatch(addPriceDetails(totalPrice));
+  }
 
-  const { userDetails } = useSelector(state => state.user)
+  useEffect(() => {
+    calculatePrice();
+  }, [distance]);
+
+  const { userDetails } = useSelector(state => state.user);
+
   const dispatch = useDispatch()
   const containerStyle = {
     width: '100vw',
@@ -59,6 +72,9 @@ function page(props) {
   const [mapStep, setMapStep] = useState(1)
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false)
   const [center, setCenter] = useState(initialCenter)
+  const [success, setSuccess] = useState(false);
+  const router = useRouter();
+
 
   const listSelect = (item) => {
     if (mapStep == 1) {
@@ -195,11 +211,25 @@ function page(props) {
         </div>
         <div className={styles.cont}>
 
-          <div className={styles.price}>
+          <div className={styles.details}>
+          {(senderLocDetails.address_line1.length<10 && receiverLocDetails.address_line1.length<10 ) ?
+            (<>From {senderLocDetails.address_line1} to  {receiverLocDetails.address_line1}</>)
+             :
+             (<>From {senderLocDetails.address_line1.slice(0,10)+'...'} to  {receiverLocDetails.address_line1.slice(0,10)+'...'}</>)
+          }
+          </div>
+          <Divider style={{backgroundColor:'white',margin:'2px 0px'}}/>
+          <div className={styles.details}>
+            Sender: {userDetails.fullName}
+          </div>
+          <div className={styles.details}>
+            Receiver: {orderDetails.receiverName}
+          </div>
+          <div className={styles.details}>
             Total Distance: {distance} km
           </div>
-          <div className={styles.distance}>
-            Estimated Price: Rs. {totalPrice}
+          <div className={styles.details}>
+            Estimated Price: Rs. {orderDetails.price}
           </div>
         </div>
         <Avatar
@@ -207,18 +237,22 @@ function page(props) {
           src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
 
 
-        {mapStep !== 1 &&
-          <div onClick={() => setMapStep(1)} className={styles.back}>
-            <IoMdArrowRoundBack size={50} />
-          </div>
-        }
+        {
+      mapStep !== 1 &&
+      <div onClick={() => setMapStep(1)} className={styles.back}>
+        <IoMdArrowRoundBack size={50} />
+      </div>
+    }
 
         <div onClick={() => {
           setMapStep(2)
           if (mapStep == 2) {
-            alert("Your order has been requested, Please wait for admin approval")
-
-            saveOrder()
+            setSuccess(true);
+            setTimeout(()=>{
+              setSuccess(false);
+              router.push('/');
+            },2000);
+            saveOrder();       
           }
 
         }} className={styles.proceed}>
@@ -249,44 +283,54 @@ function page(props) {
 
           }
         />
-      </div>
+      </div >
     )
-  }
-  if (isLoaded) {
+}
+if (isLoaded) {
 
-    return (
-      <div>
-        <GoogleMap
-          mapContainerStyle={props.containerStyle || containerStyle}
-          center={center}
-          zoom={props.userType === 'rider' ? 12 : 14}
-          onClick={() => setIsSearchBoxOpen(false)}
-        >
-          {(mapStep === 1 || props.userType == 'rider') && (
-            <MarkerF
-              onDragEnd={addSenderLocation}
-              draggable={props.userType !== 'rider'}
-              position={senderLocDetails.senderCoords}
-            />
-          )}
+  return (
+    <div>
+      <GoogleMap
+        mapContainerStyle={props.containerStyle || containerStyle}
+        center={center}
+        zoom={props.userType === 'rider' ? 12 : 14}
+        onClick={() => setIsSearchBoxOpen(false)}
+      >
+        {(mapStep === 1 || props.userType == 'rider') && (
+          <MarkerF
+            onDragEnd={addSenderLocation}
+            draggable={props.userType !== 'rider'}
+            position={senderLocDetails.senderCoords}
+          />
+        )}
 
-          {(mapStep === 2 || props.userType == 'rider') && (
-            <MarkerF
-              onDragEnd={addReceiverLocation}
-              draggable={props.userType !== 'rider'}
-              position={receiverLocDetails.receiverCoords}
-            />
-          )}
+        {(mapStep === 2 || props.userType == 'rider') && (
+          <MarkerF
+            onDragEnd={addReceiverLocation}
+            draggable={props.userType !== 'rider'}
+            position={receiverLocDetails.receiverCoords}
+          />
+        )}
+
+        {success &&
+          <Alert
+            message="Order approval"
+            description="Congratulations, your order have been sent."
+            type="success"
+            showIcon
+            closable
+            style={{ height: '130px', position: 'absolute', left: '37%', top: '1%', zIndex: '10' }}
+          />
+        }
 
 
-
-          {props.userType !== 'rider' && <UserSection />}
-        </GoogleMap>
-      </div>
-    )
-  } else {
-    return "loading..."
-  }
+        {props.userType !== 'rider' && <UserSection />}
+      </GoogleMap>
+    </div>
+  )
+} else {
+  return "loading..."
+}
 }
 
 export default page

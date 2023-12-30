@@ -1,7 +1,7 @@
 const express = require('express')
 var router = express.Router();
 
-const{createCategory,getCategory,updateCategory,deleteCategory,editCategory}=require('../controllers/categories')
+const{createCategory,getCategory,getCategoryDetails,updateCategory,deleteCategory,editCategory}=require('../controllers/categories')
 const Category=require('../models/category')
 router.use(express.json());
 
@@ -9,6 +9,7 @@ router.post('/categories',createCategory)
 
 router.get('/categories',getCategory)
 
+router.get('/category-details',getCategoryDetails)
  
  router.put('/categories',updateCategory)
 
