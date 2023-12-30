@@ -75,7 +75,7 @@ const Nav = (props) => {
       <Space size="large">
       <Badge dot={props.initialCount>=props.orderCount}>
           {/* <Avatar shape="square" size="large"  /> */}
-          <BellOutlined  twoToneColor="#eb2f96"/>
+          <BellOutlined  twoToneColor="#eb2f96" style={{marginLeft:'50px'}}/>
           </Badge>
         
       </Space>
