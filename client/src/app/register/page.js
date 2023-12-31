@@ -34,8 +34,6 @@ const SignupSchema = Yup.object().shape({
     .max(50, 'Too Long!')
     .required('Required'),
   role: Yup.string()
-    .required('Required'),
-  role: Yup.string()
     .required('Required')
 });
 
@@ -99,7 +97,7 @@ const index = (props) => {
     <>
      <Nav/>
       <div className={styles.container}>
-       <span className={styles.heading}>Register for hulaki</span>
+       <span className={styles.heading}>Register for Hulaki</span>
       <Formik
         initialValues={{
           fullName: '',
@@ -109,7 +107,7 @@ const index = (props) => {
           address: '',
           role: 'user'
         }}
-        // validationSchema={SignupSchema}
+        validationSchema={SignupSchema}
         onSubmit={values => {
           handleRegister(values)
         }}
@@ -118,24 +116,24 @@ const index = (props) => {
           <Form className={styles.authForm}>
             {contextHolder}
             <div className={styles.input} >
-              <Field name="fullName" type="fullName" placeholder="Full Name:" />
+              <Field style={{marginTop:'18px'}} name="fullName" type="fullName" placeholder="Full Name:" />
               {errors.fullName && touched.fullName ? (
-                <div>{errors.fullName}</div>
+                <div className={styles.errors}>{errors.fullName}</div>
               ) : null}
           
               <Field name="phoneNumber" placeholder="Phone number:" />
               {errors.phoneNumber && touched.phoneNumber ? (
-                <div>{errors.phoneNumber}</div>
+                <div className={styles.errors}>{errors.phoneNumber}</div>
               ) : null}
           
               <Field name="email" placeholder="Email:" />
               {errors.email && touched.email ? (
-                <div>{errors.email}</div>
+                <div className={styles.errors}>{errors.email}</div>
               ) : null}
          
               <Field name="address" type="address" placeholder="address" />
               {errors.address && touched.address ? (
-                <div className='errors'>{errors.address}</div>
+                <div className={styles.errors}>{errors.address}</div>
               ) : null}
           
               <Field style={{width:'70%',color:'black',cursor:'pointer'}} component='select' name='role' id='roles' placeholder='Choose your role'>
@@ -144,21 +142,22 @@ const index = (props) => {
                 <option value="rider">Rider</option>
               </Field>
               {errors.role && touched.role ? (
-                <div className='errors'>{errors.role}</div>
+                <div className={styles.errors}>{errors.role}</div>
               ) : null}
 
               <Field name="password" type="password" placeholder="password" />
               {errors.password && touched.password ? (
-                <div className='errors'>{errors.password}</div>
+                <div className={styles.errors}>{errors.password}</div>
               ) : null}
 
               <input className={styles.file} type="file" onChange={saveImage} />
             </div>
 
-            <span className={styles.text}>Already registered ?<Link style={{color:'#1677ff'}} href="/"> Login</Link>&nbsp; instead</span>
             <div className={styles.button}>
               <button className={styles.submitBtn} type="submit">Submit</button>
             </div>
+            <span className={styles.text}>Already registered ?<Link style={{color:'#1677ff'}} href="/login"> Login</Link>&nbsp; instead</span>
+
           </Form>
         )}
       </Formik>

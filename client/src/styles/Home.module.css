@@ -8,10 +8,10 @@
 }
 
 .card:hover {
-    box-shadow: 0px 0px 8px 5px #f84958;
+    box-shadow: 1.5px 3px 8px 3px #0b1d51;
     transform: scale(1.1);
     transition-duration: 0.3s;
     transition-timing-function: ease-out;
     cursor: pointer;
-    color: #f84958;
+    color: #0b1d51;
 }

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
@@ -10,6 +10,9 @@ import {setLoginDetails} from '../../redux/reducerSlices/userSlice'
 import Link from 'next/link';
 import styles from '../../styles/login.module.css'
 import {  message } from 'antd';
+import MainLayout from '@/components/MainLayout/page';
+
+
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string()
     .min(2, 'Too Short!')
@@ -44,15 +47,11 @@ const SignupSchema = Yup.object().shape({
 
   
   return(
-  <div>
-      <Image
-      src="/hulakilogo.png"
-      width={60}
-      height={60}
-      alt="Logo"
-    />
-    {contextHolder}
-    <h1 className={styles.heading}>Login</h1>
+  <>
+   <MainLayout>
+   <div className={styles.mainDiv}>
+   {contextHolder}
+    <h1 className={styles.heading}>Login </h1>
     <Formik
       initialValues={{
         phoneNumber: '',
@@ -64,24 +63,26 @@ const SignupSchema = Yup.object().shape({
       }}
     >
       {({ errors, touched }) => (
-        <Form className={styles.container}>
-          <Field name="phoneNumber"  placeholder="PhoneNumber" /> 
+        <Form className={styles.formContainer}>
+          <Field style={{marginTop:'18px'}} name="phoneNumber"  placeholder="PhoneNumber" /> 
           {errors.phoneNumber && touched.phoneNumber ? (
-            <div>{errors.phoneNumber}</div>
+            <div className={styles.errors}>{errors.phoneNumber}</div>
           ) : null}
-          <br/>
+        
           <Field name="password" type="password" placeholder="Password" />
           {errors.password && touched.password ? (
-            <div>{errors.password}</div>
+            <div className={styles.errors}>{errors.password}</div>
           ) : null}
-          <br/>
-          Dont have an account yet ? <Link href="/register">Sign Up</Link> instead
-          <br/>
-          <button className={styles.button} type="submit">Submit</button>
+               
+          <button className={styles.submitBtn} type="submit">Submit</button>
+
+          <span className={styles.text}>Dont have an account yet ? <Link style={{color:'#1677ff'}} href="/register">Sign Up</Link> instead</span>
         </Form>
       )}
     </Formik>
-  </div>
+   </div>
+    </MainLayout>
+  </>
 )}
 
 export default Home
