@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Card, Col, Row } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Breadcrumb, Layout, Menu, theme, Input } from 'antd';
+import { Timeline } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
@@ -12,12 +13,16 @@ import { Avatar, Divider, Tooltip, Button, Popover, ConfigProvider } from 'antd'
 import Table from '../../components/Table/page'
 import NavBar from '@/components/NavBar/page';
 import { Pagination } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import styles from "@/styles/Home.module.css";
 
 //import Top from '../components/Top/page'
 
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
+
+const status=  ["Pending","Admin Approved", "Order Rejected By Admin", "Reached Pickup point", "Picked up", "Order Rejected By Diver",  "Reached Destination point",  "Order Delivered"]
+
 const App = () => {
   const router = useRouter()
 
@@ -26,9 +31,13 @@ const App = () => {
   const { userDetails, isLoggedIn } = useSelector(state => state.user)
 
   const [searchList, setSearchList] = useState([])
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
+  const showModal1 = () => {
+   
+    setIsModalOpen1(true);
+  };
 
-
-  const text = <span>{userDetails.email}</span>;
+  const text = <span>{userDetails?.email}</span>;
   const content = (
     <div>
       <Link href="/profile"><span>Profile</span></Link>
@@ -53,11 +62,14 @@ const App = () => {
     const data = await res.json()
     setSearchList(data.productList)
   };
+
+  
   return (
     <>
       <NavBar/>
       <Layout className={styles.layout}>
-        <Search
+        <Search 
+        onSearch={() => showModal1()}
           placeholder="Enter Your Traking Order"
           enterButton="Search"
           size="medium"
@@ -66,6 +78,15 @@ const App = () => {
           style={{ width: '50%', marginTop: '50px' }}
         />
 
+
+{isModalOpen1 && ( // Render Timeline when the modal is open
+          <Timeline
+          items={status.map((item,id)=>{
+            const statusId = status.indexOf('Reached Pickup point')
+            return {'children': item,dot:id<=statusId ?<SmileOutlined />: null}
+          })}
+        />
+        )}
 
         <Content
           style={{

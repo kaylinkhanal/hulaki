@@ -14,6 +14,7 @@ import { Tooltip } from 'antd';
 import Marquee from 'react-fast-marquee';
 import { Alert } from 'antd';
 const { Search } = Input;
+import { useRouter } from 'next/navigation'
 import { io } from 'socket.io-client';
 const URL = 'http://localhost:4000';
 const socket = io(URL);
@@ -59,7 +60,8 @@ function page(props) {
   const [mapStep, setMapStep] = useState(1)
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false)
   const [center, setCenter] = useState(initialCenter)
-
+  const router = useRouter()
+  
   const listSelect = (item) => {
     if (mapStep == 1) {
       dispatch(setSenderPosition({ lat: item.lat, lng: item.lon }))
@@ -219,6 +221,7 @@ function page(props) {
             alert("Your order has been requested, Please wait for admin approval")
 
             saveOrder()
+            router.push('/order')
           }
 
         }} className={styles.proceed}>

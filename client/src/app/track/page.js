@@ -34,7 +34,7 @@ const App=()=>{
             <Table
             actions = {false}
             list={orderList}
-            title={['categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber','status']} endpoint="/orders" />
+            title={['_id','categoryName','productName','productWeight', 'receiverPhoneNumber','fullName', 'phoneNumber','status']} endpoint="/orders" />
         </div>
         <Footer/>
          </>

@@ -78,7 +78,7 @@ const page = () => {
             handleStatus={handleStatus}
             list={orderList}
             handleMapView={handleMapView}
-            title={['productName','categoryName', 'productWeight', 'receiverName', 'receiverPhoneNumber']} endpoint="/orders" />
+            title={['_id','productName','categoryName', 'productWeight', 'receiverName', 'receiverPhoneNumber']} endpoint="/orders" />
     </div> 
     <Footer/>
     </>
