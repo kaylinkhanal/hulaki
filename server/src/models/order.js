@@ -18,6 +18,8 @@ const orderSchema = new mongoose.Schema({
     enum : ["Pending","Admin Approved", "Order Rejected By Admin", "Reached Pickup point", "Picked up", "Order Rejected By Diver",  "Reached Destination point",  "Order Delivered"],
     default: 'Pending'
   },
+},{
+  timestamps:true
 });
 const Order = mongoose.model('Order', orderSchema);
 module.exports =Order
